@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Cabify Market</string>
+    <string name="general_error_message">Ha ocurrido un error</string>
+    <string name="general_addToCart_message">Add to cart</string>
 </resources>
