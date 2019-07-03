@@ -1,0 +1,20 @@
+[
+  {
+    "code": "VOUCHER",
+    "type": "FreePerQuantityRule",
+    "description": "Special Offer 2x1",
+    "params": {
+      "quantityForFree": 2,
+      "quantityToBuy": 1
+    }
+  },
+  {
+    "code": "TSHIRT",
+    "type": "BulkRule",
+    "description": "Buy 3 or more at 19€ per unit",
+    "params": {
+      "bulkPrice": 19.00,
+      "bulkQuantity": 3
+    }
+  }
+]

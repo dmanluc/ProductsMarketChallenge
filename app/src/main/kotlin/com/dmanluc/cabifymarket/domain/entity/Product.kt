@@ -9,7 +9,7 @@ package com.dmanluc.cabifymarket.domain.entity
  */
 data class Product(val id: Type = Type.OTHER,
                    val name: String,
-                   val price: Double,
+                   val currencyAmount: CurrencyAmount,
                    val imageUrl: String?,
                    private val discountRule: ProductDiscountRule?): Discountable {
 
@@ -29,7 +29,7 @@ data class Product(val id: Type = Type.OTHER,
     }
 
     override fun provideTotalPrice(productQuantity: Int): Double {
-        return discountRule?.calculateTotalProductPrice(productQuantity, price) ?: run { productQuantity * price }
+        return discountRule?.calculateTotalProductPrice(productQuantity, currencyAmount.amount) ?: run { productQuantity * currencyAmount.amount }
     }
 
 }

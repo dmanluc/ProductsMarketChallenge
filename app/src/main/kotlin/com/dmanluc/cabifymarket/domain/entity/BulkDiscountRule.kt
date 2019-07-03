@@ -8,7 +8,7 @@ package com.dmanluc.cabifymarket.domain.entity
  * @since    2019-07-02.
  */
 class BulkDiscountRule(private val code: String,
-                       private val discountDescription: String,
+                       private val description: String,
                        private val buyQuantity: Int,
                        private val priceWithDiscount: Double): ProductDiscountRule {
 
@@ -17,7 +17,7 @@ class BulkDiscountRule(private val code: String,
     }
 
     override fun provideDiscountInfo(): String {
-        return discountDescription
+        return description
     }
 
     override fun calculateTotalProductPrice(quantity: Int, productPrice: Double): Double {
