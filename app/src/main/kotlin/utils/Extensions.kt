@@ -8,6 +8,10 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
@@ -15,6 +19,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.signature.ObjectKey
 import com.dmanluc.cabifymarket.presentation.core.GlideApp
+import com.google.android.material.snackbar.Snackbar
 import org.apache.commons.io.IOUtils
 
 /**
@@ -28,6 +33,18 @@ fun Context.hasActiveNetworkConnectivity(): Boolean {
     return (getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager)?.let {
         it.activeNetworkInfo != null && it.activeNetworkInfo.isConnected
     } ?: false
+}
+
+fun Fragment.showSnackbar(snackbarText: String, timeLength: Int) {
+    activity?.let { Snackbar.make(it.findViewById(android.R.id.content), snackbarText, timeLength).show() }
+}
+
+fun Fragment.setupSnackbar(lifecycleOwner: LifecycleOwner, snackbarEvent: LiveData<Event<Int>>, timeLength: Int) {
+    snackbarEvent.observe(lifecycleOwner, Observer { event ->
+        event.getContentIfNotHandled()?.let { res ->
+            context?.let { showSnackbar(it.getString(res), timeLength) }
+        }
+    })
 }
 
 fun View.show() {

@@ -24,6 +24,10 @@
             </intent-filter>
 
         </activity>
+        <activity
+                android:name=".presentation.MarketActivity"
+                android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
