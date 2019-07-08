@@ -18,7 +18,7 @@ class CurrencyAmount(val amount: Double) {
         }.format(amount)
     }
 
-    fun formatCurrencyInLocale() = currencyInLocale().format(amount)
+    fun formatCurrencyInLocale(): String = currencyInLocale().format(amount)
 
     private fun currencyInLocale(): NumberFormat {
         return NumberFormat.getCurrencyInstance().apply {

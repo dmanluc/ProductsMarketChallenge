@@ -13,6 +13,6 @@ interface Discountable {
 
     fun provideDiscountInfo(): String
 
-    fun provideTotalPrice(productQuantity: Int): Double
+    fun provideTotalPrice(productQuantity: Int): CurrencyAmount
 
 }

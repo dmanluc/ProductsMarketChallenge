@@ -5,6 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
                 name="viewModel"
                 type="com.dmanluc.cabifymarket.presentation.feature.market.MarketProductsViewModel"/>
@@ -62,8 +63,27 @@
                     android:id="@+id/productsRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:paddingBottom="80dp"
+                    android:clipToPadding="false"
                     app:items="@{viewModel.getProducts()}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            <Button
+                    android:id="@+id/cartCheckout"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    style="@style/AccentButton"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:paddingEnd="12dp"
+                    android:paddingStart="12dp"
+                    android:text="@string/general_addToCart_message"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:buttonText="@{viewModel.getProductsCart()}"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

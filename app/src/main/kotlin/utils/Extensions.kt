@@ -11,6 +11,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -39,7 +40,8 @@ fun Fragment.showSnackbar(snackbarText: String, timeLength: Int) {
     activity?.let { Snackbar.make(it.findViewById(android.R.id.content), snackbarText, timeLength).show() }
 }
 
-fun Fragment.setupSnackbar(lifecycleOwner: LifecycleOwner, snackbarEvent: LiveData<Event<Int>>, timeLength: Int) {
+fun Fragment.setupSnackbar(lifecycleOwner: LifecycleOwner, snackbarEvent: LiveData<Event<Int>>,
+                           timeLength: Int) {
     snackbarEvent.observe(lifecycleOwner, Observer { event ->
         event.getContentIfNotHandled()?.let { res ->
             context?.let { showSnackbar(it.getString(res), timeLength) }
@@ -58,8 +60,6 @@ fun View.hide() {
 fun View.invisible() {
     visibility = View.INVISIBLE
 }
-
-fun View.isVisible(): Boolean = visibility == View.VISIBLE
 
 fun ImageView.loadImage(path: String, errorResource: Int,
                         onExceptionDelegate: () -> Unit = {},
@@ -99,4 +99,8 @@ fun AssetManager.readJsonAssetFileName(fileName: String): String {
     }
 
     return IOUtils.toString(this.open(String.format("json/%s.json", fileName)))
+}
+
+fun <T> MutableLiveData<T>.notifyObserver() {
+    this.value = this.value
 }

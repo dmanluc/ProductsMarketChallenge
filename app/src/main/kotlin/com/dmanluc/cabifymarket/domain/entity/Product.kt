@@ -7,11 +7,11 @@ package com.dmanluc.cabifymarket.domain.entity
  * @version  1
  * @since    2019-07-02.
  */
-data class Product(val id: Type = Type.OTHER,
+data class Product(val type: Type = Type.OTHER,
                    val name: String,
                    val currencyAmount: CurrencyAmount,
                    val imageUrl: String?,
-                   private val discountRule: ProductDiscountRule?): Discountable {
+                   val discountRule: ProductDiscountRule?): Discountable {
 
     enum class Type(val typeId: String) {
         VOUCHER("VOUCHER"),
@@ -28,8 +28,8 @@ data class Product(val id: Type = Type.OTHER,
         return discountRule?.provideDiscountInfo().orEmpty()
     }
 
-    override fun provideTotalPrice(productQuantity: Int): Double {
-        return discountRule?.calculateTotalProductPrice(productQuantity, currencyAmount.amount) ?: run { productQuantity * currencyAmount.amount }
+    override fun provideTotalPrice(productQuantity: Int): CurrencyAmount {
+        return CurrencyAmount(discountRule?.calculateTotalProductPrice(productQuantity, currencyAmount.amount) ?: run { productQuantity * currencyAmount.amount })
     }
 
 }

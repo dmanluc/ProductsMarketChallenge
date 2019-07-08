@@ -14,7 +14,7 @@ class MarketProductItemDiffCallback(private val oldList: List<Product>,
             = oldList[oldItemPosition] == newList[newItemPosition]
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].id == newList[newItemPosition].id
+        return oldList[oldItemPosition].type == newList[newItemPosition].type
                 && oldList[oldItemPosition].name == newList[newItemPosition].name
                 && oldList[oldItemPosition].imageUrl == newList[newItemPosition].imageUrl
                 && oldList[oldItemPosition].currencyAmount.amount == newList[newItemPosition].currencyAmount.amount

@@ -24,8 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 fun createApiModule(baseUrl: String) = module {
     factory<Interceptor> {
-        HttpLoggingInterceptor()
-            .setLevel(HttpLoggingInterceptor.Level.BODY)
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     factory { OkHttpClient.Builder().addInterceptor(get()).build() }

@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.databinding.FragmentMarketProductsBinding
-import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.presentation.base.BaseFragment
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,21 +38,12 @@ class MarketProductsFragment: BaseFragment() {
 
         configureRecyclerView()
 
-        viewModel.getProducts().observe(this, Observer<Resource<List<Product>>> {
-            handleDataState(it.status)
-        })
         viewModel.fetchProducts()
     }
 
     private fun configureRecyclerView() {
-        binding.productsRecycler.adapter = MarketProductsAdapter(viewModel)
-    }
-
-    private fun handleDataState(state: Resource.Status){
-        when (state) {
-            Resource.Status.SUCCESS -> {}
-            Resource.Status.ERROR -> {}
-            Resource.Status.LOADING -> {}
+        binding.productsRecycler.adapter = MarketProductsAdapter() { quantity, product ->
+            viewModel.addProductToCart(quantity, product)
         }
     }
 
