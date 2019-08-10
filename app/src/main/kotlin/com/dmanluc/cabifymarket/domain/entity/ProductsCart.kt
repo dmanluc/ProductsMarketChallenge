@@ -5,9 +5,7 @@ package com.dmanluc.cabifymarket.domain.entity
  * @version  1
  * @since    2019-07-03.
  */
-class ProductsCart {
-
-    private val cart = linkedMapOf<Product, Int>()
+data class ProductsCart(private val cart: HashMap<Product, Int> = linkedMapOf()) {
 
     fun addProduct(quantity: Int, productToAdd: Product) {
         cart[productToAdd] = (cart[productToAdd] ?: 0) + quantity

@@ -21,7 +21,7 @@ object MarketProductsFragmentBinding {
     @JvmStatic
     fun <T> showWhenLoading(view: SwipeRefreshLayout, resource: Resource<T>?) {
         Log.d(MarketProductsFragmentBinding::class.java.simpleName, "Resource: $resource")
-        if (resource != null) view.isRefreshing = resource.status == Resource.Status.LOADING
+        if (resource != null) view.isRefreshing = resource is Resource.Loading
     }
 
     @BindingAdapter("items")
@@ -42,7 +42,8 @@ object MarketProductsFragmentBinding {
     @JvmStatic
     fun showMessageErrorWhenEmptyList(view: View, resource: Resource<List<Product>>?) {
         if (resource != null) {
-            view.visibility = if (resource.status == Resource.Status.ERROR && resource.data?.isEmpty() != false) {
+            view.visibility = if (resource is Resource.Error && resource.data?.isEmpty() !=
+                false) {
                 View.VISIBLE
             } else {
                 View.GONE

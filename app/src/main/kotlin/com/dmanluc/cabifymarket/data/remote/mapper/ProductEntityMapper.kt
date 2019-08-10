@@ -6,6 +6,7 @@ import com.dmanluc.cabifymarket.data.remote.model.MarketApiResponse
 import com.dmanluc.cabifymarket.domain.entity.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import utils.EntityMapper
 import utils.readJsonAssetFileName
 
 /**
@@ -14,15 +15,16 @@ import utils.readJsonAssetFileName
  * @since    2019-07-02.
  */
 class ProductEntityMapper(private val gson: Gson,
-                          private val assetManager: AssetManager): EntityMapper<MarketApiResponse, List<Product>> {
+                          private val assetManager: AssetManager):
+    EntityMapper<MarketApiResponse, List<Product>> {
 
-    private val productsImagesUrl = linkedMapOf(
+    private val productsImagesUrl = mapOf(
         Pair("MUG", "https://cdn.shopify.com/s/files/1/0312/6537/products/27514-Black-White-1_aef806de-0299-4603-9305-bcc83155db8f_1024x1024.jpg?v=1495633232"),
         Pair("TSHIRT", "https://www.goalinn.com/f/13608/136088796/adidas-real-madrid-away-16-17.jpg"),
         Pair("VOUCHER", "https://i.rafitamolin.com/18cfea7.png")
     )
 
-    override fun mapFromRemote(remoteApiModel: MarketApiResponse): List<Product> {
+    override fun mapFrom(inputModel: MarketApiResponse): List<Product> {
 
         val rules: List<ProductDiscountRule?> = gson.fromJson<List<DiscountRuleResponse>>(
             assetManager.readJsonAssetFileName("productDiscountRules"),
@@ -45,7 +47,7 @@ class ProductEntityMapper(private val gson: Gson,
             }
         }
 
-        return remoteApiModel.products?.map { productResponse ->
+        return inputModel.products?.map { productResponse ->
             val productParams = when (productResponse.id) {
                 Product.Type.VOUCHER.typeId -> {
                     Triple(Product.Type.VOUCHER,

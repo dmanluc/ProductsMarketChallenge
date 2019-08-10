@@ -16,14 +16,14 @@ abstract class RemoteBoundResource<ResultType, RequestType> {
 
     suspend fun build(): RemoteBoundResource<ResultType, RequestType> {
         withContext(Dispatchers.Main) {
-            result.value = Resource.loading()
+            result.value = Resource.Loading()
         }
         CoroutineScope(coroutineContext).launch(supervisorJob) {
             try {
                 fetchFromNetwork()
             } catch (ex: Exception) {
                 Log.e("BaseDataSource", "An error happened: $ex")
-                setValue(Resource.error(ex))
+                setValue(Resource.Error(ex))
             }
         }
         return this
@@ -35,7 +35,7 @@ abstract class RemoteBoundResource<ResultType, RequestType> {
         Log.d(RemoteBoundResource::class.java.name, "Fetch data from network")
         val apiResponse = performNetworkCallAsync().await()
         Log.d(RemoteBoundResource::class.java.name, "Data fetched from network")
-        setValue(Resource.success(processResponse(apiResponse)))
+        setValue(Resource.Success(processResponse(apiResponse)))
     }
 
     @MainThread

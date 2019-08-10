@@ -10,7 +10,7 @@ import com.dmanluc.cabifymarket.domain.repository.MarketRepository
  * @version  1
  * @since    2019-07-02.
  */
-class GetProductsInteractor constructor(private val repository: MarketRepository) {
+class GetProductsInteractor(private val repository: MarketRepository) {
 
     suspend operator fun invoke(): LiveData<Resource<List<Product>>> {
         return repository.getProducts()

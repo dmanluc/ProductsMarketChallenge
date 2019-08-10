@@ -7,7 +7,7 @@ package com.dmanluc.cabifymarket.domain.entity
  * @version  1
  * @since    2019-07-02.
  */
-data class FreePerQuantityDiscountRule(private val code: String,
+class FreePerQuantityDiscountRule(private val code: String,
                                   private val discountDescription: String,
                                   private val freeQuantity: Int,
                                   private val buyQuantity: Int): ProductDiscountRule {

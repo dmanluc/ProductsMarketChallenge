@@ -1,7 +1,8 @@
 package com.dmanluc.cabifymarket
 
 import android.app.Application
-import com.dmanluc.cabifymarket.di.createApiModule
+import com.dmanluc.cabifymarket.di.createRemoteModule
+import com.dmanluc.cabifymarket.di.localModule
 import com.dmanluc.cabifymarket.di.marketFeatureModule
 import com.dmanluc.cabifymarket.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
@@ -14,7 +15,7 @@ import org.koin.core.logger.Level
  * @version  1
  * @since    2019-07-02.
  */
-class App: Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -26,7 +27,14 @@ class App: Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@App)
-            modules(listOf(createApiModule(BuildConfig.BASE_URL), repositoryModule, marketFeatureModule))
+            modules(
+                listOf(
+                    createRemoteModule(BuildConfig.BASE_URL),
+                    repositoryModule,
+                    localModule,
+                    marketFeatureModule
+                )
+            )
         }
     }
 

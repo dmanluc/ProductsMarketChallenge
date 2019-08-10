@@ -8,7 +8,7 @@ import java.util.*
  * @version  1
  * @since    2019-07-03.
  */
-class CurrencyAmount(val amount: Double) {
+data class CurrencyAmount(val amount: Double) {
 
     fun formatCurrency(currencyCode: CurrencyCode = CurrencyCode.EUR) : String {
         return NumberFormat.getCurrencyInstance().apply {

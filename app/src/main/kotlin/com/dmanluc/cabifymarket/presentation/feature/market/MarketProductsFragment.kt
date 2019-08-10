@@ -42,8 +42,12 @@ class MarketProductsFragment: BaseFragment() {
     }
 
     private fun configureRecyclerView() {
-        binding.productsRecycler.adapter = MarketProductsAdapter() { quantity, product ->
+        binding.productsRecycler.adapter = MarketProductsAdapter { quantity, product ->
             viewModel.addProductToCart(quantity, product)
+        }
+
+        binding.cartCheckout.setOnClickListener {
+            //viewModel.printLastSavedProductsCart()
         }
     }
 
