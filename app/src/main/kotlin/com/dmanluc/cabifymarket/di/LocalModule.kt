@@ -1,6 +1,8 @@
 package com.dmanluc.cabifymarket.di
 
 import com.dmanluc.cabifymarket.data.local.AppDatabase
+import com.dmanluc.cabifymarket.data.local.datasource.CacheDataSource
+import com.dmanluc.cabifymarket.data.local.datasource.CacheDataSourceImpl
 import com.dmanluc.cabifymarket.data.local.datasource.ProductsCartLocalDataSource
 import com.dmanluc.cabifymarket.data.local.datasource.ProductsCartLocalDataSourceImpl
 import com.dmanluc.cabifymarket.data.local.mapper.DatabaseEntityToDomainMapper
@@ -26,6 +28,9 @@ val localModule = module {
 
     single { DatabaseEntityToDomainMapper() }
 
-    factory<ProductsCartLocalDataSource> { ProductsCartLocalDataSourceImpl(get(), get(), get()) }
+    factory<CacheDataSource> { CacheDataSourceImpl() }
+
+    factory<ProductsCartLocalDataSource> {
+        ProductsCartLocalDataSourceImpl(get(), get(), get(), get()) }
 
 }
