@@ -19,4 +19,18 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="AccentRoundButton" parent="AppTheme">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:background">@drawable/background_accent_button_rounded</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="AccentBackground" parent="AppTheme">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="PrimaryDarkBackground" parent="AppTheme">
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

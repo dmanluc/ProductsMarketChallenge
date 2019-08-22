@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -12,8 +13,10 @@ import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutAdapter
 import utils.hide
 import utils.loadImage
+import utils.show
 
 object MarketProductsFragmentBinding {
 
@@ -27,7 +30,7 @@ object MarketProductsFragmentBinding {
     @BindingAdapter("items")
     @JvmStatic
     fun setItems(recyclerView: RecyclerView, resource: Resource<List<Product>>?) {
-        with(recyclerView.adapter as MarketProductsAdapter) {
+        with(recyclerView.adapter as MarketCheckoutAdapter) {
             resource?.data?.let { setAdapterItems(it) }
         }
     }
@@ -35,18 +38,45 @@ object MarketProductsFragmentBinding {
     @BindingAdapter("imageUrl")
     @JvmStatic
     fun loadImage(view: ImageView, url: String?) {
-        url?.let { view.loadImage(it, R.drawable.ic_error_black_24dp) }
+        url?.let { view.loadImage(it, R.drawable.ic_broken_image_black_24dp) }
     }
 
     @BindingAdapter("showWhenEmptyList")
     @JvmStatic
-    fun showMessageErrorWhenEmptyList(view: View, resource: Resource<List<Product>>?) {
+    fun showMessageErrorWhenEmptyList(view: ImageView, resource: Resource<List<Product>>?) {
         if (resource != null) {
-            view.visibility = if (resource is Resource.Error && resource.data?.isEmpty() !=
-                false) {
-                View.VISIBLE
-            } else {
-                View.GONE
+            when {
+                resource is Resource.Error -> {
+                    view.show()
+                }
+                resource.data?.isEmpty() ?: false -> {
+                    view.show()
+                }
+                else -> view.hide()
+            }
+        } else {
+            view.hide()
+        }
+    }
+
+    @BindingAdapter("showWhenEmptyList")
+    @JvmStatic
+    fun showMessageErrorWhenEmptyList(view: TextView, resource: Resource<List<Product>>?) {
+        if (resource != null) {
+            when {
+                resource is Resource.Error -> {
+                    view.apply {
+                        show()
+                        text = resources.getString(R.string.general_error_message)
+                    }
+                }
+                resource.data?.isEmpty() ?: false -> {
+                    view.apply {
+                        show()
+                        text = resources.getString(R.string.market_overview_fragment_products_not_available)
+                    }
+                }
+                else -> view.hide()
             }
         } else {
             view.hide()

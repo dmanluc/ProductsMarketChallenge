@@ -14,8 +14,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:showWhenLoading="@{viewModel.getProducts()}"
-            app:onRefreshListener="@{() -> viewModel.fetchProducts()}">
+            app:showWhenLoading="@{viewModel.products}"
+            app:onRefreshListener="@{() -> viewModel.fetchProducts()()}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                     android:layout_marginTop="8dp"
                     android:textStyle="bold"
                     android:visibility="gone"
-                    app:showWhenEmptyList="@{viewModel.getProducts()}"
+                    app:showWhenEmptyList="@{viewModel.products}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/emptyProductsImageView"
@@ -50,8 +50,8 @@
                     android:layout_marginBottom="8dp"
                     android:visibility="visible"
                     android:tint="@color/colorPrimary"
-                    app:showWhenEmptyList="@{viewModel.getProducts()}"
-                    app:srcCompat="@drawable/ic_error_black_24dp"
+                    app:showWhenEmptyList="@{viewModel.products}"
+                    app:srcCompat="@drawable/ic_broken_image_black_24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/productsRecycler"
@@ -65,7 +65,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="80dp"
                     android:clipToPadding="false"
-                    app:items="@{viewModel.getProducts()}"
+                    app:items="@{viewModel.products}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
             <Button
@@ -79,10 +79,10 @@
                     android:layout_marginStart="16dp"
                     android:paddingEnd="12dp"
                     android:paddingStart="12dp"
-                    android:text="@string/general_addToCart_message"
+                    android:text="@string/market_overview_fragment_add_to_cart_button"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:buttonText="@{viewModel.getProductsCart()}"
+                    app:buttonText="@{viewModel.productsCart}"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

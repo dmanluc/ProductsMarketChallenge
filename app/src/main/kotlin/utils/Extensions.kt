@@ -9,10 +9,7 @@ import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
@@ -103,4 +100,13 @@ fun AssetManager.readJsonAssetFileName(fileName: String): String {
 
 fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
+}
+
+private fun <R> bindObserver(observer: MediatorLiveData<R?>?,
+                             source: LiveData<R?>) {
+    observer?.apply {
+        addSource(source) {
+            postValue(it)
+        }
+    }
 }

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
@@ -15,7 +14,6 @@ import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import utils.Event
 import utils.notifyObserver
 
 /**
@@ -29,29 +27,26 @@ class MarketProductsViewModel(
     private val getLastSavedProductsCartInteractor: GetLastSavedProductsCartInteractor
 ) : BaseViewModel() {
 
-    private val products: MediatorLiveData<Resource<List<Product>>> = MediatorLiveData()
-    private var productsSource: LiveData<Resource<List<Product>>> = MutableLiveData()
+    private var _productsResource: LiveData<Resource<List<Product>>> = MutableLiveData()
+    private val _products: MediatorLiveData<Resource<List<Product>>> = MediatorLiveData()
+    val products: LiveData<Resource<List<Product>>>
+    get() = _products
 
-    private val productsCart = MutableLiveData<ProductsCart>().apply { value = ProductsCart() }
+    private val _productsCart: MutableLiveData<ProductsCart> = MutableLiveData(ProductsCart())
+    val productsCart: LiveData<ProductsCart>
+        get() = _productsCart
 
-    fun getProducts(): LiveData<Resource<List<Product>>> = products
+    init {
+        fetchProducts()
+    }
 
     fun fetchProducts() {
-        products.removeSource(productsSource)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                productsSource = getProductsInteractor()
+                _productsResource = getProductsInteractor()
             }
-            products.addSource(productsSource) { resource ->
-                products.value = resource
-
-                when (resource) {
-                    is Resource.Error -> {
-                        _snackbarError.value = Event(R.string.general_error_message)
-                    }
-                    else -> {
-                    }
-                }
+            _products.addSource(_productsResource) { resource ->
+                _products.value = resource
             }
         }
     }
@@ -67,19 +62,17 @@ class MarketProductsViewModel(
         }
     }
 
-    fun getProductsCart() = productsCart
-
     fun addProductToCart(quantity: Int, product: Product) {
-        with(productsCart) {
+        with(_productsCart) {
             value?.addProduct(quantity, product)
             notifyObserver()
-            saveProductsCart()
         }
+        saveProductsCart()
     }
 
     private fun saveProductsCart() {
-        productsCart.value?.let {
-            viewModelScope.launch(Dispatchers.Default) {
+        _productsCart.value?.let {
+            viewModelScope.launch {
                 saveProductsCartInteractor(it)
             }
         }

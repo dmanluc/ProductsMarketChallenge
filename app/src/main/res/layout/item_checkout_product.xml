@@ -152,14 +152,14 @@
                     app:layout_constraintBaseline_toBaselineOf="@id/productPrice"
                     android:text="@{product.currencyAmount.formatCurrencyInLocale()}"
                     app:layout_constraintStart_toEndOf="@id/horizontalBarrier"
-                    app:layout_constraintEnd_toStartOf="@id/addToCart"
+                    app:layout_constraintEnd_toStartOf="@id/removeProductFromCart"
                     app:layout_constraintTop_toBottomOf="@id/bottomDivider"
                     android:visibility="gone"
                     tools:visibility="visible"
                     tools:text="45,35€"/>
 
             <Button
-                    android:id="@+id/addToCart"
+                    android:id="@+id/removeProductFromCart"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     style="@style/AccentButton"
@@ -170,7 +170,7 @@
                     android:maxLines="2"
                     android:paddingEnd="8dp"
                     android:paddingStart="8dp"
-                    android:text="@string/market_overview_fragment_add_to_cart_button"
+                    android:text="@string/market_checkout_fragment_remove_product_button"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@id/productName"

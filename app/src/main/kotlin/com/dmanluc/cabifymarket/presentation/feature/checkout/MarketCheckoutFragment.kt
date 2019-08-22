@@ -1,10 +1,10 @@
-package com.dmanluc.cabifymarket.presentation.feature.market
+package com.dmanluc.cabifymarket.presentation.feature.checkout
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dmanluc.cabifymarket.databinding.FragmentMarketProductsBinding
+import com.dmanluc.cabifymarket.databinding.FragmentMarketCheckoutBinding
 import com.dmanluc.cabifymarket.presentation.base.BaseFragment
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -12,22 +12,22 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
- * @since    2019-07-02.
+ * @since    2019-08-20.
  */
-class MarketProductsFragment: BaseFragment() {
+class MarketCheckoutFragment: BaseFragment() {
 
     companion object {
-        fun newInstance() = MarketProductsFragment()
+        fun newInstance() = MarketCheckoutFragment()
     }
 
-    private val viewModel: MarketProductsViewModel by viewModel()
+    private val viewModel: MarketCheckoutViewModel by viewModel()
 
-    private lateinit var binding: FragmentMarketProductsBinding
+    private lateinit var binding: FragmentMarketCheckoutBinding
 
     override fun getViewModel(): BaseViewModel = viewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentMarketProductsBinding.inflate(inflater, container, false)
+        binding = FragmentMarketCheckoutBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -37,16 +37,18 @@ class MarketProductsFragment: BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         configureRecyclerView()
+
+        //viewModel.getCartProducts()
     }
 
     private fun configureRecyclerView() {
-        binding.productsRecycler.adapter = MarketProductsAdapter { quantity, product ->
-            viewModel.addProductToCart(quantity, product)
-        }
-
-        binding.cartCheckout.setOnClickListener {
-            // TODO Save cart locally and navigate to checkout screen
-        }
+        binding.cartProductsRecycler.adapter = MarketCheckoutAdapter(
+            onProductQuantityChanged = { newQuantity, product ->
+                //viewModel.updateProductCartQuantity(newQuantity, product)
+            },
+            onRemoveProductFromCart = { 
+                //viewModel.removeProductFromCart(it)
+            })
     }
 
 }
