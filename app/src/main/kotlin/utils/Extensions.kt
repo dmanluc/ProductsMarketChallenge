@@ -8,6 +8,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
+import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.bumptech.glide.load.DataSource
@@ -34,11 +35,15 @@ fun Context.hasActiveNetworkConnectivity(): Boolean {
 }
 
 fun Fragment.showSnackbar(snackbarText: String, timeLength: Int) {
-    activity?.let { Snackbar.make(it.findViewById(android.R.id.content), snackbarText, timeLength).show() }
+    activity?.let {
+        Snackbar.make(it.findViewById(android.R.id.content), snackbarText, timeLength).show()
+    }
 }
 
-fun Fragment.setupSnackbar(lifecycleOwner: LifecycleOwner, snackbarEvent: LiveData<Event<Int>>,
-                           timeLength: Int) {
+fun Fragment.setupSnackbar(
+    lifecycleOwner: LifecycleOwner, snackbarEvent: LiveData<Event<Int>>,
+    timeLength: Int
+) {
     snackbarEvent.observe(lifecycleOwner, Observer { event ->
         event.getContentIfNotHandled()?.let { res ->
             context?.let { showSnackbar(it.getString(res), timeLength) }
@@ -58,22 +63,33 @@ fun View.invisible() {
     visibility = View.INVISIBLE
 }
 
-fun ImageView.loadImage(path: String, errorResource: Int,
-                        onExceptionDelegate: () -> Unit = {},
-                        onResourceReadyDelegate: () -> Unit = {},
-                        daysWhileValidCache: Int = 1) {
+fun ImageView.loadImage(
+    path: String, errorResource: Int,
+    onExceptionDelegate: () -> Unit = {},
+    onResourceReadyDelegate: () -> Unit = {},
+    daysWhileValidCache: Int = 1
+) {
 
     GlideApp.with(this.context)
         .load(Uri.parse(path))
         .listener(object : RequestListener<Drawable> {
-            override fun onLoadFailed(e: GlideException?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable>?,
-                                      isFirstResource: Boolean): Boolean {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any?,
+                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                isFirstResource: Boolean
+            ): Boolean {
                 onExceptionDelegate()
                 return false
             }
 
-            override fun onResourceReady(resource: Drawable?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable>,
-                                         dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: com.bumptech.glide.request.target.Target<Drawable>,
+                dataSource: DataSource?,
+                isFirstResource: Boolean
+            ): Boolean {
                 onResourceReadyDelegate()
                 return false
             }
@@ -102,11 +118,17 @@ fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
 }
 
-private fun <R> bindObserver(observer: MediatorLiveData<R?>?,
-                             source: LiveData<R?>) {
-    observer?.apply {
-        addSource(source) {
-            postValue(it)
-        }
+inline fun <T> LiveData<Event<T>>.observeEvent(
+    owner: LifecycleOwner,
+    crossinline onEventUnhandledContent: (T) -> Unit
+) {
+    observe(owner, Observer { it?.getContentIfNotHandled()?.let(onEventUnhandledContent) })
+}
+
+@MainThread
+fun <M, S> MediatorLiveData<M>.observeAndMapValue(source: LiveData<S>, func: (data: S) -> M) {
+    this.removeSource(source)
+    this.addSource(source) {
+        this.value = func.invoke(it)
     }
 }

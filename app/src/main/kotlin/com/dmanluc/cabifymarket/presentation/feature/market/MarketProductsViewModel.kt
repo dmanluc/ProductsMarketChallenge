@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import utils.notifyObserver
+import utils.observeAndMapValue
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
@@ -27,10 +28,10 @@ class MarketProductsViewModel(
     private val getLastSavedProductsCartInteractor: GetLastSavedProductsCartInteractor
 ) : BaseViewModel() {
 
-    private var _productsResource: LiveData<Resource<List<Product>>> = MutableLiveData()
+    private var _productsSource: LiveData<Resource<List<Product>>> = MutableLiveData()
     private val _products: MediatorLiveData<Resource<List<Product>>> = MediatorLiveData()
     val products: LiveData<Resource<List<Product>>>
-    get() = _products
+        get() = _products
 
     private val _productsCart: MutableLiveData<ProductsCart> = MutableLiveData(ProductsCart())
     val productsCart: LiveData<ProductsCart>
@@ -43,21 +44,10 @@ class MarketProductsViewModel(
     fun fetchProducts() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _productsResource = getProductsInteractor()
+                _productsSource = getProductsInteractor()
             }
-            _products.addSource(_productsResource) { resource ->
-                _products.value = resource
-            }
-        }
-    }
-
-    fun printLastSavedProductsCart() {
-        viewModelScope.launch(Dispatchers.Default) {
-            val returnData = getLastSavedProductsCartInteractor()
-            withContext(Dispatchers.Main) {
-                returnData.observeForever {
-                    println(it.data)
-                }
+            _products.observeAndMapValue(_productsSource) {
+                it
             }
         }
     }
@@ -75,6 +65,12 @@ class MarketProductsViewModel(
             viewModelScope.launch {
                 saveProductsCartInteractor(it)
             }
+        }
+    }
+
+    fun goToCheckout() {
+        productsCart.value?.let {
+            navigate(MarketProductsFragmentDirections.actionGoToCheckout(it))
         }
     }
 
