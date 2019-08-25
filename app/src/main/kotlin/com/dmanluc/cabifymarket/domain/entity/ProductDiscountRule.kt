@@ -1,5 +1,7 @@
 package com.dmanluc.cabifymarket.domain.entity
 
+import java.io.Serializable
+
 /**
  * Interface which models the contract from a product discount rule
  *
@@ -7,7 +9,7 @@ package com.dmanluc.cabifymarket.domain.entity
  * @version  1
  * @since    2019-07-02.
  */
-interface ProductDiscountRule {
+interface ProductDiscountRule : Serializable {
 
     fun provideCode(): String
 

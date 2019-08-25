@@ -7,10 +7,12 @@ package com.dmanluc.cabifymarket.domain.entity
  * @version  1
  * @since    2019-07-02.
  */
-class FreePerQuantityDiscountRule(private val code: String,
-                                  private val discountDescription: String,
-                                  private val freeQuantity: Int,
-                                  private val buyQuantity: Int): ProductDiscountRule {
+class FreePerQuantityDiscountRule(
+    private val code: String,
+    private val discountDescription: String,
+    private val freeQuantity: Int,
+    private val buyQuantity: Int
+) : ProductDiscountRule {
 
     override fun provideCode(): String {
         return code
@@ -24,7 +26,7 @@ class FreePerQuantityDiscountRule(private val code: String,
         val productSetsWithDiscount = quantity / freeQuantity
 
         val productsWithDiscount = productSetsWithDiscount * buyQuantity
-        val productsWithoutDiscount =  quantity % freeQuantity
+        val productsWithoutDiscount = quantity % freeQuantity
 
         return (productsWithDiscount + productsWithoutDiscount) * productPrice
     }

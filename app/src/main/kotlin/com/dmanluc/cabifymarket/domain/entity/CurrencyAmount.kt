@@ -1,5 +1,6 @@
 package com.dmanluc.cabifymarket.domain.entity
 
+import java.io.Serializable
 import java.text.NumberFormat
 import java.util.*
 
@@ -8,7 +9,7 @@ import java.util.*
  * @version  1
  * @since    2019-07-03.
  */
-data class CurrencyAmount(val amount: Double) {
+data class CurrencyAmount(val amount: Double): Serializable {
 
     fun formatCurrency(currencyCode: CurrencyCode = CurrencyCode.EUR) : String {
         return NumberFormat.getCurrencyInstance().apply {

@@ -3,7 +3,10 @@ package com.dmanluc.cabifymarket.data.remote.mapper
 import android.content.res.AssetManager
 import com.dmanluc.cabifymarket.data.remote.model.DiscountRuleResponse
 import com.dmanluc.cabifymarket.data.remote.model.MarketApiResponse
-import com.dmanluc.cabifymarket.domain.entity.*
+import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
+import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
+import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
+import com.dmanluc.cabifymarket.domain.entity.Product
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import utils.EntityMapper
@@ -14,23 +17,33 @@ import utils.readJsonAssetFileName
  * @version  1
  * @since    2019-07-02.
  */
-class ProductEntityMapper(private val gson: Gson,
-                          private val assetManager: AssetManager):
+class ProductEntityMapper(
+    private val gson: Gson,
+    private val assetManager: AssetManager
+) :
     EntityMapper<MarketApiResponse, List<Product>> {
 
     private val productsImagesUrl = mapOf(
-        Pair("MUG", "https://cdn.shopify.com/s/files/1/0312/6537/products/27514-Black-White-1_aef806de-0299-4603-9305-bcc83155db8f_1024x1024.jpg?v=1495633232"),
-        Pair("TSHIRT", "https://www.goalinn.com/f/13608/136088796/adidas-real-madrid-away-16-17.jpg"),
+        Pair(
+            "MUG",
+            "https://cdn.shopify.com/s/files/1/0312/6537/products/27514-Black-White-1_aef806de-0299-4603-9305-bcc83155db8f_1024x1024.jpg?v=1495633232"
+        ),
+        Pair(
+            "TSHIRT",
+            "https://www.goalinn.com/f/13608/136088796/adidas-real-madrid-away-16-17.jpg"
+        ),
         Pair("VOUCHER", "https://i.rafitamolin.com/18cfea7.png")
     )
 
     override fun mapFrom(inputModel: MarketApiResponse): List<Product> {
 
-        val rules: List<ProductDiscountRule?> = gson.fromJson<List<DiscountRuleResponse>>(
+        val rawRules: List<DiscountRuleResponse?> = gson.fromJson<List<DiscountRuleResponse>>(
             assetManager.readJsonAssetFileName("productDiscountRules"),
-            object : TypeToken<ArrayList<DiscountRuleResponse>>() {}.type
-        ).mapNotNull {
-            when (it.type) {
+            object : TypeToken<List<DiscountRuleResponse>>() {}.type
+        )
+
+        val rules = rawRules.map {
+            when (it?.type) {
                 "FreePerQuantityRule" -> FreePerQuantityDiscountRule(
                     it.code,
                     it.description.orEmpty(),
@@ -76,7 +89,8 @@ class ProductEntityMapper(private val gson: Gson,
                 CurrencyAmount(productResponse.price),
                 productParams.second.orEmpty(),
                 productParams.third
-            ) } ?: emptyList()
+            )
+        } ?: emptyList()
     }
 
 }
