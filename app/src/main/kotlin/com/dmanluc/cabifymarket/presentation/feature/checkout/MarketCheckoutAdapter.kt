@@ -24,10 +24,11 @@ import utils.show
 
 class MarketCheckoutAdapter(
     private val onProductQuantityChanged: ((Int, Product) -> Unit),
-    private val onRemoveProductFromCart: ((Product) -> Unit)) :
+    private val onRemoveProductFromCart: ((Product) -> Unit)
+) :
     RecyclerView.Adapter<MarketCheckoutAdapter.ProductViewHolder>() {
 
-    private val items: MutableList<Product> = mutableListOf()
+    private var items: LinkedHashMap<Product, Int> = linkedMapOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return ProductViewHolder(
@@ -40,19 +41,17 @@ class MarketCheckoutAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bindTo(items[position])
+        holder.bindTo(Pair(items.keys.toList()[position], items.values.toList()[position]))
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount(): Int = items.size
 
-    fun setAdapterItems(products: List<Product>) {
-        val diffCallback = MarketProductItemDiffCallback(products, items)
+    fun setAdapterItems(productsMap: LinkedHashMap<Product, Int>) {
+        val diffCallback =
+            MarketProductItemDiffCallback(productsMap.keys.toList(), items.keys.toList())
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-        items.apply {
-            clear()
-            addAll(products)
-        }
+        items = productsMap
 
         diffResult.dispatchUpdatesTo(this)
     }
@@ -61,8 +60,11 @@ class MarketCheckoutAdapter(
 
         private val binding = ItemCheckoutProductBinding.bind(itemView)
 
-        fun bindTo(product: Product) {
-            binding.product = product
+        fun bindTo(productsMapEntry: Pair<Product, Int>) {
+            val product = productsMapEntry.first
+            val quantity = productsMapEntry.second
+
+            binding.product = productsMapEntry.first
 
             itemView.removeProductFromCart.setOnClickListener {
                 items.remove(product)
@@ -71,7 +73,7 @@ class MarketCheckoutAdapter(
             }
 
             itemView.productPrice.text = product.currencyAmount.formatCurrencyInLocale()
-
+            itemView.productQuantity.value = quantity
             itemView.productQuantity.valueChangedListener = ValueChangedListener { value, _ ->
                 onProductQuantityChanged(value, product)
 
@@ -88,11 +90,18 @@ class MarketCheckoutAdapter(
             val discountRule = product.discountRule as BulkDiscountRule
             when {
                 quantity == discountRule.buyQuantity -> {
-                    itemView.productPriceWithoutDiscount.text = SpannableString(product.currencyAmount.formatCurrencyInLocale()).apply {
-                        setSpan(StrikethroughSpan(), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    }
+                    itemView.productPriceWithoutDiscount.text =
+                        SpannableString(product.currencyAmount.formatCurrencyInLocale()).apply {
+                            setSpan(
+                                StrikethroughSpan(),
+                                0,
+                                length,
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                        }
                     itemView.productPriceWithoutDiscount.show()
-                    itemView.productPrice.text = CurrencyAmount(product.discountRule.priceWithDiscount).formatCurrencyInLocale()
+                    itemView.productPrice.text =
+                        CurrencyAmount(product.discountRule.priceWithDiscount).formatCurrencyInLocale()
                 }
                 quantity < discountRule.buyQuantity -> {
                     itemView.productPrice.text = product.currencyAmount.formatCurrencyInLocale()

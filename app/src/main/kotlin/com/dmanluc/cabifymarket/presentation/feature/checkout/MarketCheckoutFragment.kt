@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import com.dmanluc.cabifymarket.databinding.FragmentMarketCheckoutBinding
 import com.dmanluc.cabifymarket.presentation.base.BaseFragment
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
@@ -14,13 +15,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @version  1
  * @since    2019-08-20.
  */
-class MarketCheckoutFragment: BaseFragment() {
-
-    companion object {
-        fun newInstance() = MarketCheckoutFragment()
-    }
+class MarketCheckoutFragment : BaseFragment() {
 
     private val viewModel: MarketCheckoutViewModel by viewModel()
+    private val args: MarketCheckoutFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentMarketCheckoutBinding
 
@@ -38,7 +36,7 @@ class MarketCheckoutFragment: BaseFragment() {
 
         configureRecyclerView()
 
-        //viewModel.getCartProducts()
+        viewModel.loadCartProducts(args.productsCart)
     }
 
     private fun configureRecyclerView() {
@@ -46,7 +44,7 @@ class MarketCheckoutFragment: BaseFragment() {
             onProductQuantityChanged = { newQuantity, product ->
                 //viewModel.updateProductCartQuantity(newQuantity, product)
             },
-            onRemoveProductFromCart = { 
+            onRemoveProductFromCart = {
                 //viewModel.removeProductFromCart(it)
             })
     }

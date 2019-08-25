@@ -1,11 +1,14 @@
 package com.dmanluc.cabifymarket.domain.entity
 
+import java.io.Serializable
+
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-03.
  */
-data class ProductsCart(private val cart: HashMap<Product, Int> = linkedMapOf()) {
+data class ProductsCart(private val cart: LinkedHashMap<Product, Int> = linkedMapOf()) :
+    Serializable {
 
     fun addProduct(quantity: Int, productToAdd: Product) {
         cart[productToAdd] = (cart[productToAdd] ?: 0) + quantity
@@ -15,7 +18,7 @@ data class ProductsCart(private val cart: HashMap<Product, Int> = linkedMapOf())
         cart.remove(productToRemove)
     }
 
-    fun size() = cart.map { it.value }.sum()
+    fun size(): Int = cart.map { it.value }.sum()
 
     fun getTotalAmount(): Double {
         return cart.map { mapEntry ->

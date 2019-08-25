@@ -14,11 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @version  1
  * @since    2019-07-02.
  */
-class MarketProductsFragment: BaseFragment() {
-
-    companion object {
-        fun newInstance() = MarketProductsFragment()
-    }
+class MarketProductsFragment : BaseFragment() {
 
     private val viewModel: MarketProductsViewModel by viewModel()
 
@@ -26,7 +22,11 @@ class MarketProductsFragment: BaseFragment() {
 
     override fun getViewModel(): BaseViewModel = viewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentMarketProductsBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -45,8 +45,9 @@ class MarketProductsFragment: BaseFragment() {
         }
 
         binding.cartCheckout.setOnClickListener {
-            // TODO Save cart locally and navigate to checkout screen
+            viewModel.goToCheckout()
         }
+
     }
 
 }

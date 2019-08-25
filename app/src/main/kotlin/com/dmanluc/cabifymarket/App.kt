@@ -1,10 +1,7 @@
 package com.dmanluc.cabifymarket
 
 import android.app.Application
-import com.dmanluc.cabifymarket.di.createRemoteModule
-import com.dmanluc.cabifymarket.di.localModule
-import com.dmanluc.cabifymarket.di.marketFeatureModule
-import com.dmanluc.cabifymarket.di.repositoryModule
+import com.dmanluc.cabifymarket.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -32,7 +29,8 @@ class App : Application() {
                     createRemoteModule(BuildConfig.BASE_URL),
                     repositoryModule,
                     localModule,
-                    marketFeatureModule
+                    marketFeatureModule,
+                    marketCheckoutModule
                 )
             )
         }

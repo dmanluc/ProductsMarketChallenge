@@ -1,6 +1,8 @@
 package com.dmanluc.cabifymarket.presentation.feature.checkout
 
-import com.dmanluc.cabifymarket.domain.interactor.GetLastSavedProductsCartInteractor
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.dmanluc.cabifymarket.domain.entity.ProductsCart
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 
 /**
@@ -8,9 +10,14 @@ import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
  * @version  1
  * @since    2019-08-20.
  */
-class MarketCheckoutViewModel(
-    private val getLastSavedProductsCartInteractor: GetLastSavedProductsCartInteractor
-): BaseViewModel() {
+class MarketCheckoutViewModel : BaseViewModel() {
 
+    private val _productsCart: MutableLiveData<ProductsCart> = MutableLiveData()
+    val productsCart: LiveData<ProductsCart>
+        get() = _productsCart
+
+    fun loadCartProducts(cart: ProductsCart) {
+        _productsCart.value = cart
+    }
 
 }

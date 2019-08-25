@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids="discountInfo,topDivider"
-                    app:showIfProductWithDiscount="@{product.hasDiscount()}"/>
+                    app:showIfCartProductWithDiscount="@{product.hasDiscount()}"/>
 
             <TextView
                     android:id="@+id/discountInfo"
@@ -77,7 +77,7 @@
                     android:scaleType="fitCenter"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
-                    app:imageUrl="@{product.imageUrl}"
+                    app:cartProductImageUrl="@{product.imageUrl}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/productName"
                     app:layout_constraintBottom_toBottomOf="@id/productQuantity"

@@ -13,7 +13,6 @@ import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
-import com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutAdapter
 import utils.hide
 import utils.loadImage
 import utils.show
@@ -30,7 +29,7 @@ object MarketProductsFragmentBinding {
     @BindingAdapter("items")
     @JvmStatic
     fun setItems(recyclerView: RecyclerView, resource: Resource<List<Product>>?) {
-        with(recyclerView.adapter as MarketCheckoutAdapter) {
+        with(recyclerView.adapter as MarketProductsAdapter) {
             resource?.data?.let { setAdapterItems(it) }
         }
     }

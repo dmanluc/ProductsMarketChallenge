@@ -8,14 +8,14 @@
 
         <variable
                 name="viewModel"
-                type="com.dmanluc.cabifymarket.presentation.feature.market.MarketProductsViewModel"/>
+                type="com.dmanluc.cabifymarket.presentation.feature.market.MarketProductsViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:showWhenLoading="@{viewModel.products}"
-            app:onRefreshListener="@{() -> viewModel.fetchProducts()()}">
+            app:onRefreshListener="@{() -> viewModel.fetchProducts()}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/emptyProductsImageView"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintBottom_toTopOf="@+id/productsRecycler"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible" />
 
             <ImageView
                     android:id="@+id/emptyProductsImageView"
@@ -57,7 +57,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/productsRecycler"
                     app:layout_constraintBottom_toTopOf="@+id/emptyProductsTextView"
                     app:layout_constraintHorizontal_bias="0.5"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible"
+                    tools:ignore="ContentDescription" />
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/productsRecycler"
@@ -66,7 +67,7 @@
                     android:paddingBottom="80dp"
                     android:clipToPadding="false"
                     app:items="@{viewModel.products}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <Button
                     android:id="@+id/cartCheckout"
@@ -83,7 +84,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:buttonText="@{viewModel.productsCart}"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
