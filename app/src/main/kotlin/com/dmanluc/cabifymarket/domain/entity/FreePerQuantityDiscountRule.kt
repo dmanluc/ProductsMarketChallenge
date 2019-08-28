@@ -10,8 +10,8 @@ package com.dmanluc.cabifymarket.domain.entity
 class FreePerQuantityDiscountRule(
     private val code: String,
     private val discountDescription: String,
-    private val freeQuantity: Int,
-    private val buyQuantity: Int
+    val freeQuantity: Int,
+    val buyQuantity: Int
 ) : ProductDiscountRule {
 
     override fun provideCode(): String {
@@ -22,13 +22,21 @@ class FreePerQuantityDiscountRule(
         return discountDescription
     }
 
-    override fun calculateTotalProductPrice(quantity: Int, productPrice: Double): Double {
-        val productSetsWithDiscount = quantity / freeQuantity
+    override fun calculateProductPriceWithDiscount(quantity: Int, productPrice: Double): Double {
+        return calculateProductsTotalPrice(quantity, productPrice) / quantity
+    }
 
-        val productsWithDiscount = productSetsWithDiscount * buyQuantity
-        val productsWithoutDiscount = quantity % freeQuantity
+    override fun calculateProductsTotalPrice(quantity: Int, productPrice: Double): Double {
+        return if (freeQuantity > buyQuantity) {
+            val productSetsWithDiscount = quantity / freeQuantity
 
-        return (productsWithDiscount + productsWithoutDiscount) * productPrice
+            val productsWithDiscount = productSetsWithDiscount * buyQuantity
+            val productsWithoutDiscount = quantity % freeQuantity
+
+            (productsWithDiscount + productsWithoutDiscount) * productPrice
+        } else {
+            0.0
+        }
     }
 
 }

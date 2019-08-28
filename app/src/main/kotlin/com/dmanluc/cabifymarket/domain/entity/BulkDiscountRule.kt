@@ -22,7 +22,11 @@ class BulkDiscountRule(
         return description
     }
 
-    override fun calculateTotalProductPrice(quantity: Int, productPrice: Double): Double {
+    override fun calculateProductPriceWithDiscount(quantity: Int, productPrice: Double): Double {
+        return priceWithDiscount
+    }
+
+    override fun calculateProductsTotalPrice(quantity: Int, productPrice: Double): Double {
         return if (quantity < buyQuantity) quantity * productPrice else quantity * priceWithDiscount
     }
 

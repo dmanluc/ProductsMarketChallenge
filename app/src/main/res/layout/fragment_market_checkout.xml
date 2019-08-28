@@ -1,177 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-                name="viewModel"
-                type="com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutViewModel" />
+            name="viewModel"
+            type="com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/checkoutCoordinatorLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white">
+        android:id="@+id/checkoutCoordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cartProductsRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingBottom="66dp"
-                android:paddingTop="8dp"
-                android:scrollbars="vertical"
-                android:nestedScrollingEnabled="true"
-                app:cartProductItems="@{viewModel.productsCart}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:id="@+id/cartProductsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:nestedScrollingEnabled="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="66dp"
+            android:scrollbars="vertical"
+            app:cartProductItems="@{viewModel.productsCart}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/checkoutOrderInfoBottomSheet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:elevation="4dp"
-                app:behavior_hideable="false"
-                app:behavior_peekHeight="64dp"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            android:id="@+id/checkoutOrderInfoBottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="64dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <include layout="@layout/item_divider" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/checkoutOrderInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/PrimaryDarkBackground"
-                    android:padding="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                android:id="@+id/checkoutOrderInfo"
+                style="@style/PrimaryDarkBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:padding="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                        android:id="@+id/checkoutOrderInfoTitle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:gravity="start|center_vertical"
-                        android:maxLines="1"
-                        android:text="@string/market_overview_fragment_bottom_sheet_total_order_summary"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="21sp"
-                        app:layout_constraintBaseline_toBaselineOf="@id/checkoutOrderInfoTotalPrice"
-                        app:layout_constraintEnd_toStartOf="@id/sliderIcon"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    android:id="@+id/checkoutOrderInfoTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
+                    android:text="@string/market_overview_fragment_bottom_sheet_total_order_summary"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="21sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/checkoutOrderInfoTotalPrice"
+                    app:layout_constraintEnd_toStartOf="@id/sliderIcon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                        android:id="@+id/sliderIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_unfold_more_black_24dp"
-                        android:tint="@color/colorAccent"
-                        app:layout_constraintEnd_toStartOf="@id/checkoutOrderInfoTotalPrice"
-                        app:layout_constraintStart_toEndOf="@id/checkoutOrderInfoTitle"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="ContentDescription" />
+                    android:id="@+id/sliderIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_unfold_more_black_24dp"
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintEnd_toStartOf="@id/checkoutOrderInfoTotalPrice"
+                    app:layout_constraintStart_toEndOf="@id/checkoutOrderInfoTitle"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
-                        android:id="@+id/checkoutOrderInfoTotalPrice"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:maxLines="1"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/sliderIcon"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="100,50 €" />
+                    android:id="@+id/checkoutOrderInfoTotalPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/sliderIcon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:totalCartPrice="@{viewModel.productsCart}"
+                    tools:text="100,50 €" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                    android:id="@+id/checkoutOrderSubtotalTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center_vertical"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:text="@string/market_overview_fragment_bottom_sheet_subtotal_title"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toTopOf="@id/checkoutOrderDeliveryTitle"
-                    app:layout_constraintEnd_toStartOf="@id/checkoutOrderSubtotalPrice"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/checkoutOrderInfo" />
+                android:id="@+id/checkoutOrderSubtotalTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="start|center_vertical"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/checkoutOrderDeliveryTitle"
+                app:layout_constraintEnd_toStartOf="@id/checkoutOrderSubtotalPrice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/checkoutOrderInfo"
+                app:totalCartItems="@{viewModel.productsCart}" />
 
             <TextView
-                    android:id="@+id/checkoutOrderSubtotalPrice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="end|center_vertical"
-                    android:layout_marginEnd="16dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="18sp"
-                    app:layout_constraintBaseline_toBaselineOf="@id/checkoutOrderSubtotalTitle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/checkoutOrderSubtotalTitle"
-                    tools:text="100,50 €" />
+                android:id="@+id/checkoutOrderSubtotalPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="end|center_vertical"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/checkoutOrderSubtotalTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/checkoutOrderSubtotalTitle"
+                app:totalCartPrice="@{viewModel.productsCart}"
+                tools:text="100,50 €" />
 
             <TextView
-                    android:id="@+id/checkoutOrderDeliveryTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center_vertical"
-                    android:layout_marginBottom="24dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/market_overview_fragment_bottom_sheet_delivery_title"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toTopOf="@id/cartPayment"
-                    app:layout_constraintEnd_toStartOf="@id/checkoutOrderDeliveryPrice"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/checkoutOrderSubtotalTitle" />
+                android:id="@+id/checkoutOrderDeliveryTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:gravity="start|center_vertical"
+                android:text="@string/market_overview_fragment_bottom_sheet_delivery_title"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/cartPayment"
+                app:layout_constraintEnd_toStartOf="@id/checkoutOrderDeliveryPrice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/checkoutOrderSubtotalTitle" />
 
             <TextView
-                    android:id="@+id/checkoutOrderDeliveryPrice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="end|center_vertical"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/market_overview_fragment_bottom_sheet_delivery_price"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="18sp"
-                    app:layout_constraintBaseline_toBaselineOf="@id/checkoutOrderDeliveryTitle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/checkoutOrderDeliveryTitle" />
+                android:id="@+id/checkoutOrderDeliveryPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="end|center_vertical"
+                android:text="@string/market_overview_fragment_bottom_sheet_delivery_price"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@id/checkoutOrderDeliveryTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/checkoutOrderDeliveryTitle" />
 
             <Button
-                    android:id="@+id/cartPayment"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    style="@style/AccentRoundButton"
-                    android:ellipsize="end"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:maxLines="1"
-                    android:paddingEnd="8dp"
-                    android:paddingStart="8dp"
-                    android:text="@string/market_overview_fragment_bottom_sheet_payment_button"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="19sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/checkoutOrderDeliveryTitle" />
+                android:id="@+id/cartPayment"
+                style="@style/AccentRoundButton"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/market_overview_fragment_bottom_sheet_payment_button"
+                android:textColor="@color/colorAccent"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/checkoutOrderDeliveryTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -42,10 +42,10 @@ class MarketCheckoutFragment : BaseFragment() {
     private fun configureRecyclerView() {
         binding.cartProductsRecycler.adapter = MarketCheckoutAdapter(
             onProductQuantityChanged = { newQuantity, product ->
-                //viewModel.updateProductCartQuantity(newQuantity, product)
+                viewModel.updateProductCartQuantity(newQuantity, product)
             },
             onRemoveProductFromCart = {
-                //viewModel.removeProductFromCart(it)
+                viewModel.removeProductFromCart(it)
             })
     }
 

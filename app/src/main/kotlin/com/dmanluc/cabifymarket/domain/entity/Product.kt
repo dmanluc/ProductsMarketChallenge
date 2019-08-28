@@ -12,7 +12,7 @@ import java.io.Serializable
 data class Product(
     val type: Type = Type.OTHER,
     val name: String,
-    val currencyAmount: CurrencyAmount,
+    val price: CurrencyAmount,
     val imageUrl: String?,
     val discountRule: ProductDiscountRule?
 ) : Discountable, Serializable {
@@ -32,12 +32,19 @@ data class Product(
         return discountRule?.provideDiscountInfo().orEmpty()
     }
 
+    override fun providePriceWithDiscount(productQuantity: Int): CurrencyAmount {
+        return CurrencyAmount(
+            discountRule?.calculateProductPriceWithDiscount(productQuantity, price.amount)
+                ?: price.amount
+        )
+    }
+
     override fun provideTotalPrice(productQuantity: Int): CurrencyAmount {
         return CurrencyAmount(
-            discountRule?.calculateTotalProductPrice(
+            discountRule?.calculateProductsTotalPrice(
                 productQuantity,
-                currencyAmount.amount
-            ) ?: run { productQuantity * currencyAmount.amount })
+                price.amount
+            ) ?: run { productQuantity * price.amount })
     }
 
 }

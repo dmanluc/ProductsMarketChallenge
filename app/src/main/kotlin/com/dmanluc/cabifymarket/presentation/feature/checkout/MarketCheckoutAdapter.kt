@@ -12,13 +12,11 @@ import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.databinding.ItemCheckoutProductBinding
 import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
+import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.presentation.feature.market.MarketProductItemDiffCallback
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener
 import kotlinx.android.synthetic.main.item_checkout_product.view.*
-import kotlinx.android.synthetic.main.item_market_product.view.productPrice
-import kotlinx.android.synthetic.main.item_market_product.view.productPriceWithoutDiscount
-import kotlinx.android.synthetic.main.item_market_product.view.productQuantity
 import utils.hide
 import utils.show
 
@@ -72,48 +70,103 @@ class MarketCheckoutAdapter(
                 onRemoveProductFromCart(product)
             }
 
-            itemView.productPrice.text = product.currencyAmount.formatCurrencyInLocale()
+            itemView.productsTotalPrice.text = product.provideTotalPrice(quantity).formatCurrencyInLocale()
             itemView.productQuantity.value = quantity
+
+            checkForProductDiscountEligible(product, quantity)
+
             itemView.productQuantity.valueChangedListener = ValueChangedListener { value, _ ->
                 onProductQuantityChanged(value, product)
 
-                when (product.discountRule) {
-                    is BulkDiscountRule -> {
-                        updateProductPricesForBulkDiscount(product, value)
-                    }
-                    else -> hideOriginalPriceWithoutDiscount()
-                }
+                updateDiscountInfoWhenQuantityUpdated(product, value)
             }
         }
 
-        private fun updateProductPricesForBulkDiscount(product: Product, quantity: Int) {
+        private fun checkForProductDiscountEligible(product: Product, quantity: Int) {
+            val isEligibleForDiscount = when (product.discountRule) {
+                is BulkDiscountRule -> {
+                    quantity >= product.discountRule.buyQuantity
+                }
+                is FreePerQuantityDiscountRule -> {
+                    quantity >= product.discountRule.freeQuantity
+                }
+                else -> false
+            }
+
+            if (isEligibleForDiscount) updateDiscountInfoWhenQuantityUpdated(product, quantity)
+        }
+
+        private fun updateDiscountInfoWhenQuantityUpdated(product: Product, newQuantity: Int) {
+            when (product.discountRule) {
+                is BulkDiscountRule -> {
+                    updateProductsTotalPriceForBulkDiscount(product, newQuantity)
+                }
+                is FreePerQuantityDiscountRule -> {
+                    updateProductsTotalPriceForFreePerQuantityDiscount(product, newQuantity)
+                }
+                else -> hideOriginalTotalPriceWithoutDiscount()
+            }
+        }
+
+        private fun updateProductsTotalPriceForBulkDiscount(product: Product, quantity: Int) {
             val discountRule = product.discountRule as BulkDiscountRule
             when {
                 quantity == discountRule.buyQuantity -> {
-                    itemView.productPriceWithoutDiscount.text =
-                        SpannableString(product.currencyAmount.formatCurrencyInLocale()).apply {
-                            setSpan(
-                                StrikethroughSpan(),
-                                0,
-                                length,
-                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
-                        }
-                    itemView.productPriceWithoutDiscount.show()
-                    itemView.productPrice.text =
-                        CurrencyAmount(product.discountRule.priceWithDiscount).formatCurrencyInLocale()
+                    showNewProductsTotalPriceWithDiscount(
+                        product.provideTotalPrice(quantity),
+                        CurrencyAmount(product.price.amount * quantity)
+                    )
                 }
                 quantity < discountRule.buyQuantity -> {
-                    itemView.productPrice.text = product.currencyAmount.formatCurrencyInLocale()
-                    itemView.productPriceWithoutDiscount.hide()
+                    showOriginalProductsTotalPriceWithoutDiscount(CurrencyAmount(product.price.amount * quantity))
                 }
             }
         }
 
-        private fun hideOriginalPriceWithoutDiscount() {
-            itemView.productPriceWithoutDiscount.hide()
+        private fun showNewProductsTotalPriceWithDiscount(
+            totalPriceWithDiscount: CurrencyAmount,
+            totalPriceWithoutDiscount: CurrencyAmount
+        ) {
+            itemView.productsTotalPriceWithoutDiscount.text = SpannableString(
+                totalPriceWithoutDiscount.formatCurrencyInLocale()
+            ).apply {
+                setSpan(
+                    StrikethroughSpan(),
+                    0,
+                    length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+            itemView.productsTotalPriceWithoutDiscount.show()
+            itemView.productsTotalPrice.text = totalPriceWithDiscount.formatCurrencyInLocale()
+        }
+
+        private fun showOriginalProductsTotalPriceWithoutDiscount(originalProductsTotalPrice: CurrencyAmount) {
+            itemView.productsTotalPrice.text = originalProductsTotalPrice.formatCurrencyInLocale()
+            itemView.productsTotalPriceWithoutDiscount.hide()
+        }
+
+        private fun updateProductsTotalPriceForFreePerQuantityDiscount(product: Product, quantity: Int) {
+            val discountRule = product.discountRule as FreePerQuantityDiscountRule
+            when {
+                quantity <= discountRule.buyQuantity -> {
+                    showOriginalProductsTotalPriceWithoutDiscount(CurrencyAmount(product.price.amount * quantity))
+                }
+                quantity.rem(discountRule.freeQuantity) >= 0 -> {
+                    showNewProductsTotalPriceWithDiscount(
+                        product.provideTotalPrice(quantity),
+                        CurrencyAmount(product.price.amount * quantity)
+                    )
+                }
+            }
+        }
+
+        private fun hideOriginalTotalPriceWithoutDiscount() {
+            itemView.productsTotalPriceWithoutDiscount.hide()
         }
 
     }
+
+
 
 }

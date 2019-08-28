@@ -15,6 +15,8 @@ interface ProductDiscountRule : Serializable {
 
     fun provideDiscountInfo(): String
 
-    fun calculateTotalProductPrice(quantity: Int, productPrice: Double): Double
+    fun calculateProductPriceWithDiscount(quantity: Int, productPrice: Double): Double
+
+    fun calculateProductsTotalPrice(quantity: Int, productPrice: Double): Double
 
 }

@@ -38,10 +38,10 @@ class MarketProductsViewModel(
         get() = _productsCart
 
     init {
-        fetchProducts()
+        fetchMarketProducts()
     }
 
-    fun fetchProducts() {
+    fun fetchMarketProducts() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _productsSource = getProductsInteractor()

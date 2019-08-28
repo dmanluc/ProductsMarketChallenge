@@ -18,6 +18,12 @@ data class ProductsCart(private val cart: LinkedHashMap<Product, Int> = linkedMa
         cart.remove(productToRemove)
     }
 
+    fun updateProduct(newQuantity: Int, product: Product) {
+        if (cart[product] != null && newQuantity > 0) {
+            cart[product] = newQuantity
+        }
+    }
+
     fun size(): Int = cart.map { it.value }.sum()
 
     fun getTotalAmount(): Double {
