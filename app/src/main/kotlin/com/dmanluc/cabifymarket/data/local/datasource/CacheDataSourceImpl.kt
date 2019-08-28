@@ -14,12 +14,12 @@ class CacheDataSourceImpl : CacheDataSource {
 
     private val cacheMap = HashMap<Class<*>, CacheEntry<*>>()
 
-    override fun <T: Any> save(data: T) {
+    override fun <T : Any> save(data: T) {
         cacheMap[data.javaClass] = CacheEntry(data)
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T: Any> get(dataClass: Class<T>): T? {
+    override fun <T : Any> get(dataClass: Class<T>): T? {
         val cache = cacheMap[dataClass] as CacheEntry<T>? ?: return null
         if (cache.isExpired) {
             cacheMap.remove(dataClass)
@@ -33,14 +33,18 @@ class CacheDataSourceImpl : CacheDataSource {
     }
 
     override fun manageExpiration(enable: Boolean, minutesForValidation: Long) {
-        expirationSeconds = if (enable) TimeUnit.MINUTES.toSeconds(minutesForValidation).toInt() else 0
+        expirationSeconds =
+            if (enable) TimeUnit.MINUTES.toSeconds(minutesForValidation).toInt() else 0
     }
 
-    private inner class CacheEntry<T: Any>(val data: T) {
+    private inner class CacheEntry<T : Any>(val data: T) {
 
         private val expirationDate: Calendar = GregorianCalendar.getInstance()
 
-        val isExpired = if (expirationSeconds == 0) false else !GregorianCalendar.getInstance().before(expirationDate)
+        val isExpired =
+            if (expirationSeconds == 0) false else !GregorianCalendar.getInstance().before(
+                expirationDate
+            )
 
         init {
             expirationDate.add(Calendar.SECOND, expirationSeconds)

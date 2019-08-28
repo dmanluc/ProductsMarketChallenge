@@ -1,10 +1,8 @@
 package com.dmanluc.cabifymarket.di
 
-import com.dmanluc.cabifymarket.domain.interactor.GetLastSavedProductsCartInteractor
-import com.dmanluc.cabifymarket.domain.interactor.GetProductsInteractor
-import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
 import com.dmanluc.cabifymarket.presentation.feature.market.MarketProductsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 /**
@@ -12,10 +10,6 @@ import org.koin.dsl.module
  * @version  1
  * @since    2019-07-02.
  */
-val marketFeatureModule = module {
-    factory { GetProductsInteractor(get()) }
-    factory { SaveProductsCartInteractor(get()) }
-    factory { GetLastSavedProductsCartInteractor(get()) }
-
+val marketFeatureModule: Module = module {
     viewModel { MarketProductsViewModel(get(), get(), get()) }
 }

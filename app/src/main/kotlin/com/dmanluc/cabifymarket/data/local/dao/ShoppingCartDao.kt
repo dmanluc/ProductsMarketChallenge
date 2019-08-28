@@ -5,7 +5,7 @@ import androidx.room.Query
 import com.dmanluc.cabifymarket.data.local.model.ShoppingCartEntity
 
 @Dao
-abstract class ShoppingCartDao: BaseDao<ShoppingCartEntity>() {
+abstract class ShoppingCartDao : BaseDao<ShoppingCartEntity>() {
 
     @Query("SELECT * FROM shoppingCart LIMIT 1")
     abstract suspend fun getShoppingCart(): ShoppingCartEntity

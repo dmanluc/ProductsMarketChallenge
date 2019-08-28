@@ -17,11 +17,10 @@ import kotlin.coroutines.coroutineContext
  * @since    2019-07-02.
  */
 class ProductsCartLocalDataSourceImpl(
-    private val dao: ShoppingCartDao,
-    private val domainToEntityMapper: DomainToDatabaseEntityMapper,
-    private val databaseEntityToDomainMapper: DatabaseEntityToDomainMapper,
-    private val cacheDataSource: CacheDataSource
-) : ProductsCartLocalDataSource {
+        private val dao: ShoppingCartDao,
+        private val domainToEntityMapper: DomainToDatabaseEntityMapper,
+        private val databaseEntityToDomainMapper: DatabaseEntityToDomainMapper,
+        private val cacheDataSource: CacheDataSource) : ProductsCartLocalDataSource {
 
     private val result = MutableLiveData<Resource<ProductsCart>>()
 

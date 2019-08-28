@@ -15,6 +15,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @version  1
  * @since    2019-07-02.
  */
-fun createRemoteModule(baseUrl: String) = module {
+fun createRemoteModule(baseUrl: String): Module = module {
     factory<Interceptor> {
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
@@ -42,17 +43,21 @@ fun createRemoteModule(baseUrl: String) = module {
             .build()
     }
 
-    factory{ get<Retrofit>().create(MarketApi::class.java) }
+    factory { get<Retrofit>().create(MarketApi::class.java) }
 
     factory { androidContext().assets as AssetManager }
 
-    single { GsonBuilder()
-        .enableComplexMapKeySerialization()
-        .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(ProductDiscountRule::class.java)
-            .registerSubtype(BulkDiscountRule::class.java)
-            .registerSubtype(FreePerQuantityDiscountRule::class.java))
-        .setPrettyPrinting()
-        .create() }
+    single {
+        GsonBuilder()
+            .enableComplexMapKeySerialization()
+            .registerTypeAdapterFactory(
+                RuntimeTypeAdapterFactory.of(ProductDiscountRule::class.java)
+                    .registerSubtype(BulkDiscountRule::class.java)
+                    .registerSubtype(FreePerQuantityDiscountRule::class.java)
+            )
+            .setPrettyPrinting()
+            .create()
+    }
 
     factory { ProductEntityMapper(get(), get()) }
 

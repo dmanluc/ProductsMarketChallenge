@@ -8,6 +8,7 @@ import com.dmanluc.cabifymarket.data.local.datasource.ProductsCartLocalDataSourc
 import com.dmanluc.cabifymarket.data.local.mapper.DatabaseEntityToDomainMapper
 import com.dmanluc.cabifymarket.data.local.mapper.DomainToDatabaseEntityMapper
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -18,7 +19,7 @@ import org.koin.dsl.module
  */
 private const val DATABASE = "DATABASE"
 
-val localModule = module {
+val localModule: Module = module {
 
     single(named(DATABASE)) { AppDatabase.buildDatabase(androidContext()) }
 

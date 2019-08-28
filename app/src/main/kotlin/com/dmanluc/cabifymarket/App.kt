@@ -27,8 +27,9 @@ class App : Application() {
             modules(
                 listOf(
                     createRemoteModule(BuildConfig.BASE_URL),
-                    repositoryModule,
                     localModule,
+                    repositoryModule,
+                    interactorModule,
                     marketFeatureModule,
                     marketCheckoutModule
                 )

@@ -7,9 +7,9 @@ package com.dmanluc.cabifymarket.data.local.datasource
  */
 interface CacheDataSource {
 
-    fun <T: Any> save(data: T)
+    fun <T : Any> save(data: T)
 
-    fun <T: Any> get(dataClass: Class<T>): T?
+    fun <T : Any> get(dataClass: Class<T>): T?
 
     fun clear()
 
