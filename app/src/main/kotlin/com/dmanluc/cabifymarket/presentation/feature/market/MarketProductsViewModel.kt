@@ -14,8 +14,8 @@ import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import utils.notifyObserver
-import utils.observeAndMapValue
+import com.dmanluc.cabifymarket.utils.notifyObserver
+import com.dmanluc.cabifymarket.utils.observeAndMapValue
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>

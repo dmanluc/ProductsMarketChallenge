@@ -36,11 +36,11 @@ fun createRemoteModule(baseUrl: String): Module = module {
 
     single {
         Retrofit.Builder()
-            .client(get())
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .build()
+                .client(get())
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .build()
     }
 
     factory { get<Retrofit>().create(MarketApi::class.java) }
@@ -49,14 +49,14 @@ fun createRemoteModule(baseUrl: String): Module = module {
 
     single {
         GsonBuilder()
-            .enableComplexMapKeySerialization()
-            .registerTypeAdapterFactory(
-                RuntimeTypeAdapterFactory.of(ProductDiscountRule::class.java)
-                    .registerSubtype(BulkDiscountRule::class.java)
-                    .registerSubtype(FreePerQuantityDiscountRule::class.java)
-            )
-            .setPrettyPrinting()
-            .create()
+                .enableComplexMapKeySerialization()
+                .registerTypeAdapterFactory(
+                    RuntimeTypeAdapterFactory.of(ProductDiscountRule::class.java)
+                            .registerSubtype(BulkDiscountRule::class.java)
+                            .registerSubtype(FreePerQuantityDiscountRule::class.java)
+                )
+                .setPrettyPrinting()
+                .create()
     }
 
     factory { ProductEntityMapper(get(), get()) }

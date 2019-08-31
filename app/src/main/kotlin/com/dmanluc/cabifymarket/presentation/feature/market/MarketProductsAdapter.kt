@@ -16,8 +16,8 @@ import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener
 import kotlinx.android.synthetic.main.item_market_product.view.*
-import utils.hide
-import utils.show
+import com.dmanluc.cabifymarket.utils.hide
+import com.dmanluc.cabifymarket.utils.show
 
 class MarketProductsAdapter(private val onAddProductToCart: ((Int, Product) -> Unit)) :
     RecyclerView.Adapter<MarketProductsAdapter.ProductViewHolder>() {

@@ -8,7 +8,7 @@ import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import utils.notifyObserver
+import com.dmanluc.cabifymarket.utils.notifyObserver
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>

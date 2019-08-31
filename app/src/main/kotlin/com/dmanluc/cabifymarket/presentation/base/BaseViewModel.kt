@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.dmanluc.cabifymarket.presentation.navigation.NavigationCommand
-import utils.Event
+import com.dmanluc.cabifymarket.utils.Event
 
 abstract class BaseViewModel : ViewModel() {
 

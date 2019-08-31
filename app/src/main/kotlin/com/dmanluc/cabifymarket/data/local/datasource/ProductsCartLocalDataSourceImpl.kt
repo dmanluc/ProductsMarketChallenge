@@ -39,13 +39,13 @@ class ProductsCartLocalDataSourceImpl(
     override suspend fun getLastSavedProductsCart(): LiveData<Resource<ProductsCart>> {
         val cachedCart = cacheDataSource.get(ProductsCart::class.java)
         if (cachedCart != null) {
-            val newValue = Resource.Success(cachedCart)
+            val newValue = Resource.success(cachedCart)
             if (result.value != newValue) result.postValue(newValue)
             return result
         }
 
         CoroutineScope(coroutineContext).launch {
-            val newValue = Resource.Success(databaseEntityToDomainMapper.mapFrom(dao.getShoppingCart()))
+            val newValue = Resource.success(databaseEntityToDomainMapper.mapFrom(dao.getShoppingCart()))
             if (result.value != newValue) result.postValue(newValue)
         }
 

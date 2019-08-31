@@ -9,7 +9,7 @@ import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
-import utils.loadImage
+import com.dmanluc.cabifymarket.utils.loadImage
 
 object MarketCheckoutFragmentBinding {
 

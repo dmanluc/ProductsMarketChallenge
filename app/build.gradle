@@ -50,7 +50,7 @@ dependencies {
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.1.1"
 
     // Android
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -65,6 +65,7 @@ dependencies {
     implementation "androidx.room:room-runtime:2.1.0"
     kapt "androidx.room:room-compiler:2.1.0"
     implementation "androidx.room:room-ktx:2.1.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
 
     // Frameworks
     implementation 'com.google.android.material:material:1.0.0'
@@ -81,7 +82,17 @@ dependencies {
     implementation 'com.github.travijuu:numberpicker:1.0.7'
 
     // Testing
-    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+    testImplementation 'androidx.arch.core:core-testing:2.0.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.fragment:fragment-testing:1.1.0-rc04'
+    androidTestImplementation 'io.mockk:mockk-android:1.9.2'
+    testImplementation 'org.koin:koin-test:2.0.1'
+    kaptAndroidTest 'androidx.databinding:databinding-compiler:3.5.0'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'io.mockk:mockk:1.9.2'
+    testImplementation 'com.squareup.okhttp:mockwebserver:2.7.5'
 }

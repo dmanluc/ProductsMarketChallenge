@@ -13,9 +13,9 @@ import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
-import utils.hide
-import utils.loadImage
-import utils.show
+import com.dmanluc.cabifymarket.utils.hide
+import com.dmanluc.cabifymarket.utils.loadImage
+import com.dmanluc.cabifymarket.utils.show
 
 object MarketProductsFragmentBinding {
 
@@ -23,7 +23,7 @@ object MarketProductsFragmentBinding {
     @JvmStatic
     fun <T> showWhenLoading(view: SwipeRefreshLayout, resource: Resource<T>?) {
         Log.d(MarketProductsFragmentBinding::class.java.simpleName, "Resource: $resource")
-        if (resource != null) view.isRefreshing = resource is Resource.Loading
+        if (resource != null) view.isRefreshing = resource.status == Resource.Status.LOADING
     }
 
     @BindingAdapter("items")
@@ -45,7 +45,7 @@ object MarketProductsFragmentBinding {
     fun showMessageErrorWhenEmptyList(view: ImageView, resource: Resource<List<Product>>?) {
         if (resource != null) {
             when {
-                resource is Resource.Error -> {
+                resource.status == Resource.Status.ERROR -> {
                     view.show()
                 }
                 resource.data?.isEmpty() ?: false -> {
@@ -63,7 +63,7 @@ object MarketProductsFragmentBinding {
     fun showMessageErrorWhenEmptyList(view: TextView, resource: Resource<List<Product>>?) {
         if (resource != null) {
             when {
-                resource is Resource.Error -> {
+                resource.status == Resource.Status.ERROR -> {
                     view.apply {
                         show()
                         text = resources.getString(R.string.general_error_message)

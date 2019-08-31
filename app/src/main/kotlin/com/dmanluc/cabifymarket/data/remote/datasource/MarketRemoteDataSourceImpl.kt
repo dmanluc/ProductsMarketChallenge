@@ -13,8 +13,10 @@ import kotlinx.coroutines.Deferred
  * @version  1
  * @since    2019-07-02.
  */
-class MarketRemoteDataSourceImpl constructor(private val marketApi: MarketApi,
-                                             private val entityMapper: ProductEntityMapper): MarketRemoteDataSource {
+class MarketRemoteDataSourceImpl constructor(
+    private val marketApi: MarketApi,
+    private val entityMapper: ProductEntityMapper
+) : MarketRemoteDataSource {
 
     override suspend fun getProducts(): LiveData<Resource<List<Product>>> {
         return object : RemoteBoundResource<List<Product>, MarketApiResponse>() {

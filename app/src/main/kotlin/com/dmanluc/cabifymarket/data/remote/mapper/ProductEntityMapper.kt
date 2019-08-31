@@ -7,10 +7,10 @@ import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
 import com.dmanluc.cabifymarket.domain.entity.Product
+import com.dmanluc.cabifymarket.utils.EntityMapper
+import com.dmanluc.cabifymarket.utils.readJsonAssetFileName
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import utils.EntityMapper
-import utils.readJsonAssetFileName
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>

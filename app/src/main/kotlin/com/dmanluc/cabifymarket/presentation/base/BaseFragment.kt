@@ -9,7 +9,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.dmanluc.cabifymarket.presentation.navigation.NavigationCommand
 import com.google.android.material.snackbar.Snackbar
-import utils.setupSnackbar
+import com.dmanluc.cabifymarket.utils.setupSnackbar
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>

@@ -1,4 +1,4 @@
-package utils
+package com.dmanluc.cabifymarket.utils
 
 /**
  * Interface for model mapper. It provides helper method that facilitate

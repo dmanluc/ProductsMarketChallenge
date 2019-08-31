@@ -1,4 +1,6 @@
-package utils
+@file:JvmName("ExtensionsKt")
+
+package com.dmanluc.cabifymarket.utils
 
 import android.content.Context
 import android.content.res.AssetManager
@@ -22,7 +24,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.apache.commons.io.IOUtils
 
 /**
- * Extension utils
+ * Extension com.dmanluc.cabifymarket.utils
  *
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1

@@ -17,8 +17,8 @@ import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.presentation.feature.market.MarketProductItemDiffCallback
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener
 import kotlinx.android.synthetic.main.item_checkout_product.view.*
-import utils.hide
-import utils.show
+import com.dmanluc.cabifymarket.utils.hide
+import com.dmanluc.cabifymarket.utils.show
 
 class MarketCheckoutAdapter(
     private val onProductQuantityChanged: ((Int, Product) -> Unit),
