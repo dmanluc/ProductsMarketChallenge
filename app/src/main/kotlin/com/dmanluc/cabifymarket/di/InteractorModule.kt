@@ -1,6 +1,7 @@
 package com.dmanluc.cabifymarket.di
 
 import com.dmanluc.cabifymarket.domain.interactor.GetLastSavedProductsCartInteractor
+import com.dmanluc.cabifymarket.domain.interactor.GetProductsFromLocalDatabaseInteractor
 import com.dmanluc.cabifymarket.domain.interactor.GetProductsInteractor
 import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
 import org.koin.core.module.Module
@@ -13,6 +14,7 @@ import org.koin.dsl.module
  */
 val interactorModule: Module = module {
     factory { GetProductsInteractor(get()) }
+    factory { GetProductsFromLocalDatabaseInteractor(get()) }
     factory { SaveProductsCartInteractor(get()) }
     factory { GetLastSavedProductsCartInteractor(get()) }
 }

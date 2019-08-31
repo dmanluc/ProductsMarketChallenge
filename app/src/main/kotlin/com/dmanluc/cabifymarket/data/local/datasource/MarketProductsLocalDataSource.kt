@@ -1,4 +1,4 @@
-package com.dmanluc.cabifymarket.domain.repository
+package com.dmanluc.cabifymarket.data.local.datasource
 
 import androidx.lifecycle.LiveData
 import com.dmanluc.cabifymarket.data.remote.utils.Resource
@@ -9,8 +9,8 @@ import com.dmanluc.cabifymarket.domain.entity.Product
  * @version  1
  * @since    2019-07-02.
  */
-interface MarketRepository {
+interface MarketProductsLocalDataSource {
 
-    suspend fun getProducts(forceRefresh: Boolean): LiveData<Resource<List<Product>>>
+    suspend fun getProducts(): LiveData<Resource<List<Product>>>
 
 }

@@ -1,12 +1,10 @@
 package com.dmanluc.cabifymarket.di
 
 import com.dmanluc.cabifymarket.data.local.AppDatabase
-import com.dmanluc.cabifymarket.data.local.datasource.CacheDataSource
-import com.dmanluc.cabifymarket.data.local.datasource.CacheDataSourceImpl
-import com.dmanluc.cabifymarket.data.local.datasource.ProductsCartLocalDataSource
-import com.dmanluc.cabifymarket.data.local.datasource.ProductsCartLocalDataSourceImpl
-import com.dmanluc.cabifymarket.data.local.mapper.DatabaseEntityToDomainMapper
-import com.dmanluc.cabifymarket.data.local.mapper.DomainToDatabaseEntityMapper
+import com.dmanluc.cabifymarket.data.local.datasource.*
+import com.dmanluc.cabifymarket.data.local.mapper.MarketProductDatabaseEntityToDomainMapper
+import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEntityMapper
+import com.dmanluc.cabifymarket.data.local.mapper.ShoppingCartDatabaseEntityToDomainMapper
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -25,13 +23,22 @@ val localModule: Module = module {
 
     factory { get<AppDatabase>(named(DATABASE)).shoppingCartDao() }
 
-    single { DomainToDatabaseEntityMapper() }
+    factory { get<AppDatabase>(named(DATABASE)).marketProductDao() }
 
-    single { DatabaseEntityToDomainMapper() }
+    single { ProductsCartDomainToDatabaseEntityMapper() }
+
+    single { ShoppingCartDatabaseEntityToDomainMapper() }
+
+    single { MarketProductDatabaseEntityToDomainMapper() }
 
     factory<CacheDataSource> { CacheDataSourceImpl() }
 
     factory<ProductsCartLocalDataSource> {
-        ProductsCartLocalDataSourceImpl(get(), get(), get(), get()) }
+        ProductsCartLocalDataSourceImpl(get(), get(), get(), get())
+    }
+
+    factory<MarketProductsLocalDataSource> {
+        MarketProductsLocalDataSourceImpl(get(), get(), get())
+    }
 
 }

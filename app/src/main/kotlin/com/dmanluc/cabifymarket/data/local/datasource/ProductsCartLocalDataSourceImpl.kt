@@ -3,8 +3,8 @@ package com.dmanluc.cabifymarket.data.local.datasource
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dmanluc.cabifymarket.data.local.dao.ShoppingCartDao
-import com.dmanluc.cabifymarket.data.local.mapper.DatabaseEntityToDomainMapper
-import com.dmanluc.cabifymarket.data.local.mapper.DomainToDatabaseEntityMapper
+import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEntityMapper
+import com.dmanluc.cabifymarket.data.local.mapper.ShoppingCartDatabaseEntityToDomainMapper
 import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
 import kotlinx.coroutines.CoroutineScope
@@ -17,10 +17,10 @@ import kotlin.coroutines.coroutineContext
  * @since    2019-07-02.
  */
 class ProductsCartLocalDataSourceImpl(
-        private val dao: ShoppingCartDao,
-        private val domainToEntityMapper: DomainToDatabaseEntityMapper,
-        private val databaseEntityToDomainMapper: DatabaseEntityToDomainMapper,
-        private val cacheDataSource: CacheDataSource) : ProductsCartLocalDataSource {
+    private val dao: ShoppingCartDao,
+    private val productsCartDomainToEntityMapper: ProductsCartDomainToDatabaseEntityMapper,
+    private val shoppingCartDatabaseEntityToDomainMapper: ShoppingCartDatabaseEntityToDomainMapper,
+    private val cacheDataSource: CacheDataSource) : ProductsCartLocalDataSource {
 
     private val result = MutableLiveData<Resource<ProductsCart>>()
 
@@ -32,7 +32,7 @@ class ProductsCartLocalDataSourceImpl(
         cacheDataSource.save(cart)
 
         CoroutineScope(coroutineContext).launch {
-            dao.saveShoppingCart(domainToEntityMapper.mapFrom(cart))
+            dao.saveShoppingCart(productsCartDomainToEntityMapper.mapFrom(cart))
         }
     }
 
@@ -45,7 +45,7 @@ class ProductsCartLocalDataSourceImpl(
         }
 
         CoroutineScope(coroutineContext).launch {
-            val newValue = Resource.success(databaseEntityToDomainMapper.mapFrom(dao.getShoppingCart()))
+            val newValue = Resource.success(shoppingCartDatabaseEntityToDomainMapper.mapFrom(dao.getShoppingCart()))
             if (result.value != newValue) result.postValue(newValue)
         }
 

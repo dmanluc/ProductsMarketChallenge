@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
@@ -11,11 +12,12 @@ import com.dmanluc.cabifymarket.domain.interactor.GetLastSavedProductsCartIntera
 import com.dmanluc.cabifymarket.domain.interactor.GetProductsInteractor
 import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
+import com.dmanluc.cabifymarket.utils.Event
+import com.dmanluc.cabifymarket.utils.notifyObserver
+import com.dmanluc.cabifymarket.utils.observeAndMapValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.dmanluc.cabifymarket.utils.notifyObserver
-import com.dmanluc.cabifymarket.utils.observeAndMapValue
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
@@ -41,12 +43,19 @@ class MarketProductsViewModel(
         fetchMarketProducts()
     }
 
-    fun fetchMarketProducts() {
+    fun refreshMarketProducts() {
+        fetchMarketProducts(forceRefresh = true)
+    }
+
+    private fun fetchMarketProducts(forceRefresh: Boolean = false) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _productsSource = getProductsInteractor()
+                _productsSource = getProductsInteractor(forceRefresh)
             }
             _products.observeAndMapValue(_productsSource) {
+                if (it.status == Resource.Status.ERROR) {
+                    _snackbarError.value = Event(R.string.general_error_api_message)
+                }
                 it
             }
         }

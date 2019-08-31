@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.dmanluc.cabifymarket.data.local.converter.ShoppingCartConverter
+import com.dmanluc.cabifymarket.data.local.dao.MarketProductsDao
 import com.dmanluc.cabifymarket.data.local.dao.ShoppingCartDao
+import com.dmanluc.cabifymarket.data.local.model.MarketProductEntity
 import com.dmanluc.cabifymarket.data.local.model.ShoppingCartEntity
 
 /**
@@ -14,17 +14,23 @@ import com.dmanluc.cabifymarket.data.local.model.ShoppingCartEntity
  * @version  1
  * @since    2019-07-09.
  */
-@Database(entities = [ShoppingCartEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [MarketProductEntity::class, ShoppingCartEntity::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun shoppingCartDao(): ShoppingCartDao
 
+    abstract fun marketProductDao(): MarketProductsDao
+
     companion object {
-        fun buildDatabase(context: Context) =
+        fun buildDatabase(context: Context): AppDatabase =
             Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
-                "AppProductsCart.db"
+                "MarketProducts.db"
             ).build()
     }
 

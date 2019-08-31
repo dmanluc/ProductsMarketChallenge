@@ -11,6 +11,6 @@ import com.dmanluc.cabifymarket.domain.entity.Product
  */
 interface MarketRemoteDataSource {
 
-    suspend fun getProducts(): LiveData<Resource<List<Product>>>
+    suspend fun getProducts(forceRefresh: Boolean): LiveData<Resource<List<Product>>>
 
 }

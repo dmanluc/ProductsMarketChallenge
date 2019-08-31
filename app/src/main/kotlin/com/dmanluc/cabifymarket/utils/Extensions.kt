@@ -134,3 +134,5 @@ fun <M, S> MediatorLiveData<M>.observeAndMapValue(source: LiveData<S>, func: (da
         this.value = func.invoke(it)
     }
 }
+
+fun Boolean?.orFalse(): Boolean = this ?: false

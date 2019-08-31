@@ -7,8 +7,6 @@ import com.google.gson.reflect.TypeToken
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-
-
 class ShoppingCartConverter: KoinComponent {
 
     private val gson: Gson by inject()

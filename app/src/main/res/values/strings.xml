@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Cabify Market</string>
     <string name="general_error_message">An error happened, please retry !</string>
+    <string name="general_error_api_message">An error happened when fetching products</string>
 
     <string name="market_activity_network_connected_title">Network Connected</string>
     <string name="market_activity_network_disconnected_title">Network Disconnected</string>

@@ -11,10 +11,11 @@ import com.dmanluc.cabifymarket.domain.repository.MarketRepository
  * @version  1
  * @since    2019-07-02.
  */
-class MarketRepositoryImpl(private val remoteDataSource: MarketRemoteDataSource): MarketRepository {
+class MarketRepositoryImpl(private val remoteDataSource: MarketRemoteDataSource) :
+    MarketRepository {
 
-    override suspend fun getProducts(): LiveData<Resource<List<Product>>> {
-        return remoteDataSource.getProducts()
+    override suspend fun getProducts(forceRefresh: Boolean): LiveData<Resource<List<Product>>> {
+        return remoteDataSource.getProducts(forceRefresh)
     }
 
 }

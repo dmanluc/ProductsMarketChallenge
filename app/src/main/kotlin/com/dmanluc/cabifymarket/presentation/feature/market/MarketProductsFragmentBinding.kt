@@ -15,6 +15,7 @@ import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
 import com.dmanluc.cabifymarket.utils.hide
 import com.dmanluc.cabifymarket.utils.loadImage
+import com.dmanluc.cabifymarket.utils.orFalse
 import com.dmanluc.cabifymarket.utils.show
 
 object MarketProductsFragmentBinding {
@@ -45,10 +46,7 @@ object MarketProductsFragmentBinding {
     fun showMessageErrorWhenEmptyList(view: ImageView, resource: Resource<List<Product>>?) {
         if (resource != null) {
             when {
-                resource.status == Resource.Status.ERROR -> {
-                    view.show()
-                }
-                resource.data?.isEmpty() ?: false -> {
+                resource.status != Resource.Status.LOADING && resource.data?.isEmpty().orFalse() -> {
                     view.show()
                 }
                 else -> view.hide()
@@ -63,13 +61,13 @@ object MarketProductsFragmentBinding {
     fun showMessageErrorWhenEmptyList(view: TextView, resource: Resource<List<Product>>?) {
         if (resource != null) {
             when {
-                resource.status == Resource.Status.ERROR -> {
+                resource.status == Resource.Status.ERROR && resource.data?.isEmpty() ?: false -> {
                     view.apply {
                         show()
                         text = resources.getString(R.string.general_error_message)
                     }
                 }
-                resource.data?.isEmpty() ?: false -> {
+                resource.status == Resource.Status.SUCCESS && resource.data?.isEmpty() ?: false -> {
                     view.apply {
                         show()
                         text = resources.getString(R.string.market_overview_fragment_products_not_available)
