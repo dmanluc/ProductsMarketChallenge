@@ -3,6 +3,7 @@ package com.dmanluc.cabifymarket.di
 import com.dmanluc.cabifymarket.data.local.AppDatabase
 import com.dmanluc.cabifymarket.data.local.datasource.*
 import com.dmanluc.cabifymarket.data.local.mapper.MarketProductDatabaseEntityToDomainMapper
+import com.dmanluc.cabifymarket.data.local.mapper.ProductDomainToDatabaseEntityMapper
 import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEntityMapper
 import com.dmanluc.cabifymarket.data.local.mapper.ShoppingCartDatabaseEntityToDomainMapper
 import org.koin.android.ext.koin.androidContext
@@ -28,6 +29,8 @@ val localModule: Module = module {
     single { ProductsCartDomainToDatabaseEntityMapper() }
 
     single { ShoppingCartDatabaseEntityToDomainMapper() }
+
+    single { ProductDomainToDatabaseEntityMapper() }
 
     single { MarketProductDatabaseEntityToDomainMapper() }
 
