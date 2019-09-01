@@ -40,5 +40,13 @@ data class Product(val type: Type = Type.OTHER,
         ) ?: run { productQuantity * price.amount })
     }
 
+    override fun equals(other: Any?): Boolean {
+        return type.typeId == (other as? Product)?.type?.typeId
+    }
+
+    override fun hashCode(): Int {
+        return type.typeId.hashCode()
+    }
+
 }
 
