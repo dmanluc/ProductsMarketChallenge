@@ -84,7 +84,6 @@ class MarketRepositoryImplTest {
 
         verifyOrder {
             observer.onChanged(Resource.loading())
-            observer.onChanged(Resource.loading(listOf()))
             observer.onChanged(Resource.error(exception, listOf()))
         }
 
@@ -105,7 +104,6 @@ class MarketRepositoryImplTest {
 
         verifyOrder {
             observer.onChanged(Resource.loading())
-            observer.onChanged(Resource.loading(listOf()))
             observer.onChanged(Resource.success(mockProducts))
         }
 

@@ -39,7 +39,6 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
     private suspend fun fetchFromNetwork(dbResult: ResultType) {
         Log.d(NetworkBoundResource::class.java.name, "Fetch data from network")
-        setValue(Resource.loading(dbResult)) // Dispatch latest value quickly (UX purpose)
         val apiResponse = createCallAsync().await()
         Log.d(NetworkBoundResource::class.java.name, "Data fetched from network")
         saveCallResults(processResponse(apiResponse))
