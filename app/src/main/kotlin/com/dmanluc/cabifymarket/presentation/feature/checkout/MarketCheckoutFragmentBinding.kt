@@ -1,6 +1,7 @@
 package com.dmanluc.cabifymarket.presentation.feature.checkout
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -54,6 +55,14 @@ object MarketCheckoutFragmentBinding {
             R.string.market_overview_fragment_bottom_sheet_subtotal_title,
             quantity
         )
+    }
+
+    @BindingAdapter("enableCheckout")
+    @JvmStatic
+    fun setCheckoutButtonEnabled(view: Button, cart: ProductsCart?) {
+        cart?.let {
+            view.isEnabled = it.size() != 0
+        } ?: run { view.isEnabled = false }
     }
 
 }
