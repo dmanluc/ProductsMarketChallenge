@@ -2,7 +2,10 @@ package com.dmanluc.cabifymarket.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.dmanluc.cabifymarket.R
 
 /**
@@ -11,6 +14,10 @@ import com.dmanluc.cabifymarket.R
  * @since    2019-07-02.
  */
 class MarketActivity : AppCompatActivity() {
+
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,13 +29,17 @@ class MarketActivity : AppCompatActivity() {
         setContentView(R.layout.activity_market)
 
         supportActionBar?.apply {
-            title = "Cabify Market"
             setDisplayHomeAsUpEnabled(false)
             setDisplayShowHomeEnabled(false)
             show()
         }
+
+        navController = findNavController(this, R.id.navHostFragment)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
-    override fun onSupportNavigateUp(): Boolean = findNavController(this, R.id.navHostFragment).navigateUp()
+    override fun onSupportNavigateUp(): Boolean = navController.navigateUp()
 
 }

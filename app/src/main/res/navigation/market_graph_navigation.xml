@@ -7,7 +7,7 @@
     <fragment
             android:id="@+id/marketProductsFragment"
             android:name="com.dmanluc.cabifymarket.presentation.feature.market.MarketProductsFragment"
-            android:label="MarketProductsFragment"
+            android:label="@string/app_name"
             tools:layout="@layout/fragment_market_products">
         <action
                 android:id="@+id/actionGoToCheckout"
@@ -18,7 +18,7 @@
     <fragment
             android:id="@+id/marketCheckoutFragment"
             android:name="com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutFragment"
-            android:label="MarketCheckoutFragment"
+            android:label="@string/market_checkout_fragment_screen_title"
             tools:layout="@layout/fragment_market_checkout">
 
         <argument
