@@ -11,5 +11,5 @@ import org.koin.dsl.module
  * @since    2019-07-02.
  */
 val marketFeatureModule: Module = module {
-    viewModel { MarketProductsViewModel(get(), get(), get()) }
+    viewModel { MarketProductsViewModel(get(), get()) }
 }

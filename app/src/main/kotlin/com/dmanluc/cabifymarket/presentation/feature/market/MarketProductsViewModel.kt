@@ -8,7 +8,6 @@ import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
-import com.dmanluc.cabifymarket.domain.interactor.GetLastSavedProductsCartInteractor
 import com.dmanluc.cabifymarket.domain.interactor.GetProductsInteractor
 import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
@@ -26,8 +25,7 @@ import kotlinx.coroutines.withContext
  */
 class MarketProductsViewModel(
     private val getProductsInteractor: GetProductsInteractor,
-    private val saveProductsCartInteractor: SaveProductsCartInteractor,
-    private val getLastSavedProductsCartInteractor: GetLastSavedProductsCartInteractor
+    private val saveProductsCartInteractor: SaveProductsCartInteractor
 ) : BaseViewModel() {
 
     private var _productsSource: LiveData<Resource<List<Product>>> = MutableLiveData()
