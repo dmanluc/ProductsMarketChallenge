@@ -12,7 +12,7 @@ import com.dmanluc.cabifymarket.data.local.model.MarketProductEntity
 @Dao
 abstract class MarketProductsDao : BaseDao<MarketProductEntity>() {
 
-    @Query("SELECT * FROM marketProducts ORDER BY _id")
+    @Query("SELECT * FROM marketProducts ORDER BY name")
     abstract suspend fun getMarketProducts(): List<MarketProductEntity>
 
     suspend fun save(products: List<MarketProductEntity>) {

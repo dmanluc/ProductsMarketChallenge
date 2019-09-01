@@ -15,10 +15,10 @@ import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.presentation.feature.market.MarketProductItemDiffCallback
-import com.travijuu.numberpicker.library.Interface.ValueChangedListener
-import kotlinx.android.synthetic.main.item_checkout_product.view.*
 import com.dmanluc.cabifymarket.utils.hide
 import com.dmanluc.cabifymarket.utils.show
+import com.travijuu.numberpicker.library.Interface.ValueChangedListener
+import kotlinx.android.synthetic.main.item_checkout_product.view.*
 
 class MarketCheckoutAdapter(
     private val onProductQuantityChanged: ((Int, Product) -> Unit),
@@ -45,8 +45,7 @@ class MarketCheckoutAdapter(
     override fun getItemCount(): Int = items.size
 
     fun setAdapterItems(productsMap: LinkedHashMap<Product, Int>) {
-        val diffCallback =
-            MarketProductItemDiffCallback(productsMap.keys.toList(), items.keys.toList())
+        val diffCallback = MarketProductItemDiffCallback(items.keys.toList(), productsMap.keys.toList())
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         items = productsMap

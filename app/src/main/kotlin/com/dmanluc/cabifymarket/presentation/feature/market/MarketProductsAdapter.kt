@@ -14,10 +14,10 @@ import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
 import com.dmanluc.cabifymarket.domain.entity.Product
-import com.travijuu.numberpicker.library.Interface.ValueChangedListener
-import kotlinx.android.synthetic.main.item_market_product.view.*
 import com.dmanluc.cabifymarket.utils.hide
 import com.dmanluc.cabifymarket.utils.show
+import com.travijuu.numberpicker.library.Interface.ValueChangedListener
+import kotlinx.android.synthetic.main.item_market_product.view.*
 
 class MarketProductsAdapter(private val onAddProductToCart: ((Int, Product) -> Unit)) :
     RecyclerView.Adapter<MarketProductsAdapter.ProductViewHolder>() {
@@ -41,7 +41,7 @@ class MarketProductsAdapter(private val onAddProductToCart: ((Int, Product) -> U
     override fun getItemCount() = items.size
 
     fun setAdapterItems(products: List<Product>) {
-        val diffCallback = MarketProductItemDiffCallback(products, items)
+        val diffCallback = MarketProductItemDiffCallback(items, products)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         items.apply {
