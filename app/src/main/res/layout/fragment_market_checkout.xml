@@ -16,6 +16,22 @@
         android:layout_height="match_parent"
         android:background="@android:color/white">
 
+        <TextView
+            android:id="@+id/emptyProductsCartTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/market_checkout_fragment_empty_cart"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            app:showWhenEmptyCart="@{viewModel.productsCart}"
+            tools:visibility="visible" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cartProductsRecycler"
             android:layout_width="match_parent"

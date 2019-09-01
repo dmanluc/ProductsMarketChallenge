@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Cabify Market</string>
-    <string name="general_error_message">An error happened, please retry !</string>
+    <string name="general_error_message">An error happened, please retry swyping from top!</string>
     <string name="general_error_api_message">An error happened when fetching products</string>
 
     <string name="market_activity_network_connected_title">Network Connected</string>
@@ -20,6 +20,7 @@
     <string name="item_market_product_overview_decrease_button">-</string>
 
     <string name="market_checkout_fragment_screen_title">Checkout</string>
+    <string name="market_checkout_fragment_empty_cart">Your cart is empty</string>
     <string name="market_checkout_fragment_remove_product_button">Remove</string>
 
     <string name="market_overview_fragment_bottom_sheet_total_order_summary">Total</string>

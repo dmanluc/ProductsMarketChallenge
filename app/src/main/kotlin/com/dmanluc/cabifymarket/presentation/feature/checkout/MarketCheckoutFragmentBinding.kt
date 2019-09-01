@@ -10,7 +10,9 @@ import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.utils.hide
 import com.dmanluc.cabifymarket.utils.loadImage
+import com.dmanluc.cabifymarket.utils.show
 
 object MarketCheckoutFragmentBinding {
 
@@ -62,6 +64,14 @@ object MarketCheckoutFragmentBinding {
         cart?.let {
             view.isEnabled = it.size() != 0
         } ?: run { view.isEnabled = false }
+    }
+
+    @BindingAdapter("showWhenEmptyCart")
+    @JvmStatic
+    fun setEmptyProductsCartInfoMessage(view: TextView, cart: ProductsCart?) {
+        cart?.let {
+            if (it.size() != 0) view.hide() else view.show()
+        } ?: run { view.hide() }
     }
 
 }
