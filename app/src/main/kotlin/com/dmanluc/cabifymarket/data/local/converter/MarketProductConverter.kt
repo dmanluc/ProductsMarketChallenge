@@ -34,7 +34,7 @@ class MarketProductConverter : KoinComponent {
 
     @TypeConverter
     fun fromDiscountRuleToString(rule: ProductDiscountRule?): String {
-        return gson.toJson(rule)
+        return gson.toJson(rule, ProductDiscountRule::class.java)
     }
 
     @TypeConverter

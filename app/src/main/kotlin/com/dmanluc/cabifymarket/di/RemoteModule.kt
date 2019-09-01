@@ -1,13 +1,11 @@
 package com.dmanluc.cabifymarket.di
 
 import android.content.res.AssetManager
-import com.dmanluc.cabifymarket.data.local.typeadapter.RuntimeTypeAdapterFactory
+import com.dmanluc.cabifymarket.data.local.typeadapter.InterfaceAdapter
 import com.dmanluc.cabifymarket.data.remote.api.MarketApi
 import com.dmanluc.cabifymarket.data.remote.datasource.MarketRemoteDataSource
 import com.dmanluc.cabifymarket.data.remote.datasource.MarketRemoteDataSourceImpl
 import com.dmanluc.cabifymarket.data.remote.mapper.ProductEntityMapper
-import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
 import com.dmanluc.cabifymarket.domain.entity.ProductDiscountRule
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -48,15 +46,10 @@ fun createRemoteModule(baseUrl: String): Module = module {
     factory { androidContext().assets as AssetManager }
 
     single {
-        GsonBuilder()
-            .enableComplexMapKeySerialization()
-            .registerTypeAdapterFactory(
-                RuntimeTypeAdapterFactory.of(ProductDiscountRule::class.java)
-                    .registerSubtype(BulkDiscountRule::class.java)
-                    .registerSubtype(FreePerQuantityDiscountRule::class.java)
-            )
-            .setPrettyPrinting()
-            .create()
+        GsonBuilder().registerTypeAdapter(
+            ProductDiscountRule::class.java,
+            InterfaceAdapter<ProductDiscountRule>()
+        ).setPrettyPrinting().create()
     }
 
     factory { ProductEntityMapper(get(), get()) }
