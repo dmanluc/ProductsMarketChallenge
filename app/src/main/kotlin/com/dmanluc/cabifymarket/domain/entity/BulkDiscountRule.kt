@@ -11,7 +11,7 @@ class BulkDiscountRule(
     private val code: String,
     private val description: String,
     val buyQuantity: Int,
-    val priceWithDiscount: Double
+    private val priceWithDiscount: Double
 ) : ProductDiscountRule {
 
     override fun provideCode(): String {
