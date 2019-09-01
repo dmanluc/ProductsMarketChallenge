@@ -7,13 +7,13 @@ import com.google.gson.reflect.TypeToken
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class ShoppingCartConverter: KoinComponent {
+class ShoppingCartConverter : KoinComponent {
 
     private val gson: Gson by inject()
 
     @TypeConverter
     fun fromStringToMap(value: String): LinkedHashMap<Product, Int> {
-        val mapType = object : TypeToken<LinkedHashMap<Product, Int>>(){}.type
+        val mapType = object : TypeToken<LinkedHashMap<Product, Int>>() {}.type
         return gson.fromJson(value, mapType)
     }
 

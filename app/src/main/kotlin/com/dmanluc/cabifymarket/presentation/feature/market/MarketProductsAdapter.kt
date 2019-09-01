@@ -27,9 +27,7 @@ class MarketProductsAdapter(private val onAddProductToCart: ((Int, Product) -> U
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return ProductViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_market_product,
-                parent,
-                false
+                R.layout.item_market_product, parent, false
             )
         )
     }
@@ -83,8 +81,7 @@ class MarketProductsAdapter(private val onAddProductToCart: ((Int, Product) -> U
             when {
                 quantity == discountRule.buyQuantity -> {
                     showNewProductPriceWithDiscount(
-                        product.providePriceWithDiscount(quantity),
-                        product.price
+                        product.providePriceWithDiscount(quantity), product.price
                     )
                 }
                 quantity < discountRule.buyQuantity -> {
@@ -93,18 +90,13 @@ class MarketProductsAdapter(private val onAddProductToCart: ((Int, Product) -> U
             }
         }
 
-        private fun showNewProductPriceWithDiscount(
-            priceWithDiscount: CurrencyAmount,
-            priceWithoutDiscount: CurrencyAmount
-        ) {
+        private fun showNewProductPriceWithDiscount(priceWithDiscount: CurrencyAmount,
+                                                    priceWithoutDiscount: CurrencyAmount) {
             itemView.productsTotalPriceWithoutDiscount.text = SpannableString(
                 "${priceWithoutDiscount.formatCurrencyInLocale()} / ud."
             ).apply {
                 setSpan(
-                    StrikethroughSpan(),
-                    0,
-                    length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    StrikethroughSpan(), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             }
             itemView.productsTotalPriceWithoutDiscount.show()
@@ -124,8 +116,7 @@ class MarketProductsAdapter(private val onAddProductToCart: ((Int, Product) -> U
                 }
                 quantity.rem(discountRule.freeQuantity) >= 0 -> {
                     showNewProductPriceWithDiscount(
-                        product.providePriceWithDiscount(quantity),
-                        product.price
+                        product.providePriceWithDiscount(quantity), product.price
                     )
                 }
             }

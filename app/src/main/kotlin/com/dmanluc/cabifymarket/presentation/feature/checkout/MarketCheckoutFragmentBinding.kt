@@ -52,8 +52,7 @@ object MarketCheckoutFragmentBinding {
         val quantity = cart?.size() ?: 0
 
         view.text = view.context.getString(
-            R.string.market_overview_fragment_bottom_sheet_subtotal_title,
-            quantity
+            R.string.market_overview_fragment_bottom_sheet_subtotal_title, quantity
         )
     }
 

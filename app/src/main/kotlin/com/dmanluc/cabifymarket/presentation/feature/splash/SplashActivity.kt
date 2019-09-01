@@ -10,7 +10,7 @@ import com.dmanluc.cabifymarket.presentation.MarketActivity
  * @version  1
  * @since    2019-07-02.
  */
-class SplashActivity: AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

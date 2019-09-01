@@ -20,6 +20,7 @@
         android:background="?attr/selectableItemBackground"
         app:cardElevation="2dp"
         app:cardMaxElevation="4dp"
+        app:cardCornerRadius="6dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true">
 
@@ -28,7 +29,7 @@
             android:layout_height="match_parent"
             android:animateLayoutChanges="true"
             android:paddingStart="16dp"
-            android:paddingTop="8dp"
+            android:paddingTop="12dp"
             android:paddingEnd="16dp"
             android:paddingBottom="8dp">
 
@@ -56,12 +57,12 @@
                 android:id="@+id/topDivider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintTop_toBottomOf="@id/discountInfo" />
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/imageProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
@@ -89,7 +90,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@{product.name}"
@@ -105,7 +106,7 @@
                 android:id="@+id/productQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 app:focusable="false"
                 app:layout_constraintStart_toStartOf="@id/productName"
                 app:layout_constraintTop_toBottomOf="@id/productName"
@@ -117,7 +118,7 @@
                 android:id="@+id/bottomDivider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintTop_toBottomOf="@id/productQuantity" />
 
@@ -125,16 +126,16 @@
                 android:id="@+id/productsTotalPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="18dp"
-                android:drawablePadding="16dp"
+                android:layout_marginBottom="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bottomDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="45,35€" />
 
             <TextView
@@ -160,7 +161,7 @@
 
             <Button
                 android:id="@+id/removeProductFromCart"
-                style="@style/AccentButton"
+                style="@style/AccentRoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_marginStart="16dp"

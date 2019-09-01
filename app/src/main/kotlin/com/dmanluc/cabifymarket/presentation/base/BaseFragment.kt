@@ -8,8 +8,8 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.dmanluc.cabifymarket.presentation.navigation.NavigationCommand
-import com.google.android.material.snackbar.Snackbar
 import com.dmanluc.cabifymarket.utils.setupSnackbar
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
@@ -35,8 +35,7 @@ abstract class BaseFragment : Fragment() {
             it?.getContentIfNotHandled()?.let { command ->
                 when (command) {
                     is NavigationCommand.To -> findNavController().navigate(
-                        command.directions,
-                        getExtras()
+                        command.directions, getExtras()
                     )
                     is NavigationCommand.Back -> findNavController().navigateUp()
                 }

@@ -33,12 +33,9 @@ fun createRemoteModule(baseUrl: String): Module = module {
     factory { OkHttpClient.Builder().addInterceptor(get()).build() }
 
     single {
-        Retrofit.Builder()
-            .client(get())
-            .baseUrl(baseUrl)
+        Retrofit.Builder().client(get()).baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .build()
+            .addCallAdapterFactory(CoroutineCallAdapterFactory()).build()
     }
 
     factory { get<Retrofit>().create(MarketApi::class.java) }
@@ -47,8 +44,7 @@ fun createRemoteModule(baseUrl: String): Module = module {
 
     single {
         GsonBuilder().registerTypeAdapter(
-            ProductDiscountRule::class.java,
-            InterfaceAdapter<ProductDiscountRule>()
+            ProductDiscountRule::class.java, InterfaceAdapter<ProductDiscountRule>()
         ).setPrettyPrinting().create()
     }
 
@@ -56,11 +52,7 @@ fun createRemoteModule(baseUrl: String): Module = module {
 
     factory<MarketRemoteDataSource> {
         MarketRemoteDataSourceImpl(
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
+            get(), get(), get(), get(), get()
         )
     }
 

@@ -17,12 +17,14 @@
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:background">@drawable/background_accent_button</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="AccentRoundButton" parent="AppTheme">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:background">@drawable/background_accent_button_rounded</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="AccentBackground" parent="AppTheme">

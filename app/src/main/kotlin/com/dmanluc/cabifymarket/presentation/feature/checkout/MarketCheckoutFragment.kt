@@ -24,7 +24,9 @@ class MarketCheckoutFragment : BaseFragment() {
 
     override fun getViewModel(): BaseViewModel = viewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         binding = FragmentMarketCheckoutBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -40,11 +42,10 @@ class MarketCheckoutFragment : BaseFragment() {
     }
 
     private fun configureRecyclerView() {
-        binding.cartProductsRecycler.adapter = MarketCheckoutAdapter(
-            onProductQuantityChanged = { newQuantity, product ->
+        binding.cartProductsRecycler.adapter =
+            MarketCheckoutAdapter(onProductQuantityChanged = { newQuantity, product ->
                 viewModel.updateProductCartQuantity(newQuantity, product)
-            },
-            onRemoveProductFromCart = {
+            }, onRemoveProductFromCart = {
                 viewModel.removeProductFromCart(it)
             })
     }

@@ -10,7 +10,7 @@ import com.dmanluc.cabifymarket.utils.EntityMapper
  * @version  1
  * @since    2019-07-09.
  */
-class ProductsCartDomainToDatabaseEntityMapper: EntityMapper<ProductsCart,ShoppingCartEntity> {
+class ProductsCartDomainToDatabaseEntityMapper : EntityMapper<ProductsCart, ShoppingCartEntity> {
 
     override fun mapFrom(inputModel: ProductsCart): ShoppingCartEntity {
         return ShoppingCartEntity(inputModel.getProducts().toMutableMap() as LinkedHashMap<Product, Int>)

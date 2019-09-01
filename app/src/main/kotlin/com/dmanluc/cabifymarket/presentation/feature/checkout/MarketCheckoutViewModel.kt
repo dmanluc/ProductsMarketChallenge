@@ -6,9 +6,9 @@ import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
 import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
+import com.dmanluc.cabifymarket.utils.notifyObserver
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import com.dmanluc.cabifymarket.utils.notifyObserver
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>

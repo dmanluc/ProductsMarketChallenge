@@ -10,11 +10,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext
 
-class MarketProductsLocalDataSourceImpl(
-    private val dao: MarketProductsDao,
-    private val databaseToDomainMapper: MarketProductDatabaseEntityToDomainMapper,
-    cacheDataSource: CacheDataSource
-) : MarketProductsLocalDataSource {
+class MarketProductsLocalDataSourceImpl(private val dao: MarketProductsDao,
+                                        private val databaseToDomainMapper: MarketProductDatabaseEntityToDomainMapper,
+                                        cacheDataSource: CacheDataSource) :
+    MarketProductsLocalDataSource {
 
     private val result = MutableLiveData<Resource<List<Product>>>()
 
@@ -24,7 +23,8 @@ class MarketProductsLocalDataSourceImpl(
 
     override suspend fun getProducts(): LiveData<Resource<List<Product>>> {
         CoroutineScope(coroutineContext).launch {
-            val newValue = Resource.success(dao.getMarketProducts().map { databaseToDomainMapper.mapFrom(it) })
+            val newValue =
+                Resource.success(dao.getMarketProducts().map { databaseToDomainMapper.mapFrom(it) })
             if (result.value != newValue) result.postValue(newValue)
         }
 

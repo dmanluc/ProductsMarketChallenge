@@ -9,19 +9,14 @@ import java.io.Serializable
  * @version  1
  * @since    2019-07-02.
  */
-data class Product(
-    val type: Type = Type.OTHER,
-    val name: String,
-    val price: CurrencyAmount,
-    val imageUrl: String?,
-    val discountRule: ProductDiscountRule?
-) : Discountable, Serializable {
+data class Product(val type: Type = Type.OTHER,
+                   val name: String,
+                   val price: CurrencyAmount,
+                   val imageUrl: String?,
+                   val discountRule: ProductDiscountRule?) : Discountable, Serializable {
 
     enum class Type(val typeId: String) {
-        VOUCHER("VOUCHER"),
-        TSHIRT("TSHIRT"),
-        MUG("MUG"),
-        OTHER("")
+        VOUCHER("VOUCHER"), TSHIRT("TSHIRT"), MUG("MUG"), OTHER("")
     }
 
     override fun hasDiscount(): Boolean {
@@ -40,11 +35,9 @@ data class Product(
     }
 
     override fun provideTotalPrice(productQuantity: Int): CurrencyAmount {
-        return CurrencyAmount(
-            discountRule?.calculateProductsTotalPrice(
-                productQuantity,
-                price.amount
-            ) ?: run { productQuantity * price.amount })
+        return CurrencyAmount(discountRule?.calculateProductsTotalPrice(
+            productQuantity, price.amount
+        ) ?: run { productQuantity * price.amount })
     }
 
 }

@@ -16,11 +16,11 @@ import kotlin.coroutines.coroutineContext
  * @version  1
  * @since    2019-07-02.
  */
-class ProductsCartLocalDataSourceImpl(
-    private val dao: ShoppingCartDao,
-    private val productsCartDomainToEntityMapper: ProductsCartDomainToDatabaseEntityMapper,
-    private val shoppingCartDatabaseEntityToDomainMapper: ShoppingCartDatabaseEntityToDomainMapper,
-    private val cacheDataSource: CacheDataSource) : ProductsCartLocalDataSource {
+class ProductsCartLocalDataSourceImpl(private val dao: ShoppingCartDao,
+                                      private val productsCartDomainToEntityMapper: ProductsCartDomainToDatabaseEntityMapper,
+                                      private val shoppingCartDatabaseEntityToDomainMapper: ShoppingCartDatabaseEntityToDomainMapper,
+                                      private val cacheDataSource: CacheDataSource) :
+    ProductsCartLocalDataSource {
 
     private val result = MutableLiveData<Resource<ProductsCart>>()
 
@@ -45,7 +45,8 @@ class ProductsCartLocalDataSourceImpl(
         }
 
         CoroutineScope(coroutineContext).launch {
-            val newValue = Resource.success(shoppingCartDatabaseEntityToDomainMapper.mapFrom(dao.getShoppingCart()))
+            val newValue =
+                Resource.success(shoppingCartDatabaseEntityToDomainMapper.mapFrom(dao.getShoppingCart()))
             if (result.value != newValue) result.postValue(newValue)
         }
 

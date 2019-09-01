@@ -17,10 +17,9 @@ class InterfaceAdapter<T : Any> : JsonDeserializer<T>, JsonSerializer<T> {
     }
 
     @Throws(JsonParseException::class)
-    override fun deserialize(
-        jsonElement: JsonElement, type: Type,
-        jsonDeserializationContext: JsonDeserializationContext
-    ): T {
+    override fun deserialize(jsonElement: JsonElement,
+                             type: Type,
+                             jsonDeserializationContext: JsonDeserializationContext): T {
         val jsonObject = jsonElement.asJsonObject
         val prim = jsonObject.get(CLASSNAME) as JsonPrimitive
         val className = prim.asString
@@ -29,11 +28,9 @@ class InterfaceAdapter<T : Any> : JsonDeserializer<T>, JsonSerializer<T> {
     }
 
 
-    override fun serialize(
-        jsonElement: T,
-        type: Type,
-        jsonSerializationContext: JsonSerializationContext
-    ): JsonElement {
+    override fun serialize(jsonElement: T,
+                           type: Type,
+                           jsonSerializationContext: JsonSerializationContext): JsonElement {
         return JsonObject().apply {
             addProperty(CLASSNAME, jsonElement::class.java.name)
             add(DATA, jsonSerializationContext.serialize(jsonElement))

@@ -9,7 +9,7 @@ import com.dmanluc.cabifymarket.utils.EntityMapper
  * @version  1
  * @since    2019-07-09.
  */
-class ShoppingCartDatabaseEntityToDomainMapper: EntityMapper<ShoppingCartEntity, ProductsCart> {
+class ShoppingCartDatabaseEntityToDomainMapper : EntityMapper<ShoppingCartEntity, ProductsCart> {
 
     override fun mapFrom(inputModel: ShoppingCartEntity): ProductsCart {
         return ProductsCart(inputModel.cart)

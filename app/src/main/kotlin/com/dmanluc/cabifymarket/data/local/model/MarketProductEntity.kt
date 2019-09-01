@@ -15,10 +15,7 @@ import com.dmanluc.cabifymarket.domain.entity.ProductDiscountRule
  */
 @Entity(tableName = "marketProducts")
 @TypeConverters(MarketProductConverter::class)
-data class MarketProductEntity(
-    @PrimaryKey val type: Product.Type,
-    val name: String,
-    val price: CurrencyAmount,
-    val imageUrl: String?,
-    val discountRule: ProductDiscountRule?
-)
+data class MarketProductEntity(@PrimaryKey val type: Product.Type, val name: String,
+                               val price: CurrencyAmount,
+                               val imageUrl: String?,
+                               val discountRule: ProductDiscountRule?)

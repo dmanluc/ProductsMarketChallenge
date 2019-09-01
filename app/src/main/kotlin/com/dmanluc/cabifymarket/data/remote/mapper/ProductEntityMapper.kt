@@ -17,22 +17,16 @@ import com.google.gson.reflect.TypeToken
  * @version  1
  * @since    2019-07-02.
  */
-class ProductEntityMapper(
-    private val gson: Gson,
-    private val assetManager: AssetManager
-) :
+class ProductEntityMapper(private val gson: Gson, private val assetManager: AssetManager) :
     EntityMapper<MarketApiResponse, List<Product>> {
 
     private val productsImagesUrl = mapOf(
         Pair(
             "MUG",
             "https://cdn.shopify.com/s/files/1/0312/6537/products/27514-Black-White-1_aef806de-0299-4603-9305-bcc83155db8f_1024x1024.jpg?v=1495633232"
-        ),
-        Pair(
-            "TSHIRT",
-            "https://www.goalinn.com/f/13608/136088796/adidas-real-madrid-away-16-17.jpg"
-        ),
-        Pair("VOUCHER", "https://i.rafitamolin.com/18cfea7.png")
+        ), Pair(
+            "TSHIRT", "https://www.goalinn.com/f/13608/136088796/adidas-real-madrid-away-16-17.jpg"
+        ), Pair("VOUCHER", "https://i.rafitamolin.com/18cfea7.png")
     )
 
     override fun mapFrom(inputModel: MarketApiResponse): List<Product> {
@@ -78,8 +72,7 @@ class ProductEntityMapper(
                         rules.firstOrNull { it?.provideCode() == Product.Type.MUG.typeId })
                 }
                 else -> Triple(
-                    Product.Type.OTHER,
-                    null, null
+                    Product.Type.OTHER, null, null
                 )
             }
 

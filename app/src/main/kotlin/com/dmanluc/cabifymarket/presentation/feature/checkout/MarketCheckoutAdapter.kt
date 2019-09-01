@@ -20,10 +20,8 @@ import com.dmanluc.cabifymarket.utils.show
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener
 import kotlinx.android.synthetic.main.item_checkout_product.view.*
 
-class MarketCheckoutAdapter(
-    private val onProductQuantityChanged: ((Int, Product) -> Unit),
-    private val onRemoveProductFromCart: ((Product) -> Unit)
-) :
+class MarketCheckoutAdapter(private val onProductQuantityChanged: ((Int, Product) -> Unit),
+                            private val onRemoveProductFromCart: ((Product) -> Unit)) :
     RecyclerView.Adapter<MarketCheckoutAdapter.ProductViewHolder>() {
 
     private var items: LinkedHashMap<Product, Int> = linkedMapOf()
@@ -31,9 +29,7 @@ class MarketCheckoutAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return ProductViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_checkout_product,
-                parent,
-                false
+                R.layout.item_checkout_product, parent, false
             )
         )
     }
@@ -45,7 +41,8 @@ class MarketCheckoutAdapter(
     override fun getItemCount(): Int = items.size
 
     fun setAdapterItems(productsMap: LinkedHashMap<Product, Int>) {
-        val diffCallback = MarketProductItemDiffCallback(items.keys.toList(), productsMap.keys.toList())
+        val diffCallback =
+            MarketProductItemDiffCallback(items.keys.toList(), productsMap.keys.toList())
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         items = productsMap
@@ -69,7 +66,8 @@ class MarketCheckoutAdapter(
                 onRemoveProductFromCart(product)
             }
 
-            itemView.productsTotalPrice.text = product.provideTotalPrice(quantity).formatCurrencyInLocale()
+            itemView.productsTotalPrice.text =
+                product.provideTotalPrice(quantity).formatCurrencyInLocale()
             itemView.productQuantity.value = quantity
 
             checkForProductDiscountEligible(product, quantity)
@@ -122,18 +120,13 @@ class MarketCheckoutAdapter(
             }
         }
 
-        private fun showNewProductsTotalPriceWithDiscount(
-            totalPriceWithDiscount: CurrencyAmount,
-            totalPriceWithoutDiscount: CurrencyAmount
-        ) {
+        private fun showNewProductsTotalPriceWithDiscount(totalPriceWithDiscount: CurrencyAmount,
+                                                          totalPriceWithoutDiscount: CurrencyAmount) {
             itemView.productsTotalPriceWithoutDiscount.text = SpannableString(
                 totalPriceWithoutDiscount.formatCurrencyInLocale()
             ).apply {
                 setSpan(
-                    StrikethroughSpan(),
-                    0,
-                    length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    StrikethroughSpan(), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             }
             itemView.productsTotalPriceWithoutDiscount.show()
@@ -145,7 +138,8 @@ class MarketCheckoutAdapter(
             itemView.productsTotalPriceWithoutDiscount.hide()
         }
 
-        private fun updateProductsTotalPriceForFreePerQuantityDiscount(product: Product, quantity: Int) {
+        private fun updateProductsTotalPriceForFreePerQuantityDiscount(product: Product,
+                                                                       quantity: Int) {
             val discountRule = product.discountRule as FreePerQuantityDiscountRule
             when {
                 quantity <= discountRule.buyQuantity -> {
@@ -165,7 +159,6 @@ class MarketCheckoutAdapter(
         }
 
     }
-
 
 
 }

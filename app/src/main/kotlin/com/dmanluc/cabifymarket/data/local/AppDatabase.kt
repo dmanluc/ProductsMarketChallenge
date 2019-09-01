@@ -26,12 +26,9 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun marketProductDao(): MarketProductsDao
 
     companion object {
-        fun buildDatabase(context: Context): AppDatabase =
-            Room.databaseBuilder(
-                context.applicationContext,
-                AppDatabase::class.java,
-                "MarketProducts.db"
-            ).build()
+        fun buildDatabase(context: Context): AppDatabase = Room.databaseBuilder(
+            context.applicationContext, AppDatabase::class.java, "MarketProducts.db"
+        ).build()
     }
 
 }

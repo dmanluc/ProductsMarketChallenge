@@ -11,10 +11,8 @@ import com.google.gson.annotations.SerializedName
  */
 class MarketApiResponse(@SerializedName("products") val products: List<ProductApiResponse>?) {
 
-    class ProductApiResponse(
-        @SerializedName("code") val id: String?,
-        @SerializedName("name") val name: String?,
-        @SerializedName("price") val price: Double
-    )
+    class ProductApiResponse(@SerializedName("code") val id: String?, @SerializedName("name") val name: String?, @SerializedName(
+        "price"
+    ) val price: Double)
 
 }

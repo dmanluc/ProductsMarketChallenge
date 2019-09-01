@@ -23,10 +23,9 @@ import kotlinx.coroutines.withContext
  * @version  1
  * @since    2019-07-02.
  */
-class MarketProductsViewModel(
-    private val getProductsInteractor: GetProductsInteractor,
-    private val saveProductsCartInteractor: SaveProductsCartInteractor
-) : BaseViewModel() {
+class MarketProductsViewModel(private val getProductsInteractor: GetProductsInteractor,
+                              private val saveProductsCartInteractor: SaveProductsCartInteractor) :
+    BaseViewModel() {
 
     private var _productsSource: LiveData<Resource<List<Product>>> = MutableLiveData()
     private val _products: MediatorLiveData<Resource<List<Product>>> = MediatorLiveData()

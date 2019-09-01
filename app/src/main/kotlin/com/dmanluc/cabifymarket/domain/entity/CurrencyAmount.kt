@@ -30,8 +30,7 @@ data class CurrencyAmount(val amount: Double) : Serializable {
     }
 
     enum class CurrencyCode(val code: String) {
-        EUR("EUR"),
-        USD("USD")
+        EUR("EUR"), USD("USD")
     }
 
 }

@@ -16,13 +16,12 @@ import kotlinx.coroutines.Deferred
  * @version  1
  * @since    2019-07-02.
  */
-class MarketRemoteDataSourceImpl constructor(
-    private val marketApi: MarketApi,
-    private val dataToDomainEntityMapper: ProductEntityMapper,
-    private val domainToDatabaseEntityMapper: ProductDomainToDatabaseEntityMapper,
-    private val databaseToDomainEntityMapper: MarketProductDatabaseEntityToDomainMapper,
-    private val localDao: MarketProductsDao
-) : MarketRemoteDataSource {
+class MarketRemoteDataSourceImpl constructor(private val marketApi: MarketApi,
+                                             private val dataToDomainEntityMapper: ProductEntityMapper,
+                                             private val domainToDatabaseEntityMapper: ProductDomainToDatabaseEntityMapper,
+                                             private val databaseToDomainEntityMapper: MarketProductDatabaseEntityToDomainMapper,
+                                             private val localDao: MarketProductsDao) :
+    MarketRemoteDataSource {
 
     override suspend fun getProducts(forceRefresh: Boolean): LiveData<Resource<List<Product>>> {
         return object : NetworkBoundResource<List<Product>, MarketApiResponse>() {

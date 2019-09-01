@@ -24,7 +24,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.apache.commons.io.IOUtils
 
 /**
- * Extension com.dmanluc.cabifymarket.utils
+ * Extension utils
  *
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
@@ -42,10 +42,9 @@ fun Fragment.showSnackbar(snackbarText: String, timeLength: Int) {
     }
 }
 
-fun Fragment.setupSnackbar(
-    lifecycleOwner: LifecycleOwner, snackbarEvent: LiveData<Event<Int>>,
-    timeLength: Int
-) {
+fun Fragment.setupSnackbar(lifecycleOwner: LifecycleOwner,
+                           snackbarEvent: LiveData<Event<Int>>,
+                           timeLength: Int) {
     snackbarEvent.observe(lifecycleOwner, Observer { event ->
         event.getContentIfNotHandled()?.let { res ->
             context?.let { showSnackbar(it.getString(res), timeLength) }
@@ -65,45 +64,34 @@ fun View.invisible() {
     visibility = View.INVISIBLE
 }
 
-fun ImageView.loadImage(
-    path: String, errorResource: Int,
-    onExceptionDelegate: () -> Unit = {},
-    onResourceReadyDelegate: () -> Unit = {},
-    daysWhileValidCache: Int = 1
-) {
+fun ImageView.loadImage(path: String,
+                        errorResource: Int,
+                        onExceptionDelegate: () -> Unit = {},
+                        onResourceReadyDelegate: () -> Unit = {},
+                        daysWhileValidCache: Int = 1) {
 
-    GlideApp.with(this.context)
-        .load(Uri.parse(path))
-        .listener(object : RequestListener<Drawable> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: com.bumptech.glide.request.target.Target<Drawable>?,
-                isFirstResource: Boolean
-            ): Boolean {
-                onExceptionDelegate()
-                return false
-            }
+    GlideApp.with(this.context).load(Uri.parse(path)).listener(object : RequestListener<Drawable> {
+        override fun onLoadFailed(e: GlideException?,
+                                  model: Any?,
+                                  target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                  isFirstResource: Boolean): Boolean {
+            onExceptionDelegate()
+            return false
+        }
 
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: com.bumptech.glide.request.target.Target<Drawable>,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
-                onResourceReadyDelegate()
-                return false
-            }
-        })
-        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        override fun onResourceReady(resource: Drawable?,
+                                     model: Any?,
+                                     target: com.bumptech.glide.request.target.Target<Drawable>,
+                                     dataSource: DataSource?,
+                                     isFirstResource: Boolean): Boolean {
+            onResourceReadyDelegate()
+            return false
+        }
+    }).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         .signature(ObjectKey(with(System.currentTimeMillis()) {
             if (daysWhileValidCache > 0) (this / (daysWhileValidCache * 24 * 60 * 60 * 1000)).toString()
             else this.toString()
-        }))
-        .error(errorResource)
-        .transition(DrawableTransitionOptions().crossFade())
-        .into(this)
+        })).error(errorResource).transition(DrawableTransitionOptions().crossFade()).into(this)
 }
 
 fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
@@ -120,10 +108,8 @@ fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
 }
 
-inline fun <T> LiveData<Event<T>>.observeEvent(
-    owner: LifecycleOwner,
-    crossinline onEventUnhandledContent: (T) -> Unit
-) {
+inline fun <T> LiveData<Event<T>>.observeEvent(owner: LifecycleOwner,
+                                               crossinline onEventUnhandledContent: (T) -> Unit) {
     observe(owner, Observer { it?.getContentIfNotHandled()?.let(onEventUnhandledContent) })
 }
 

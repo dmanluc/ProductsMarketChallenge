@@ -38,7 +38,7 @@ object MarketProductsFragmentBinding {
     @BindingAdapter("imageUrl")
     @JvmStatic
     fun loadImage(view: ImageView, url: String?) {
-        url?.let { view.loadImage(it, R.drawable.ic_broken_image_black_24dp) }
+        url?.let { view.loadImage(it, errorResource = R.drawable.ic_broken_image_black_24dp) }
     }
 
     @BindingAdapter("showWhenEmptyList")
@@ -70,7 +70,8 @@ object MarketProductsFragmentBinding {
                 resource.status == Resource.Status.SUCCESS && resource.data?.isEmpty() ?: false -> {
                     view.apply {
                         show()
-                        text = resources.getString(R.string.market_overview_fragment_products_not_available)
+                        text =
+                            resources.getString(R.string.market_overview_fragment_products_not_available)
                     }
                 }
                 else -> view.hide()
