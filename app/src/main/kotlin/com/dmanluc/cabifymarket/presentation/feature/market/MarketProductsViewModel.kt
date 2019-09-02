@@ -11,10 +11,10 @@ import com.dmanluc.cabifymarket.domain.entity.ProductsCart
 import com.dmanluc.cabifymarket.domain.interactor.GetProductsInteractor
 import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
+import com.dmanluc.cabifymarket.utils.AppDispatchers
 import com.dmanluc.cabifymarket.utils.Event
 import com.dmanluc.cabifymarket.utils.notifyObserver
 import com.dmanluc.cabifymarket.utils.observeAndMapValue
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -24,8 +24,8 @@ import kotlinx.coroutines.withContext
  * @since    2019-07-02.
  */
 class MarketProductsViewModel(private val getProductsInteractor: GetProductsInteractor,
-                              private val saveProductsCartInteractor: SaveProductsCartInteractor) :
-    BaseViewModel() {
+                              private val saveProductsCartInteractor: SaveProductsCartInteractor,
+                              private val dispatchers: AppDispatchers) : BaseViewModel() {
 
     private var _productsSource: LiveData<Resource<List<Product>>> = MutableLiveData()
     private val _products: MediatorLiveData<Resource<List<Product>>> = MediatorLiveData()
@@ -45,8 +45,8 @@ class MarketProductsViewModel(private val getProductsInteractor: GetProductsInte
     }
 
     private fun fetchMarketProducts(forceRefresh: Boolean = false) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.main) {
+            withContext(dispatchers.io) {
                 _productsSource = getProductsInteractor(forceRefresh)
             }
             _products.observeAndMapValue(_productsSource) {
@@ -68,7 +68,7 @@ class MarketProductsViewModel(private val getProductsInteractor: GetProductsInte
 
     private fun saveProductsCart() {
         _productsCart.value?.let {
-            viewModelScope.launch {
+            viewModelScope.launch(dispatchers.main) {
                 saveProductsCartInteractor(it)
             }
         }

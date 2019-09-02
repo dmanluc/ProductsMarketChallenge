@@ -16,7 +16,14 @@ import com.dmanluc.cabifymarket.data.remote.utils.MockDataProvider.createMockPro
 import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.repository.MarketRepository
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.verifyOrder
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -29,6 +36,7 @@ import org.junit.Test
  * @version 1
  * @since 2019-08-30.
  */
+@ExperimentalCoroutinesApi
 class MarketRepositoryImplTest {
 
     @get:Rule

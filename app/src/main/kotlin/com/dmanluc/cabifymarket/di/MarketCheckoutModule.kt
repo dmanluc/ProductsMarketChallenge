@@ -1,6 +1,8 @@
 package com.dmanluc.cabifymarket.di
 
 import com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutViewModel
+import com.dmanluc.cabifymarket.utils.AppDispatchers
+import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -11,5 +13,6 @@ import org.koin.dsl.module
  * @since    2019-07-02.
  */
 val marketCheckoutModule: Module = module {
-    viewModel { MarketCheckoutViewModel(get()) }
+    factory { AppDispatchers(Dispatchers.Main, Dispatchers.IO) }
+    viewModel { MarketCheckoutViewModel(get(), get()) }
 }

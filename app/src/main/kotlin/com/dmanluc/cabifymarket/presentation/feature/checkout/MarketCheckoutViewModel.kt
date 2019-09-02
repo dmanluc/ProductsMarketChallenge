@@ -6,6 +6,7 @@ import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
 import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
+import com.dmanluc.cabifymarket.utils.AppDispatchers
 import com.dmanluc.cabifymarket.utils.notifyObserver
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -15,8 +16,8 @@ import kotlinx.coroutines.launch
  * @version  1
  * @since    2019-08-20.
  */
-class MarketCheckoutViewModel(private val saveProductsCartInteractor: SaveProductsCartInteractor) :
-    BaseViewModel() {
+class MarketCheckoutViewModel(private val saveProductsCartInteractor: SaveProductsCartInteractor,
+                              private val dispatchers: AppDispatchers) : BaseViewModel() {
 
     private val _productsCart: MutableLiveData<ProductsCart> = MutableLiveData()
     val productsCart: LiveData<ProductsCart>
@@ -38,7 +39,7 @@ class MarketCheckoutViewModel(private val saveProductsCartInteractor: SaveProduc
 
     override fun onCleared() {
         _productsCart.value?.let {
-            GlobalScope.launch {
+            GlobalScope.launch(dispatchers.main) {
                 saveProductsCartInteractor.invoke(it)
             }
         }
