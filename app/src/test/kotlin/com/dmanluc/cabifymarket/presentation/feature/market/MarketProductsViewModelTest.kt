@@ -7,8 +7,10 @@ import androidx.test.filters.SmallTest
 import com.dmanluc.cabifymarket.data.remote.utils.MockDataProvider
 import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.data.remote.utils.getOrAwaitValue
+import com.dmanluc.cabifymarket.data.remote.utils.observeForTesting
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.domain.interactor.GetLastSavedProductsCartInteractor
 import com.dmanluc.cabifymarket.domain.interactor.GetProductsInteractor
 import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
 import com.dmanluc.cabifymarket.presentation.navigation.NavigationCommand
@@ -20,7 +22,9 @@ import io.mockk.coVerify
 import io.mockk.confirmVerified
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
+import io.mockk.verifyAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert
@@ -46,56 +50,80 @@ class MarketProductsViewModelTest {
     private lateinit var marketProductsInteractor: GetProductsInteractor
     private lateinit var saveProductsCartInteractor: SaveProductsCartInteractor
     private lateinit var marketProductsViewModel: MarketProductsViewModel
+    private lateinit var lastSavedProductsCartInteractor: GetLastSavedProductsCartInteractor
     private val dispatchers = AppDispatchers(Dispatchers.Unconfined, Dispatchers.Unconfined)
+
+    private val mockProductListResource = Resource.success(MockDataProvider.createMockProductList())
+    private val mockProductCartResource = Resource.success(ProductsCart())
 
     @Before
     fun setUp() {
         marketProductsInteractor = mockk()
         saveProductsCartInteractor = mockk()
+        lastSavedProductsCartInteractor = mockk()
+
+        coEvery {
+            marketProductsInteractor.invoke(any())
+        } returns MutableLiveData<Resource<List<Product>>>().apply {
+            value = mockProductListResource
+        }
+
+        coEvery { saveProductsCartInteractor.invoke(any()) } just Runs
+
+        coEvery {
+            lastSavedProductsCartInteractor.invoke()
+        } returns MutableLiveData<Resource<ProductsCart>>().apply {
+            value = mockProductCartResource
+        }
+
+        marketProductsViewModel = MarketProductsViewModel(
+            marketProductsInteractor,
+            saveProductsCartInteractor,
+            lastSavedProductsCartInteractor,
+            dispatchers
+        )
     }
 
     @Test
     fun `market products requested when ViewModel is created and no error found`() {
         val observer = mockk<Observer<Resource<List<Product>>>>(relaxed = true)
-        val result = Resource.success(MockDataProvider.createMockProductList())
-        coEvery {
-            marketProductsInteractor.invoke(false)
-        } returns MutableLiveData<Resource<List<Product>>>().apply {
-            value = result
+
+        marketProductsViewModel.products.observeForTesting(observer) {
+            verifyAll {
+                observer.onChanged(mockProductListResource)
+            }
+
+            confirmVerified(observer)
         }
-
-        marketProductsViewModel = MarketProductsViewModel(marketProductsInteractor,
-                                                          saveProductsCartInteractor, dispatchers)
-        marketProductsViewModel.products.observeForever(observer)
-
-        verify {
-            observer.onChanged(result)
-        }
-
-        confirmVerified(observer)
     }
 
     @Test
     fun `market products requested but failed when ViewModel is created`() {
         val observer = mockk<Observer<Resource<List<Product>>>>(relaxed = true)
-        val observerSnackbar = mockk<Observer<Event<Int>>>(relaxed = true)
+        val observerSnackbar = mockk<Observer<Event<String>>>(relaxed = true)
+
         val result = Resource.error(Exception("fail"), null)
         coEvery {
-            marketProductsInteractor(any())
+            marketProductsInteractor(forceRefresh = false)
         } returns MutableLiveData<Resource<List<Product>>>().apply {
             value = result
         }
 
-        marketProductsViewModel = MarketProductsViewModel(marketProductsInteractor,
-                                                          saveProductsCartInteractor,
-                                                          dispatchers).apply {
+        marketProductsViewModel = MarketProductsViewModel(
+            marketProductsInteractor,
+            saveProductsCartInteractor,
+            lastSavedProductsCartInteractor,
+            dispatchers
+        )
+
+        with(marketProductsViewModel) {
             products.observeForever(observer)
-            snackBarError.observeForever(observerSnackbar)
+            snackbarErrorWithStringLiteral.observeForever(observerSnackbar)
         }
 
         verify {
             observer.onChanged(result)
-            observerSnackbar.onChanged(marketProductsViewModel.snackBarError.value)
+            observerSnackbar.onChanged(any())
         }
 
         confirmVerified(observer)
@@ -105,61 +133,49 @@ class MarketProductsViewModelTest {
     fun `add product to user´s products cart`() {
         val observer = mockk<Observer<ProductsCart>>(relaxed = true)
         val mockProductList = MockDataProvider.createMockProductList()
-        coEvery {
-            marketProductsInteractor(false)
-        } returns MutableLiveData<Resource<List<Product>>>().apply {
-            value = Resource.success(mockProductList)
-        }
-        coEvery { saveProductsCartInteractor.invoke(any()) } just Runs
 
-        marketProductsViewModel = MarketProductsViewModel(marketProductsInteractor,
-                                                          saveProductsCartInteractor,
-                                                          dispatchers).apply {
-            productsCart.observeForever(observer)
-            addProductToCart(1, mockProductList.first())
-        }
+        with(marketProductsViewModel) {
+            products.getOrAwaitValue()
+            productsCart.getOrAwaitValue() {
+                checkLastSavedProductsCart(mockProductListResource)
+            }
+            productsCart.observeForTesting(observer) {
+                addProductToCart(1, mockProductList.first())
 
-        verify {
-            observer.onChanged(marketProductsViewModel.productsCart.value)
-        }
+                val cartSlot = slot<ProductsCart>()
 
-        coVerify(exactly = 1) {
-            saveProductsCartInteractor.invoke(marketProductsViewModel.productsCart.value!!)
-        }
+                verify {
+                    observer.onChanged(capture(cartSlot))
+                }
 
-        confirmVerified(observer)
+                coVerify(exactly = 1) {
+                    saveProductsCartInteractor.invoke(any())
+                    lastSavedProductsCartInteractor.invoke()
+                }
+
+                confirmVerified(observer)
+
+                Assert.assertEquals(cartSlot.captured.size(), 1)
+            }
+        }
     }
 
     @Test
     fun `navigate to checkout screen`() {
-        val mockProductList = MockDataProvider.createMockProductList()
+        with(marketProductsViewModel) {
+            products.getOrAwaitValue()
+            productsCart.getOrAwaitValue() {
+                checkLastSavedProductsCart(mockProductListResource)
+            }
+        }
+
         val event = Event(
             NavigationCommand.To(
-                MarketProductsFragmentDirections.actionGoToCheckout(ProductsCart().apply {
-                    addProduct(
-                        1, mockProductList.first()
-                    )
-                })
+                MarketProductsFragmentDirections.actionGoToCheckout(ProductsCart())
             )
         )
 
-        coEvery {
-            marketProductsInteractor(false)
-        } returns MutableLiveData<Resource<List<Product>>>().apply {
-            value = Resource.success(mockProductList)
-        }
-        coEvery { saveProductsCartInteractor.invoke(any()) } just Runs
-
-        marketProductsViewModel = MarketProductsViewModel(marketProductsInteractor,
-                                                          saveProductsCartInteractor, dispatchers)
-        with(marketProductsViewModel) {
-            addProductToCart(1, mockProductList.first())
-            goToCheckout()
-        }
-
-        coVerify(exactly = 1) {
-            saveProductsCartInteractor.invoke(marketProductsViewModel.productsCart.value!!)
-        }
+        marketProductsViewModel.goToCheckout()
 
         Assert.assertEquals(
             event.peekContent(), marketProductsViewModel.navigation.getOrAwaitValue().peekContent()
@@ -169,26 +185,17 @@ class MarketProductsViewModelTest {
     @Test
     fun `user refreshes list with swipe to refresh`() {
         val observer = mockk<Observer<Resource<List<Product>>>>(relaxed = true)
-        val mockProductList = MockDataProvider.createMockProductList()
-        coEvery {
-            marketProductsInteractor(any())
-        } returns MutableLiveData<Resource<List<Product>>>().apply {
-            value = Resource.success(mockProductList)
-        }
 
-        marketProductsViewModel = MarketProductsViewModel(marketProductsInteractor,
-                                                          saveProductsCartInteractor,
-                                                          dispatchers).apply {
-            products.observeForever(observer)
-            refreshMarketProducts()
-        }
+        marketProductsViewModel.products.observeForTesting(observer) {
+            marketProductsViewModel.refreshMarketProducts()
 
-        verify {
-            observer.onChanged(Resource.success(mockProductList))
-            observer.onChanged(Resource.success(mockProductList))
-        }
+            verify {
+                observer.onChanged(mockProductListResource)
+                observer.onChanged(mockProductListResource)
+            }
 
-        confirmVerified(observer)
+            confirmVerified(observer)
+        }
     }
 
 }
