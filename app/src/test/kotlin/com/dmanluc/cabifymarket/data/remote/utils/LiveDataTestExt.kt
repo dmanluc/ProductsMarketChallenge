@@ -22,6 +22,7 @@ fun <T> LiveData<T>.getOrAwaitValue(time: Long = 2,
                                     afterObserve: () -> Unit = {}): T {
     var data: T? = null
     val latch = CountDownLatch(1)
+
     val observer = object : Observer<T> {
         override fun onChanged(o: T?) {
             data = o
@@ -45,8 +46,7 @@ fun <T> LiveData<T>.getOrAwaitValue(time: Long = 2,
 /**
  * Observes a [LiveData] until the `block` is done executing.
  */
-fun <T> LiveData<T>.observeForTesting(block: () -> Unit) {
-    val observer = Observer<T> { }
+fun <T> LiveData<T>.observeForTesting(observer: Observer<T> = Observer {}, block: () -> Unit) {
     try {
         observeForever(observer)
         block()
