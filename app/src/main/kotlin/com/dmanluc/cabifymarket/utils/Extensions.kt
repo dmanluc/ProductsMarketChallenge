@@ -2,17 +2,18 @@
 
 package com.dmanluc.cabifymarket.utils
 
-import android.content.Context
 import android.content.res.AssetManager
-import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import android.net.ConnectivityManager
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
@@ -30,24 +31,32 @@ import org.apache.commons.io.IOUtils
  * @version  1
  * @since    29/10/2018.
  */
-fun Context.hasActiveNetworkConnectivity(): Boolean {
-    return (getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager)?.let {
-        it.activeNetworkInfo != null && it.activeNetworkInfo.isConnected
-    } ?: false
-}
-
 fun Fragment.showSnackbar(snackbarText: String, timeLength: Int) {
     activity?.let {
         Snackbar.make(it.findViewById(android.R.id.content), snackbarText, timeLength).show()
     }
 }
 
-fun Fragment.setupSnackbar(lifecycleOwner: LifecycleOwner,
-                           snackbarEvent: LiveData<Event<Int>>,
-                           timeLength: Int) {
+fun Fragment.setupSnackbarWithStringResId(
+    lifecycleOwner: LifecycleOwner,
+    snackbarEvent: LiveData<Event<Int>>,
+    timeLength: Int
+) {
     snackbarEvent.observe(lifecycleOwner, Observer { event ->
         event.getContentIfNotHandled()?.let { res ->
             context?.let { showSnackbar(it.getString(res), timeLength) }
+        }
+    })
+}
+
+fun Fragment.setupSnackbarWithStringLiteral(
+    lifecycleOwner: LifecycleOwner,
+    snackbarEvent: LiveData<Event<String>>,
+    timeLength: Int
+) {
+    snackbarEvent.observe(lifecycleOwner, Observer { event ->
+        event.getContentIfNotHandled()?.let { literal ->
+            context?.let { showSnackbar(literal, timeLength) }
         }
     })
 }
@@ -60,30 +69,32 @@ fun View.hide() {
     visibility = View.GONE
 }
 
-fun View.invisible() {
-    visibility = View.INVISIBLE
-}
-
-fun ImageView.loadImage(path: String,
-                        errorResource: Int,
-                        onExceptionDelegate: () -> Unit = {},
-                        onResourceReadyDelegate: () -> Unit = {},
-                        daysWhileValidCache: Int = 1) {
+fun ImageView.loadImage(
+    path: String,
+    errorResource: Int,
+    onExceptionDelegate: () -> Unit = {},
+    onResourceReadyDelegate: () -> Unit = {},
+    daysWhileValidCache: Int = 1
+) {
 
     GlideApp.with(this.context).load(Uri.parse(path)).listener(object : RequestListener<Drawable> {
-        override fun onLoadFailed(e: GlideException?,
-                                  model: Any?,
-                                  target: com.bumptech.glide.request.target.Target<Drawable>?,
-                                  isFirstResource: Boolean): Boolean {
+        override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: com.bumptech.glide.request.target.Target<Drawable>?,
+            isFirstResource: Boolean
+        ): Boolean {
             onExceptionDelegate()
             return false
         }
 
-        override fun onResourceReady(resource: Drawable?,
-                                     model: Any?,
-                                     target: com.bumptech.glide.request.target.Target<Drawable>,
-                                     dataSource: DataSource?,
-                                     isFirstResource: Boolean): Boolean {
+        override fun onResourceReady(
+            resource: Drawable?,
+            model: Any?,
+            target: com.bumptech.glide.request.target.Target<Drawable>,
+            dataSource: DataSource?,
+            isFirstResource: Boolean
+        ): Boolean {
             onResourceReadyDelegate()
             return false
         }
@@ -93,8 +104,6 @@ fun ImageView.loadImage(path: String,
             else this.toString()
         })).error(errorResource).transition(DrawableTransitionOptions().crossFade()).into(this)
 }
-
-fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 fun AssetManager.readJsonAssetFileName(fileName: String): String {
     if (fileName.isBlank()) {
@@ -108,8 +117,10 @@ fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
 }
 
-inline fun <T> LiveData<Event<T>>.observeEvent(owner: LifecycleOwner,
-                                               crossinline onEventUnhandledContent: (T) -> Unit) {
+inline fun <T> LiveData<Event<T>>.observeEvent(
+    owner: LifecycleOwner,
+    crossinline onEventUnhandledContent: (T) -> Unit
+) {
     observe(owner, Observer { it?.getContentIfNotHandled()?.let(onEventUnhandledContent) })
 }
 
@@ -122,3 +133,6 @@ fun <M, S> MediatorLiveData<M>.observeAndMapValue(source: LiveData<S>, func: (da
 }
 
 fun Boolean?.orFalse(): Boolean = this ?: false
+
+fun <T1 : Any, T2 : Any, R : Any> safeLet(p1: T1?, p2: T2?, block: (T1, T2) -> R?): R? =
+    if (p1 != null && p2 != null) block(p1, p2) else null

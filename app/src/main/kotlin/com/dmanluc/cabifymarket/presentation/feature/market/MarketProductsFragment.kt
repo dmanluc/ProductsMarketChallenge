@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.dmanluc.cabifymarket.databinding.FragmentMarketProductsBinding
 import com.dmanluc.cabifymarket.presentation.base.BaseFragment
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
@@ -22,9 +23,11 @@ class MarketProductsFragment : BaseFragment() {
 
     override fun getViewModel(): BaseViewModel = viewModel
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentMarketProductsBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -35,6 +38,10 @@ class MarketProductsFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         configureRecyclerView()
+
+        viewModel.products.observe(viewLifecycleOwner, Observer {
+            viewModel.checkLastSavedProductsCart(it)
+        })
     }
 
     private fun configureRecyclerView() {

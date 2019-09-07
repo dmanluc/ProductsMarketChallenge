@@ -8,7 +8,8 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.dmanluc.cabifymarket.presentation.navigation.NavigationCommand
-import com.dmanluc.cabifymarket.utils.setupSnackbar
+import com.dmanluc.cabifymarket.utils.setupSnackbarWithStringLiteral
+import com.dmanluc.cabifymarket.utils.setupSnackbarWithStringResId
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -21,7 +22,17 @@ abstract class BaseFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         observeNavigation(getViewModel())
-        setupSnackbar(this, getViewModel().snackBarError, Snackbar.LENGTH_LONG)
+
+        setupSnackbarWithStringResId(
+            this,
+            getViewModel().snackbarErrorWithStringResId,
+            Snackbar.LENGTH_LONG
+        )
+        setupSnackbarWithStringLiteral(
+            this,
+            getViewModel().snackbarErrorWithStringLiteral,
+            Snackbar.LENGTH_LONG
+        )
     }
 
     abstract fun getViewModel(): BaseViewModel

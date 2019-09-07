@@ -9,8 +9,11 @@ import com.dmanluc.cabifymarket.utils.Event
 
 abstract class BaseViewModel : ViewModel() {
 
-    protected val _snackbarError = MutableLiveData<Event<Int>>()
-    val snackBarError: LiveData<Event<Int>> get() = _snackbarError
+    protected val _snackbarErrorWithStringResId = MutableLiveData<Event<Int>>()
+    val snackbarErrorWithStringResId: LiveData<Event<Int>> get() = _snackbarErrorWithStringResId
+
+    protected val _snackbarErrorWithStringLiteral = MutableLiveData<Event<String>>()
+    val snackbarErrorWithStringLiteral: LiveData<Event<String>> get() = _snackbarErrorWithStringLiteral
 
     // FOR NAVIGATION
     private val _navigation = MutableLiveData<Event<NavigationCommand>>()
