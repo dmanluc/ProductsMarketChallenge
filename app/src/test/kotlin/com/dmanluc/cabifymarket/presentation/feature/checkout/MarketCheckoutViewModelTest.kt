@@ -3,7 +3,7 @@ package com.dmanluc.cabifymarket.presentation.feature.checkout
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
-import com.dmanluc.cabifymarket.data.remote.utils.MockDataProvider
+import com.dmanluc.cabifymarket.utils.MockDataProvider
 import com.dmanluc.cabifymarket.data.remote.utils.observeForTesting
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
 import io.mockk.confirmVerified

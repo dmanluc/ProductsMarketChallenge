@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
-import com.dmanluc.cabifymarket.data.remote.utils.MockDataProvider
 import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.data.remote.utils.getOrAwaitValue
 import com.dmanluc.cabifymarket.data.remote.utils.observeForTesting
@@ -16,6 +15,7 @@ import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
 import com.dmanluc.cabifymarket.presentation.navigation.NavigationCommand
 import com.dmanluc.cabifymarket.utils.AppDispatchers
 import com.dmanluc.cabifymarket.utils.Event
+import com.dmanluc.cabifymarket.utils.MockDataProvider
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify

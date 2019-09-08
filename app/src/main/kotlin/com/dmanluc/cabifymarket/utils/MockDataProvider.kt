@@ -1,4 +1,4 @@
-package com.dmanluc.cabifymarket.data.remote.utils
+package com.dmanluc.cabifymarket.utils
 
 import com.dmanluc.cabifymarket.data.remote.model.MarketApiResponse
 import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule

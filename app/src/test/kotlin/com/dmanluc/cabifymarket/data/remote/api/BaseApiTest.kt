@@ -1,7 +1,7 @@
 package com.dmanluc.cabifymarket.data.remote.api
 
-import com.dmanluc.cabifymarket.data.remote.utils.MockDataProvider
 import com.dmanluc.cabifymarket.di.createRemoteModule
+import com.dmanluc.cabifymarket.utils.MockDataProvider
 import com.squareup.okhttp.mockwebserver.MockResponse
 import com.squareup.okhttp.mockwebserver.MockWebServer
 import org.junit.After

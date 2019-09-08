@@ -11,11 +11,11 @@ import com.dmanluc.cabifymarket.data.remote.datasource.MarketRemoteDataSource
 import com.dmanluc.cabifymarket.data.remote.datasource.MarketRemoteDataSourceImpl
 import com.dmanluc.cabifymarket.data.remote.mapper.ProductEntityMapper
 import com.dmanluc.cabifymarket.data.remote.utils.CoroutinesMainDispatcherRule
-import com.dmanluc.cabifymarket.data.remote.utils.MockDataProvider.createMockMarketProductsApiResponse
-import com.dmanluc.cabifymarket.data.remote.utils.MockDataProvider.createMockProductList
 import com.dmanluc.cabifymarket.data.remote.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.repository.MarketRepository
+import com.dmanluc.cabifymarket.utils.MockDataProvider.createMockMarketProductsApiResponse
+import com.dmanluc.cabifymarket.utils.MockDataProvider.createMockProductList
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
