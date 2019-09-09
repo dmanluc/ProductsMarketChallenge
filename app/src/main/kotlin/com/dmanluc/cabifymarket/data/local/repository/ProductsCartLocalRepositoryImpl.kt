@@ -22,4 +22,8 @@ class ProductsCartLocalRepositoryImpl(private val localDataSource: ProductsCartL
         return localDataSource.getLastSavedProductsCart()
     }
 
+    override suspend fun deleteProductsCart(productsCart: ProductsCart) {
+        localDataSource.deleteProductsCart(productsCart)
+    }
+
 }

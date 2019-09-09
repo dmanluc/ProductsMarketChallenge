@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dmanluc.cabifymarket.databinding.FragmentMarketCheckoutBinding
 import com.dmanluc.cabifymarket.presentation.base.BaseFragment
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 import com.dmanluc.cabifymarket.utils.morphDoneAndRevert
+import com.dmanluc.cabifymarket.utils.observeEvent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -77,11 +79,14 @@ class MarketCheckoutFragment : BaseFragment() {
     }
 
     private fun configureCartPaymentButton() {
+        viewModel.finishCheckoutFlow.observeEvent(viewLifecycleOwner) {
+            findNavController().navigateUp()
+        }
 
         binding.cartPayment.run {
             setOnClickListener {
                 activity?.let { context ->
-                    morphDoneAndRevert(context) {  }
+                    morphDoneAndRevert(context) { viewModel.closeFlow() }
                 }
             }
         }

@@ -53,4 +53,12 @@ class ProductsCartLocalDataSourceImpl(private val dao: ShoppingCartDao,
         return result
     }
 
+    override suspend fun deleteProductsCart(productsCart: ProductsCart) {
+        cacheDataSource.clear()
+
+        CoroutineScope(coroutineContext).launch {
+            dao.deleteShoppingCart(productsCartDomainToEntityMapper.mapFrom(productsCart))
+        }
+    }
+
 }

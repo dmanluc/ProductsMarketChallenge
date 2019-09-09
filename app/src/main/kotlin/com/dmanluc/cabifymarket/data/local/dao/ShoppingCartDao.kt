@@ -14,4 +14,8 @@ abstract class ShoppingCartDao : BaseDao<ShoppingCartEntity>() {
         insert(cart)
     }
 
+    suspend fun deleteShoppingCart(cart: ShoppingCartEntity) {
+        delete(cart)
+    }
+
 }

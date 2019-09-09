@@ -1,5 +1,6 @@
 package com.dmanluc.cabifymarket.di
 
+import com.dmanluc.cabifymarket.domain.interactor.DeleteProductsCartInteractor
 import com.dmanluc.cabifymarket.domain.interactor.GetLastSavedProductsCartInteractor
 import com.dmanluc.cabifymarket.domain.interactor.GetProductsFromLocalDatabaseInteractor
 import com.dmanluc.cabifymarket.domain.interactor.GetProductsInteractor
@@ -17,4 +18,5 @@ val interactorModule: Module = module {
     factory { GetProductsFromLocalDatabaseInteractor(get()) }
     factory { SaveProductsCartInteractor(get()) }
     factory { GetLastSavedProductsCartInteractor(get()) }
+    factory { DeleteProductsCartInteractor(get()) }
 }

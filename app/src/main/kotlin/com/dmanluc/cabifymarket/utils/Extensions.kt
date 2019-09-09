@@ -127,6 +127,10 @@ fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
 }
 
+fun <T> MutableLiveData<T>.postNotifyObserver() {
+    postValue(this.value)
+}
+
 inline fun <T> LiveData<Event<T>>.observeEvent(
     owner: LifecycleOwner,
     crossinline onEventUnhandledContent: (T) -> Unit
@@ -162,8 +166,8 @@ fun Fragment.executePendingDataBindingTransactions() {
 fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 fun ProgressButton.morphDoneAndRevert(context: Context,
-                                      doneTime: Long = 3000,
-                                      revertTime: Long = 4000,
+                                      doneTime: Long = 2000,
+                                      finishTime: Long = 2650,
                                       onAnimationFinished: () -> Unit = {}) {
     progressType = ProgressType.INDETERMINATE
 
@@ -177,6 +181,6 @@ fun ProgressButton.morphDoneAndRevert(context: Context,
 
     Handler().run {
         postDelayed({ doneLoadingAnimation(fillColor, bitmap) }, doneTime)
-        postDelayed({ revertAnimation { onAnimationFinished() } }, revertTime)
+        postDelayed({ onAnimationFinished() }, finishTime)
     }
 }

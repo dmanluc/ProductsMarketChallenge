@@ -15,4 +15,6 @@ interface ProductsCartLocalDataSource {
 
     suspend fun getLastSavedProductsCart(): LiveData<Resource<ProductsCart>>
 
+    suspend fun deleteProductsCart(productsCart: ProductsCart)
+
 }

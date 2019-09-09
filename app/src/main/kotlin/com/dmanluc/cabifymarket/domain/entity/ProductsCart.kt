@@ -36,4 +36,8 @@ data class ProductsCart(private val cart: LinkedHashMap<Product, Int> = linkedMa
         return cart
     }
 
+    fun clearCart() {
+        cart.clear()
+    }
+
 }
