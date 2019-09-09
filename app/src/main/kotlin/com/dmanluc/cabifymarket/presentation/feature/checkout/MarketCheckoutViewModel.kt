@@ -12,7 +12,7 @@ import com.dmanluc.cabifymarket.utils.notifyObserver
  * @version  1
  * @since    2019-08-20.
  */
-class MarketCheckoutViewModel() : BaseViewModel() {
+class MarketCheckoutViewModel : BaseViewModel() {
 
     private val _productsCart: MutableLiveData<ProductsCart> = MutableLiveData()
     val productsCart: LiveData<ProductsCart>

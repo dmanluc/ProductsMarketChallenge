@@ -8,6 +8,7 @@ import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.MainThread
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -23,6 +24,7 @@ import com.bumptech.glide.signature.ObjectKey
 import com.dmanluc.cabifymarket.presentation.core.GlideApp
 import com.google.android.material.snackbar.Snackbar
 import org.apache.commons.io.IOUtils
+import org.jetbrains.annotations.TestOnly
 
 /**
  * Extension utils
@@ -136,3 +138,15 @@ fun Boolean?.orFalse(): Boolean = this ?: false
 
 fun <T1 : Any, T2 : Any, R : Any> safeLet(p1: T1?, p2: T2?, block: (T1, T2) -> R?): R? =
     if (p1 != null && p2 != null) block(p1, p2) else null
+
+@TestOnly
+fun Fragment.executePendingDataBindingTransactions() {
+    with(this) {
+        view?.let {
+            activity?.runOnUiThread {
+                androidx.databinding.DataBindingUtil.getBinding<ViewDataBinding>(it)
+                    ?.executePendingBindings()
+            }
+        }
+    }
+}

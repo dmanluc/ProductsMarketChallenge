@@ -1,7 +1,5 @@
 package com.dmanluc.cabifymarket
 
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -32,6 +30,7 @@ import com.dmanluc.cabifymarket.presentation.feature.market.MarketProductsFragme
 import com.dmanluc.cabifymarket.presentation.feature.market.MarketProductsFragmentDirections
 import com.dmanluc.cabifymarket.utils.AppDispatchers
 import com.dmanluc.cabifymarket.utils.MockDataProvider
+import com.dmanluc.cabifymarket.utils.executePendingDataBindingTransactions
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.just
@@ -194,11 +193,7 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
                 )
             )
 
-        fragment.view?.let {
-            fragment.activity?.runOnUiThread {
-                DataBindingUtil.getBinding<ViewDataBinding>(it)?.executePendingBindings()
-            }
-        }
+        fragment.executePendingDataBindingTransactions()
 
         onView(withId(R.id.cartCheckout)).check(matches(isEnabled()))
     }
