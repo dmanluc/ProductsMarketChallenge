@@ -96,6 +96,7 @@ dependencies {
     androidTestImplementation 'io.mockk:mockk-android:1.9.2'
     implementation 'org.koin:koin-test:2.0.1'
     kaptAndroidTest 'androidx.databinding:databinding-compiler:3.5.0'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
 
     testImplementation 'junit:junit:4.12'
     implementation 'io.mockk:mockk:1.9.2'

@@ -3,10 +3,15 @@ package com.dmanluc.cabifymarket.presentation.feature.checkout
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
-import com.dmanluc.cabifymarket.utils.MockDataProvider
 import com.dmanluc.cabifymarket.data.remote.utils.observeForTesting
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.domain.interactor.DeleteProductsCartInteractor
+import com.dmanluc.cabifymarket.utils.Event
+import com.dmanluc.cabifymarket.utils.MockDataProvider
+import io.mockk.Runs
+import io.mockk.coEvery
 import io.mockk.confirmVerified
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
@@ -31,11 +36,16 @@ class MarketCheckoutViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
+    private lateinit var deleteProductsCartInteractor: DeleteProductsCartInteractor
     private lateinit var marketCheckoutViewModel: MarketCheckoutViewModel
 
     @Before
     fun setUp() {
-        marketCheckoutViewModel = MarketCheckoutViewModel()
+        deleteProductsCartInteractor = mockk()
+
+        coEvery { deleteProductsCartInteractor.invoke(any()) } just Runs
+
+        marketCheckoutViewModel = MarketCheckoutViewModel(deleteProductsCartInteractor)
 
         val mockProductsCart = MockDataProvider.createMockProductsCart()
         marketCheckoutViewModel.loadCartProducts(mockProductsCart)
@@ -98,6 +108,34 @@ class MarketCheckoutViewModelTest {
                 confirmVerified(observer)
 
                 Assert.assertEquals(cartSlot.captured.size(), 5)
+            }
+        }
+    }
+
+    @Test
+    fun clearCartAndCloseFlow() {
+        val cartObserver = mockk<Observer<ProductsCart>>(relaxed = true)
+        val closeEventObserver = mockk<Observer<Event<Unit>>>(relaxed = true)
+
+        with(marketCheckoutViewModel) {
+            productsCart.observeForTesting(cartObserver) {
+                finishCheckoutFlow.observeForever(closeEventObserver)
+
+                closeFlow()
+
+                val cartSlot = slot<ProductsCart>()
+
+                verify {
+                    cartObserver.onChanged(capture(cartSlot))
+                    closeEventObserver.onChanged(any())
+                }
+
+                confirmVerified(cartObserver)
+                confirmVerified(closeEventObserver)
+
+                Assert.assertEquals(cartSlot.captured.size(), 0)
+
+                finishCheckoutFlow.removeObserver(closeEventObserver)
             }
         }
     }

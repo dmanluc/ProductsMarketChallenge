@@ -5,28 +5,42 @@ import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.pressBackUnconditionally
+import androidx.test.espresso.action.ViewActions.swipeUp
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.idling.CountingIdlingResource
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.dmanluc.cabifymarket.di.interactorModule
 import com.dmanluc.cabifymarket.di.marketCheckoutModule
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
+import com.dmanluc.cabifymarket.domain.repository.MarketProductsLocalRepository
+import com.dmanluc.cabifymarket.domain.repository.MarketRepository
+import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
 import com.dmanluc.cabifymarket.espressoRecyclerViewActions.RecyclerViewHolderItemViewAction
 import com.dmanluc.cabifymarket.espressoRecyclerViewActions.RecyclerViewItemCountAssertion.Companion.withItemCount
 import com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutAdapter
 import com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutFragment
+import com.dmanluc.cabifymarket.utils.AppDispatchers
 import com.dmanluc.cabifymarket.utils.MockDataProvider
 import com.dmanluc.cabifymarket.utils.executePendingDataBindingTransactions
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
 import org.hamcrest.CoreMatchers.not
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.core.context.startKoin
+import org.koin.dsl.module
 import org.koin.test.AutoCloseKoinTest
 
 
@@ -41,21 +55,36 @@ import org.koin.test.AutoCloseKoinTest
 @LargeTest
 class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
 
+    private var componentIdlingResource: CountingIdlingResource? = null
+
     private val mockProductsCart = MockDataProvider.createMockProductsCart()
+
+    private var marketRepository = mockk<MarketRepository>()
+    private var localProductsCartRepository = mockk<ProductsCartLocalRepository>()
 
     private lateinit var fragment: MarketCheckoutFragment
 
     @Before
     fun setUp() {
         startKoin {
-            modules(listOf(marketCheckoutModule))
+            modules(listOf(module {
+                factory { AppDispatchers(Dispatchers.Main, Dispatchers.Main) }
+                factory { marketRepository }
+                factory { localProductsCartRepository }
+                factory { mockk<MarketProductsLocalRepository>() }
+            }, interactorModule, marketCheckoutModule))
         }
+
+        launchFragment()
+    }
+
+    @After
+    fun tearDown() {
+        componentIdlingResource?.let { IdlingRegistry.getInstance().unregister(it) }
     }
 
     @Test
     fun loadProductsCart_checkoutListContainsItsItems() {
-        launchFragment()
-
         onView(withId(R.id.cartProductsRecycler)).check(withItemCount(mockProductsCart.getProducts().size))
 
         onView(withId(R.id.checkoutOrderInfoTotalPrice)).check(
@@ -73,8 +102,6 @@ class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
 
     @Test
     fun updateProductItemQuantity_shouldUpdateTotalPrice() {
-        launchFragment()
-
         onView(withId(R.id.cartProductsRecycler))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<MarketCheckoutAdapter.ProductViewHolder>(
@@ -98,8 +125,6 @@ class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
 
     @Test
     fun removeAllProductsFromCart_shouldDisablePaymentButton() {
-        launchFragment()
-
         repeat(mockProductsCart.getProducts().size) {
             onView(withId(R.id.cartProductsRecycler))
                 .perform(
@@ -124,6 +149,14 @@ class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
         onView(withId(R.id.cartPayment)).check(matches(not(isEnabled())))
     }
 
+    @Test
+    fun completePayment_shouldFinishCheckoutFlow() {
+        onView(withId(R.id.checkoutOrderInfo)).perform(swipeUp())
+        onView(withId(R.id.cartPayment)).perform(click())
+
+        onView(isRoot()).perform(pressBackUnconditionally())
+    }
+
     private fun launchFragment(): NavController {
         val mockNavController = mockk<NavController>(relaxed = true)
         val marketProductsScenario =
@@ -133,6 +166,10 @@ class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
 
         marketProductsScenario.onFragment { fragment ->
             this.fragment = fragment
+
+            componentIdlingResource = fragment.countingIdlingResource
+            IdlingRegistry.getInstance().register(componentIdlingResource)
+
             Navigation.setViewNavController(fragment.requireView(), mockNavController)
         }
 

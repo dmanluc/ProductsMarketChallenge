@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.dmanluc.cabifymarket.databinding.FragmentMarketCheckoutBinding
 import com.dmanluc.cabifymarket.presentation.base.BaseFragment
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
@@ -24,6 +25,8 @@ class MarketCheckoutFragment : BaseFragment() {
 
     private val viewModel: MarketCheckoutViewModel by viewModel()
     private val args: MarketCheckoutFragmentArgs by navArgs()
+
+    val countingIdlingResource = CountingIdlingResource("MarketCheckoutFragment")
 
     private lateinit var binding: FragmentMarketCheckoutBinding
 
@@ -64,17 +67,27 @@ class MarketCheckoutFragment : BaseFragment() {
     private fun configureBottomSheet() {
         BottomSheetBehavior.from(binding.checkoutOrderInfoBottomSheet)
             .setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onSlide(p0: View, p1: Float) {
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
                     val layoutParams =
                         binding.cartProductsRecycler.layoutParams as CoordinatorLayout.LayoutParams
-                    layoutParams.height = p0.top + binding.cartProductsRecycler.paddingBottom
+                    layoutParams.height = bottomSheet.top + binding.cartProductsRecycler.paddingBottom
                     binding.cartProductsRecycler.apply {
                         setLayoutParams(layoutParams)
                         requestLayout()
                     }
                 }
 
-                override fun onStateChanged(p0: View, p1: Int) {}
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    when (newState) {
+                        BottomSheetBehavior.STATE_EXPANDED ->
+                            countingIdlingResource.decrement()
+                        BottomSheetBehavior.STATE_COLLAPSED ->
+                            countingIdlingResource.decrement()
+                        BottomSheetBehavior.STATE_DRAGGING ->
+                            countingIdlingResource.increment()
+                       else -> {}
+                    }
+                }
             })
     }
 
