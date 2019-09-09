@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.fragment.navArgs
 import com.dmanluc.cabifymarket.databinding.FragmentMarketCheckoutBinding
 import com.dmanluc.cabifymarket.presentation.base.BaseFragment
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -36,9 +38,14 @@ class MarketCheckoutFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        configureRecyclerView()
-
+        setupUI()
+        
         viewModel.loadCartProducts(args.productsCart)
+    }
+
+    private fun setupUI() {
+        configureRecyclerView()
+        configureBottomSheet()
     }
 
     private fun configureRecyclerView() {
@@ -47,6 +54,23 @@ class MarketCheckoutFragment : BaseFragment() {
                 viewModel.updateProductCartQuantity(newQuantity, product)
             }, onRemoveProductFromCart = {
                 viewModel.removeProductFromCart(it)
+            })
+    }
+
+    private fun configureBottomSheet() {
+        BottomSheetBehavior.from(binding.checkoutOrderInfoBottomSheet)
+            .setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(p0: View, p1: Float) {
+                    val layoutParams =
+                        binding.cartProductsRecycler.layoutParams as CoordinatorLayout.LayoutParams
+                    layoutParams.height = p0.top + binding.cartProductsRecycler.paddingBottom
+                    binding.cartProductsRecycler.apply {
+                        setLayoutParams(layoutParams)
+                        requestLayout()
+                    }
+                }
+
+                override fun onStateChanged(p0: View, p1: Int) {}
             })
     }
 
