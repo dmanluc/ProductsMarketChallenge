@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -20,15 +21,15 @@
             android:id="@+id/emptyProductsCartTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/market_checkout_fragment_empty_cart"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:visibility="gone"
-            android:textSize="18sp"
-            android:layout_gravity="center"
             app:showWhenEmptyCart="@{viewModel.productsCart}"
             tools:visibility="visible" />
 
@@ -54,8 +55,6 @@
             app:behavior_hideable="false"
             app:behavior_peekHeight="64dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-            <include layout="@layout/item_divider" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/checkoutOrderInfo"
@@ -171,7 +170,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/checkoutOrderDeliveryTitle" />
 
-            <Button
+            <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
                 android:id="@+id/cartPayment"
                 style="@style/AccentRoundButton"
                 android:layout_width="match_parent"
@@ -190,7 +189,12 @@
                 android:textSize="19sp"
                 android:textStyle="bold"
                 app:enableCheckout="@{viewModel.productsCart}"
+                app:spinning_bar_width="2dp"
+                app:spinning_bar_color="#FFF"
+                app:spinning_bar_padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/checkoutOrderDeliveryTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

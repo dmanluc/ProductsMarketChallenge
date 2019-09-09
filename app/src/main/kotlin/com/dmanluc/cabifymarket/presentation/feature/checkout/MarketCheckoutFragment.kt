@@ -9,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.dmanluc.cabifymarket.databinding.FragmentMarketCheckoutBinding
 import com.dmanluc.cabifymarket.presentation.base.BaseFragment
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
+import com.dmanluc.cabifymarket.utils.morphDoneAndRevert
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,6 +47,7 @@ class MarketCheckoutFragment : BaseFragment() {
     private fun setupUI() {
         configureRecyclerView()
         configureBottomSheet()
+        configureCartPaymentButton()
     }
 
     private fun configureRecyclerView() {
@@ -72,6 +74,17 @@ class MarketCheckoutFragment : BaseFragment() {
 
                 override fun onStateChanged(p0: View, p1: Int) {}
             })
+    }
+
+    private fun configureCartPaymentButton() {
+
+        binding.cartPayment.run {
+            setOnClickListener {
+                activity?.let { context ->
+                    morphDoneAndRevert(context) {  }
+                }
+            }
+        }
     }
 
 }

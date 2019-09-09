@@ -2,12 +2,17 @@
 
 package com.dmanluc.cabifymarket.utils
 
+import android.content.Context
 import android.content.res.AssetManager
+import android.content.res.Resources
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Handler
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.MainThread
+import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -15,12 +20,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import br.com.simplepass.loadingbutton.animatedDrawables.ProgressType
+import br.com.simplepass.loadingbutton.customViews.ProgressButton
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.signature.ObjectKey
+import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.presentation.core.GlideApp
 import com.google.android.material.snackbar.Snackbar
 import org.apache.commons.io.IOUtils
@@ -148,5 +156,27 @@ fun Fragment.executePendingDataBindingTransactions() {
                     ?.executePendingBindings()
             }
         }
+    }
+}
+
+fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+fun ProgressButton.morphDoneAndRevert(context: Context,
+                                      doneTime: Long = 3000,
+                                      revertTime: Long = 4000,
+                                      onAnimationFinished: () -> Unit = {}) {
+    progressType = ProgressType.INDETERMINATE
+
+    val button = this
+    val fillColor = ContextCompat.getColor(context, R.color.colorPrimary)
+    val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_done_white_48dp)
+
+    button.initialCorner = 6.dpToPx().toFloat()
+
+    startAnimation()
+
+    Handler().run {
+        postDelayed({ doneLoadingAnimation(fillColor, bitmap) }, doneTime)
+        postDelayed({ revertAnimation { onAnimationFinished() } }, revertTime)
     }
 }
