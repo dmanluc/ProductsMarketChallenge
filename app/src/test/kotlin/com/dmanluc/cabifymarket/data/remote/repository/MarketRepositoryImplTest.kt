@@ -48,8 +48,6 @@ class MarketRepositoryImplTest {
     private lateinit var observer: Observer<Resource<List<Product>>>
     private lateinit var productsRepository: MarketRepository
     private lateinit var remoteDataSource: MarketRemoteDataSource
-    //private lateinit var gson: Gson
-    //private lateinit var assetManager: AssetManager
     private val entityMapper = mockk<ProductEntityMapper>()
     private val domainToDatabaseEntityMapper = ProductDomainToDatabaseEntityMapper()
     private val databaseEntityToDomainMapper = MarketProductDatabaseEntityToDomainMapper()
@@ -60,11 +58,6 @@ class MarketRepositoryImplTest {
     @Before
     fun setUp() {
         observer = mockk(relaxed = true)
-
-        //gson = GsonBuilder().create()
-        //assetManager = mockk()
-        //mockkStatic("com.dmanluc.cabifymarket.utils.ExtensionsKt")
-        //every { any<AssetManager>().readJsonAssetFileName(any()) } returns readJsonAsString("productDiscountRules.json")
 
         remoteDataSource = MarketRemoteDataSourceImpl(
             marketService,
