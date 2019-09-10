@@ -1,7 +1,9 @@
 package com.dmanluc.cabifymarket.utils
 
 import com.dmanluc.cabifymarket.data.local.mapper.ProductDomainToDatabaseEntityMapper
+import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEntityMapper
 import com.dmanluc.cabifymarket.data.local.model.MarketProductEntity
+import com.dmanluc.cabifymarket.data.local.model.ShoppingCartEntity
 import com.dmanluc.cabifymarket.data.remote.model.MarketApiResponse
 import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
@@ -87,6 +89,12 @@ object MockDataProvider {
         val mapper = ProductDomainToDatabaseEntityMapper()
 
         return createMockProductList().map { mapper.mapFrom(it) }
+    }
+
+    fun createMockProductsCartEntity(): ShoppingCartEntity {
+        val mapper = ProductsCartDomainToDatabaseEntityMapper()
+
+        return mapper.mapFrom(createMockProductsCart())
     }
 
     fun readJsonAsString(path: String): String {
