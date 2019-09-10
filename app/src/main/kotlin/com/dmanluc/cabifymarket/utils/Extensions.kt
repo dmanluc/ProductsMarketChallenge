@@ -36,7 +36,7 @@ import org.apache.commons.io.IOUtils
 import org.jetbrains.annotations.TestOnly
 
 /**
- * Extension utils
+ * App extension utils
  *
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1

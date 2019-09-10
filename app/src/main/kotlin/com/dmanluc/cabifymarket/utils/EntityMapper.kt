@@ -6,6 +6,9 @@ package com.dmanluc.cabifymarket.utils
  *
  * @param <M> the entity model input type
  * @param <E> the entity model output type
+ *
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
  */
 interface EntityMapper<in R, out E> {
 

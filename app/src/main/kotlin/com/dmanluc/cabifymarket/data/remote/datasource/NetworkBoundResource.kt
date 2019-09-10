@@ -19,7 +19,7 @@ import kotlin.coroutines.coroutineContext
  * @version  1
  *
  * A generic class that can provide a resource backed by both the Room database and the network.
- * See more: https://github.com/googlesamples/android-architecture-components/blob/88747993139224a4bb6dbe985adf652d557de621/GithubBrowserSample/app/src/main/java/com/android/example/github/repository/NetworkBoundResource.kt
+ * @see: https://github.com/googlesamples/android-architecture-components/blob/88747993139224a4bb6dbe985adf652d557de621/GithubBrowserSample/app/src/main/java/com/android/example/github/repository/NetworkBoundResource.kt
  *
  */
 abstract class NetworkBoundResource<ResultType, RequestType> {

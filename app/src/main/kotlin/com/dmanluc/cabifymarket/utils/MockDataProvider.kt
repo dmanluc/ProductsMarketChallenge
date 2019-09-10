@@ -1,5 +1,6 @@
 package com.dmanluc.cabifymarket.utils
 
+import androidx.annotation.VisibleForTesting
 import com.dmanluc.cabifymarket.data.local.entity.MarketProductEntity
 import com.dmanluc.cabifymarket.data.local.entity.ShoppingCartEntity
 import com.dmanluc.cabifymarket.data.local.mapper.ProductDomainToDatabaseEntityMapper
@@ -12,6 +13,14 @@ import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import java.io.File
 
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * Mock Data provider singleton for use in tests
+ *
+ */
+@VisibleForTesting
 object MockDataProvider {
 
     fun createMockProductList(): List<Product> {
