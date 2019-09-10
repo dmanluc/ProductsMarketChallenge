@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.dmanluc.cabifymarket.data.local.dao.ShoppingCartDao
 import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEntityMapper
 import com.dmanluc.cabifymarket.data.local.mapper.ShoppingCartDatabaseEntityToDomainMapper
-import com.dmanluc.cabifymarket.data.remote.utils.Resource
+import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

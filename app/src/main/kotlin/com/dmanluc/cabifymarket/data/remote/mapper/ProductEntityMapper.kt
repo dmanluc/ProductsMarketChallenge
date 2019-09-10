@@ -16,9 +16,14 @@ import com.google.gson.reflect.TypeToken
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
+ *
+ * Mapper between market api response and domain product entities
+ *
  */
-class ProductEntityMapper(private val gson: Gson, private val assetManager: AssetManager) :
-    EntityMapper<MarketApiResponse, List<Product>> {
+class ProductEntityMapper(
+    private val gson: Gson,
+    private val assetManager: AssetManager
+) : EntityMapper<MarketApiResponse, List<Product>> {
 
     private val productsImagesUrl = mapOf(
         Pair(
@@ -58,18 +63,18 @@ class ProductEntityMapper(private val gson: Gson, private val assetManager: Asse
             val productParams = when (productResponse.id) {
                 Product.Type.VOUCHER.typeId -> {
                     Triple(Product.Type.VOUCHER,
-                        productsImagesUrl[Product.Type.VOUCHER.typeId],
-                        rules.firstOrNull { it?.provideCode() == Product.Type.VOUCHER.typeId })
+                           productsImagesUrl[Product.Type.VOUCHER.typeId],
+                           rules.firstOrNull { it?.provideCode() == Product.Type.VOUCHER.typeId })
                 }
                 Product.Type.TSHIRT.typeId -> {
                     Triple(Product.Type.TSHIRT,
-                        productsImagesUrl[Product.Type.TSHIRT.typeId].orEmpty(),
-                        rules.firstOrNull { it?.provideCode() == Product.Type.TSHIRT.typeId })
+                           productsImagesUrl[Product.Type.TSHIRT.typeId].orEmpty(),
+                           rules.firstOrNull { it?.provideCode() == Product.Type.TSHIRT.typeId })
                 }
                 Product.Type.MUG.typeId -> {
                     Triple(Product.Type.MUG,
-                        productsImagesUrl[Product.Type.MUG.typeId].orEmpty(),
-                        rules.firstOrNull { it?.provideCode() == Product.Type.MUG.typeId })
+                           productsImagesUrl[Product.Type.MUG.typeId].orEmpty(),
+                           rules.firstOrNull { it?.provideCode() == Product.Type.MUG.typeId })
                 }
                 else -> Triple(
                     Product.Type.OTHER, null, null

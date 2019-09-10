@@ -5,10 +5,23 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.dmanluc.cabifymarket.data.remote.utils.Resource
-import kotlinx.coroutines.*
+import com.dmanluc.cabifymarket.utils.Resource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.coroutineContext
 
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * A generic class that can provide a resource backed by both the Room database and the network.
+ * See more: https://github.com/googlesamples/android-architecture-components/blob/88747993139224a4bb6dbe985adf652d557de621/GithubBrowserSample/app/src/main/java/com/android/example/github/repository/NetworkBoundResource.kt
+ *
+ */
 abstract class NetworkBoundResource<ResultType, RequestType> {
 
     private val result = MutableLiveData<Resource<ResultType>>()

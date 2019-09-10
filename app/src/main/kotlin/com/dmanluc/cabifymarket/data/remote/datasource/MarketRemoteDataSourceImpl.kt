@@ -7,7 +7,7 @@ import com.dmanluc.cabifymarket.data.local.mapper.ProductDomainToDatabaseEntityM
 import com.dmanluc.cabifymarket.data.remote.api.MarketApi
 import com.dmanluc.cabifymarket.data.remote.mapper.ProductEntityMapper
 import com.dmanluc.cabifymarket.data.remote.model.MarketApiResponse
-import com.dmanluc.cabifymarket.data.remote.utils.Resource
+import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.Product
 import kotlinx.coroutines.Deferred
 
@@ -15,13 +15,17 @@ import kotlinx.coroutines.Deferred
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
+ *
+ * Implementation of remote data source to fetch and save to database market products
+ *
  */
-class MarketRemoteDataSourceImpl constructor(private val marketApi: MarketApi,
-                                             private val dataToDomainEntityMapper: ProductEntityMapper,
-                                             private val domainToDatabaseEntityMapper: ProductDomainToDatabaseEntityMapper,
-                                             private val databaseToDomainEntityMapper: MarketProductDatabaseEntityToDomainMapper,
-                                             private val localDao: MarketProductsDao) :
-    MarketRemoteDataSource {
+class MarketRemoteDataSourceImpl(
+    private val marketApi: MarketApi,
+    private val dataToDomainEntityMapper: ProductEntityMapper,
+    private val domainToDatabaseEntityMapper: ProductDomainToDatabaseEntityMapper,
+    private val databaseToDomainEntityMapper: MarketProductDatabaseEntityToDomainMapper,
+    private val localDao: MarketProductsDao
+) : MarketRemoteDataSource {
 
     override suspend fun getProducts(forceRefresh: Boolean): LiveData<Resource<List<Product>>> {
         return object : NetworkBoundResource<List<Product>, MarketApiResponse>() {

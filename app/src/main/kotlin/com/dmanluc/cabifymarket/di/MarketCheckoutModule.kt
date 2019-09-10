@@ -10,6 +10,9 @@ import org.koin.dsl.module
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
+ *
+ * Koin DI module for market checkout dependencies
+ *
  */
 val marketCheckoutModule: Module = module {
     factory { DeleteProductsCartInteractor(get()) }

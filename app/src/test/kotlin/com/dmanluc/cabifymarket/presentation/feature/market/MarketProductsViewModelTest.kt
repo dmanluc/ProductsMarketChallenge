@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
-import com.dmanluc.cabifymarket.data.remote.utils.Resource
+import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.data.remote.utils.getOrAwaitValue
 import com.dmanluc.cabifymarket.data.remote.utils.observeForTesting
 import com.dmanluc.cabifymarket.domain.entity.Product

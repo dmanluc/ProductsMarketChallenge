@@ -9,7 +9,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.dmanluc.cabifymarket.R
-import com.dmanluc.cabifymarket.data.remote.utils.Resource
+import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart

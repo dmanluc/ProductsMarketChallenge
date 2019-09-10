@@ -16,8 +16,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.dmanluc.cabifymarket.R
-import com.dmanluc.cabifymarket.data.remote.utils.Resource
-import com.dmanluc.cabifymarket.di.marketFeatureModule
+import com.dmanluc.cabifymarket.utils.Resource
+import com.dmanluc.cabifymarket.di.marketProductsModule
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
 import com.dmanluc.cabifymarket.domain.repository.MarketProductsLocalRepository
@@ -69,7 +69,7 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
                 factory { marketRepository }
                 factory { localProductsCartRepository }
                 factory { mockk<MarketProductsLocalRepository>() }
-            }, marketFeatureModule))
+            }, marketProductsModule))
         }
     }
 

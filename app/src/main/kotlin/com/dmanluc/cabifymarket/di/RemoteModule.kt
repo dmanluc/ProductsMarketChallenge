@@ -23,11 +23,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * API dependency injection module
- *
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
+ *
+ * Koin DI module for fetching remote data dependencies
+ *
  */
 fun createRemoteModule(baseUrl: String): Module = module {
     factory<Interceptor> {

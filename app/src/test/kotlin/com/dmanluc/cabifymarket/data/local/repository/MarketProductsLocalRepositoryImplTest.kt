@@ -8,7 +8,7 @@ import com.dmanluc.cabifymarket.data.local.datasource.MarketProductsLocalDataSou
 import com.dmanluc.cabifymarket.data.local.datasource.MarketProductsLocalDataSourceImpl
 import com.dmanluc.cabifymarket.data.local.mapper.MarketProductDatabaseEntityToDomainMapper
 import com.dmanluc.cabifymarket.data.remote.utils.CoroutinesMainDispatcherRule
-import com.dmanluc.cabifymarket.data.remote.utils.Resource
+import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.repository.MarketProductsLocalRepository
 import com.dmanluc.cabifymarket.utils.MockDataProvider

@@ -1,4 +1,4 @@
-package com.dmanluc.cabifymarket.data.remote.utils
+package com.dmanluc.cabifymarket.utils
 
 data class Resource<out T>(val status: Status, val data: T? = null, val error: Throwable? = null) {
     companion object {

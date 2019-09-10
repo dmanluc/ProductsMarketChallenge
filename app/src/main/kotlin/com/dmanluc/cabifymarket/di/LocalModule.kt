@@ -20,6 +20,9 @@ import org.koin.dsl.module
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-09.
+ *
+ * Koin DI module for local-storage based dependencies
+ *
  */
 private const val DATABASE = "DATABASE"
 
