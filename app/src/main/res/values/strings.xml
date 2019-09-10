@@ -3,21 +3,10 @@
     <string name="general_error_message">An error happened, please retry swyping from top!</string>
     <string name="general_error_api_message">An error happened when fetching products</string>
 
-    <string name="market_activity_network_connected_title">Network Connected</string>
-    <string name="market_activity_network_disconnected_title">Network Disconnected</string>
-    <string name="market_activity_network_connected_message">Now you can swipe from top to refresh data from server</string>
-    <string name="market_activity_network_disconnected_message">It seems you are offline. Please check your network settings</string>
-    <string name="market_activity_network_connected_action">SETTINGS</string>
-
-    <string name="market_overview_fragment_screen_title">Cabify Market</string>
     <string name="market_overview_fragment_add_to_cart_button">Add to cart</string>
-    <string name="market_overview_fragment_checkout_cart_button">Checkout %1d items</string>
-    <string name="market_overview_fragment_network_error_title">Network Error</string>
+    <string name="market_overview_fragment_checkout_cart_button">Checkout %1d items = %2s</string>
     <string name="market_overview_fragment_products_not_available">No products available.\nPlease swipe from top to refresh.</string>
-    <string name="market_overview_fragment_initial_cart_checkout_button">Checkout</string>
-
-    <string name="item_market_product_overview_increase_button">+</string>
-    <string name="item_market_product_overview_decrease_button">-</string>
+    <string name="market_overview_fragment_initial_cart_checkout_button">Empty Cart</string>
 
     <string name="market_checkout_fragment_screen_title">Checkout</string>
     <string name="market_checkout_fragment_empty_cart">Your cart is empty</string>
@@ -28,6 +17,5 @@
     <string name="market_overview_fragment_bottom_sheet_delivery_title">Delivery</string>
     <string name="market_overview_fragment_bottom_sheet_delivery_price">FREE</string>
     <string name="market_overview_fragment_bottom_sheet_payment_button">Payment</string>
-    <string name="market_overview_fragment_bottom_sheet_successful_payment_notification_title">Successful Payment</string>
-    <string name="market_overview_fragment_bottom_sheet_successful_payment_notification_message">Your order has been placed and will be dispatched to your delivery address within 1 working day</string>
+
 </resources>

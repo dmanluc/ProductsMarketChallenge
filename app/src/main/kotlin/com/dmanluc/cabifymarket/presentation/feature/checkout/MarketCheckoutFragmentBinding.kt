@@ -40,11 +40,7 @@ object MarketCheckoutFragmentBinding {
     @BindingAdapter("showIfCartProductWithDiscount")
     @JvmStatic
     fun showDiscountInfoView(view: View, productWithDiscount: Boolean) {
-        view.visibility = if (productWithDiscount) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        if (productWithDiscount) view.show() else view.hide()
     }
 
     @BindingAdapter("totalCartPrice")

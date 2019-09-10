@@ -99,20 +99,16 @@ object MarketProductsFragmentBinding {
         val totalPrice = CurrencyAmount(cart?.getTotalAmount() ?: 0.00).formatCurrencyInLocale()
 
         if (quantity != 0) {
-            view.text = "Checkout $quantity items = $totalPrice"
+            view.text = view.resources.getString(R.string.market_overview_fragment_checkout_cart_button, quantity, totalPrice)
         } else {
-            view.text = "Cesta vacía"
+            view.text = view.resources.getString(R.string.market_overview_fragment_initial_cart_checkout_button)
         }
     }
 
     @BindingAdapter("showIfProductWithDiscount")
     @JvmStatic
     fun showDiscountInfoView(view: View, productWithDiscount: Boolean) {
-        view.visibility = if (productWithDiscount) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        if (productWithDiscount) view.show() else view.hide()
     }
 
 }
