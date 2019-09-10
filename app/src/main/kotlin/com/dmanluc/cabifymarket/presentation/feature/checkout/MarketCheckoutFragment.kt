@@ -86,9 +86,9 @@ class MarketCheckoutFragment : BaseFragment() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
                     when (newState) {
                         BottomSheetBehavior.STATE_EXPANDED ->
-                            countingIdlingResource.decrement()
+                            if (countingIdlingResource.isIdleNow.not()) countingIdlingResource.decrement()
                         BottomSheetBehavior.STATE_COLLAPSED ->
-                            countingIdlingResource.decrement()
+                            if (countingIdlingResource.isIdleNow.not()) countingIdlingResource.decrement()
                         BottomSheetBehavior.STATE_DRAGGING ->
                             countingIdlingResource.increment()
                         else -> {
