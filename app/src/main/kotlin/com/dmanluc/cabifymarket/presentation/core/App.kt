@@ -3,7 +3,6 @@ package com.dmanluc.cabifymarket.presentation.core
 import android.app.Application
 import com.dmanluc.cabifymarket.BuildConfig
 import com.dmanluc.cabifymarket.di.createRemoteModule
-import com.dmanluc.cabifymarket.di.interactorModule
 import com.dmanluc.cabifymarket.di.localModule
 import com.dmanluc.cabifymarket.di.marketCheckoutModule
 import com.dmanluc.cabifymarket.di.marketFeatureModule
@@ -35,7 +34,6 @@ class App : Application() {
                     createRemoteModule(BuildConfig.BASE_URL),
                     localModule,
                     repositoryModule,
-                    interactorModule,
                     marketFeatureModule,
                     marketCheckoutModule
                 )

@@ -1,4 +1,4 @@
-package com.dmanluc.cabifymarket
+package com.dmanluc.cabifymarket.presentation.market
 
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.MutableLiveData
@@ -15,8 +15,8 @@ import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.data.remote.utils.Resource
-import com.dmanluc.cabifymarket.di.interactorModule
 import com.dmanluc.cabifymarket.di.marketFeatureModule
 import com.dmanluc.cabifymarket.domain.entity.Product
 import com.dmanluc.cabifymarket.domain.entity.ProductsCart
@@ -69,7 +69,7 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
                 factory { marketRepository }
                 factory { localProductsCartRepository }
                 factory { mockk<MarketProductsLocalRepository>() }
-            }, interactorModule, marketFeatureModule))
+            }, marketFeatureModule))
         }
     }
 

@@ -1,4 +1,4 @@
-package com.dmanluc.cabifymarket
+package com.dmanluc.cabifymarket.presentation.checkout
 
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -19,21 +19,20 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.dmanluc.cabifymarket.di.interactorModule
+import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.di.marketCheckoutModule
 import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
-import com.dmanluc.cabifymarket.domain.repository.MarketProductsLocalRepository
-import com.dmanluc.cabifymarket.domain.repository.MarketRepository
 import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
 import com.dmanluc.cabifymarket.espressoRecyclerViewActions.RecyclerViewHolderItemViewAction
 import com.dmanluc.cabifymarket.espressoRecyclerViewActions.RecyclerViewItemCountAssertion.Companion.withItemCount
 import com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutAdapter
 import com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutFragment
-import com.dmanluc.cabifymarket.utils.AppDispatchers
 import com.dmanluc.cabifymarket.utils.MockDataProvider
 import com.dmanluc.cabifymarket.utils.executePendingDataBindingTransactions
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.just
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
@@ -42,7 +41,6 @@ import org.junit.runner.RunWith
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import org.koin.test.AutoCloseKoinTest
-
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -55,12 +53,10 @@ import org.koin.test.AutoCloseKoinTest
 @LargeTest
 class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
 
-    private var componentIdlingResource: CountingIdlingResource? = null
-
     private val mockProductsCart = MockDataProvider.createMockProductsCart()
 
-    private var marketRepository = mockk<MarketRepository>()
     private var localProductsCartRepository = mockk<ProductsCartLocalRepository>()
+    private var componentIdlingResource: CountingIdlingResource? = null
 
     private lateinit var fragment: MarketCheckoutFragment
 
@@ -68,11 +64,8 @@ class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
     fun setUp() {
         startKoin {
             modules(listOf(module {
-                factory { AppDispatchers(Dispatchers.Main, Dispatchers.Main) }
-                factory { marketRepository }
                 factory { localProductsCartRepository }
-                factory { mockk<MarketProductsLocalRepository>() }
-            }, interactorModule, marketCheckoutModule))
+            }, marketCheckoutModule))
         }
 
         launchFragment()
@@ -151,6 +144,8 @@ class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
 
     @Test
     fun completePayment_shouldFinishCheckoutFlow() {
+        coEvery { localProductsCartRepository.deleteProductsCart(any()) } just Runs
+
         onView(withId(R.id.checkoutOrderInfo)).perform(swipeUp())
         onView(withId(R.id.cartPayment)).perform(click())
 
