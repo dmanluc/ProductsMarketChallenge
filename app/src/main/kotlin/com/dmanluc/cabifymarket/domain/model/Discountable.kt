@@ -1,4 +1,4 @@
-package com.dmanluc.cabifymarket.domain.entity
+package com.dmanluc.cabifymarket.domain.model
 
 /**
  * Interface that could be implemented by a market product to be able to have a discount

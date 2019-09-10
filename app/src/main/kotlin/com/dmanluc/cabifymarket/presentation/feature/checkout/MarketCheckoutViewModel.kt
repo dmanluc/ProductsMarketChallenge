@@ -2,9 +2,9 @@ package com.dmanluc.cabifymarket.presentation.feature.checkout
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.dmanluc.cabifymarket.domain.entity.Product
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
-import com.dmanluc.cabifymarket.domain.interactor.DeleteProductsCartInteractor
+import com.dmanluc.cabifymarket.domain.model.Product
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
+import com.dmanluc.cabifymarket.domain.usecase.DeleteLocalProductsCartUseCase
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 import com.dmanluc.cabifymarket.utils.Event
 import com.dmanluc.cabifymarket.utils.notifyObserver
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
  * @since    2019-08-20.
  */
 class MarketCheckoutViewModel(
-    private val deleteProductsCartInteractor: DeleteProductsCartInteractor
+    private val deleteLocalProductsCartUseCase: DeleteLocalProductsCartUseCase
 ) : BaseViewModel() {
 
     private val _productsCart: MutableLiveData<ProductsCart> = MutableLiveData()
@@ -50,7 +50,7 @@ class MarketCheckoutViewModel(
     fun closeFlow() {
         _productsCart.value?.let {
             GlobalScope.launch {
-                deleteProductsCartInteractor.invoke(it)
+                deleteLocalProductsCartUseCase.invoke(it)
 
                 it.clearCart()
                 _productsCart.postNotifyObserver()

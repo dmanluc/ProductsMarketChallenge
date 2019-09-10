@@ -1,8 +1,8 @@
 package com.dmanluc.cabifymarket.data.local.mapper
 
-import com.dmanluc.cabifymarket.data.local.model.ShoppingCartEntity
-import com.dmanluc.cabifymarket.domain.entity.Product
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.data.local.entity.ShoppingCartEntity
+import com.dmanluc.cabifymarket.domain.model.Product
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import com.dmanluc.cabifymarket.utils.EntityMapper
 
 /**

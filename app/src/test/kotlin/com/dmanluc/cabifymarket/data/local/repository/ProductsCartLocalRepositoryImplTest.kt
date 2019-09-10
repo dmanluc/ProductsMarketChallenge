@@ -10,7 +10,7 @@ import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEn
 import com.dmanluc.cabifymarket.data.local.mapper.ShoppingCartDatabaseEntityToDomainMapper
 import com.dmanluc.cabifymarket.data.remote.utils.CoroutinesMainDispatcherRule
 import com.dmanluc.cabifymarket.utils.Resource
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
 import com.dmanluc.cabifymarket.utils.MockDataProvider
 import io.mockk.Runs

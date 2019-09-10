@@ -6,7 +6,7 @@ import com.dmanluc.cabifymarket.data.local.dao.ShoppingCartDao
 import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEntityMapper
 import com.dmanluc.cabifymarket.data.local.mapper.ShoppingCartDatabaseEntityToDomainMapper
 import com.dmanluc.cabifymarket.utils.Resource
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext

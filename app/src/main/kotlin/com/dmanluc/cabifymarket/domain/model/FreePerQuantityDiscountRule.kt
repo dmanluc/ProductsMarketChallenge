@@ -1,16 +1,18 @@
-package com.dmanluc.cabifymarket.domain.entity
+package com.dmanluc.cabifymarket.domain.model
 
 /**
- * Discount rule for a free per quantity discount (e.g. 2x1)
+ * Domain model of a discount rule for a free per quantity discount (e.g. 2x1)
  *
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
  */
-class FreePerQuantityDiscountRule(private val code: String,
-                                  private val discountDescription: String,
-                                  val freeQuantity: Int,
-                                  val buyQuantity: Int) : ProductDiscountRule {
+class FreePerQuantityDiscountRule(
+    private val code: String,
+    private val discountDescription: String,
+    val freeQuantity: Int,
+    val buyQuantity: Int
+) : ProductDiscountRule {
 
     override fun provideCode(): String {
         return code

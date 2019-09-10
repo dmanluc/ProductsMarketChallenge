@@ -21,7 +21,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.di.marketCheckoutModule
-import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
+import com.dmanluc.cabifymarket.domain.model.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
 import com.dmanluc.cabifymarket.espressoRecyclerViewActions.RecyclerViewHolderItemViewAction
 import com.dmanluc.cabifymarket.espressoRecyclerViewActions.RecyclerViewItemCountAssertion.Companion.withItemCount

@@ -12,6 +12,7 @@ import android.os.Handler
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.MainThread
+import androidx.annotation.WorkerThread
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -123,14 +124,17 @@ fun AssetManager.readJsonAssetFileName(fileName: String): String {
     return IOUtils.toString(this.open(String.format("json/%s.json", fileName)))
 }
 
+@MainThread
 fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
 }
 
+@WorkerThread
 fun <T> MutableLiveData<T>.postNotifyObserver() {
     postValue(this.value)
 }
 
+@MainThread
 inline fun <T> LiveData<Event<T>>.observeEvent(
     owner: LifecycleOwner,
     crossinline onEventUnhandledContent: (T) -> Unit
@@ -165,10 +169,12 @@ fun Fragment.executePendingDataBindingTransactions() {
 
 fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-fun ProgressButton.morphDoneAndRevert(context: Context,
-                                      doneTime: Long = 2000,
-                                      finishTime: Long = 2650,
-                                      onAnimationFinished: () -> Unit = {}) {
+fun ProgressButton.morphDoneAndRevert(
+    context: Context,
+    doneTime: Long = 2000,
+    finishTime: Long = 2650,
+    onAnimationFinished: () -> Unit = {}
+) {
     progressType = ProgressType.INDETERMINATE
 
     val button = this

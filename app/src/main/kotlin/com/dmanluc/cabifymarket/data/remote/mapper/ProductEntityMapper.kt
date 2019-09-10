@@ -3,10 +3,10 @@ package com.dmanluc.cabifymarket.data.remote.mapper
 import android.content.res.AssetManager
 import com.dmanluc.cabifymarket.data.remote.model.DiscountRuleResponse
 import com.dmanluc.cabifymarket.data.remote.model.MarketApiResponse
-import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
-import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.Product
+import com.dmanluc.cabifymarket.domain.model.BulkDiscountRule
+import com.dmanluc.cabifymarket.domain.model.CurrencyAmount
+import com.dmanluc.cabifymarket.domain.model.FreePerQuantityDiscountRule
+import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.utils.EntityMapper
 import com.dmanluc.cabifymarket.utils.readJsonAssetFileName
 import com.google.gson.Gson

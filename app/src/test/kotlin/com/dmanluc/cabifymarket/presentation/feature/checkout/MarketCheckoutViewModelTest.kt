@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.test.filters.SmallTest
 import com.dmanluc.cabifymarket.data.remote.utils.observeForTesting
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
-import com.dmanluc.cabifymarket.domain.interactor.DeleteProductsCartInteractor
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
+import com.dmanluc.cabifymarket.domain.usecase.DeleteLocalProductsCartUseCase
 import com.dmanluc.cabifymarket.utils.Event
 import com.dmanluc.cabifymarket.utils.MockDataProvider
 import io.mockk.Runs
@@ -36,16 +36,16 @@ class MarketCheckoutViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var deleteProductsCartInteractor: DeleteProductsCartInteractor
+    private lateinit var deleteLocalProductsCartUseCase: DeleteLocalProductsCartUseCase
     private lateinit var marketCheckoutViewModel: MarketCheckoutViewModel
 
     @Before
     fun setUp() {
-        deleteProductsCartInteractor = mockk()
+        deleteLocalProductsCartUseCase = mockk()
 
-        coEvery { deleteProductsCartInteractor.invoke(any()) } just Runs
+        coEvery { deleteLocalProductsCartUseCase.invoke(any()) } just Runs
 
-        marketCheckoutViewModel = MarketCheckoutViewModel(deleteProductsCartInteractor)
+        marketCheckoutViewModel = MarketCheckoutViewModel(deleteLocalProductsCartUseCase)
 
         val mockProductsCart = MockDataProvider.createMockProductsCart()
         marketCheckoutViewModel.loadCartProducts(mockProductsCart)

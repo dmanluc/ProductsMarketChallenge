@@ -3,7 +3,7 @@ package com.dmanluc.cabifymarket.data.local.repository
 import androidx.lifecycle.LiveData
 import com.dmanluc.cabifymarket.data.local.datasource.ProductsCartLocalDataSource
 import com.dmanluc.cabifymarket.utils.Resource
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
 
 /**

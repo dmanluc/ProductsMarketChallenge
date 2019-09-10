@@ -7,8 +7,8 @@ import com.dmanluc.cabifymarket.data.local.mapper.ProductDomainToDatabaseEntityM
 import com.dmanluc.cabifymarket.data.remote.api.MarketApi
 import com.dmanluc.cabifymarket.data.remote.mapper.ProductEntityMapper
 import com.dmanluc.cabifymarket.data.remote.model.MarketApiResponse
+import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.utils.Resource
-import com.dmanluc.cabifymarket.domain.entity.Product
 import kotlinx.coroutines.Deferred
 
 /**

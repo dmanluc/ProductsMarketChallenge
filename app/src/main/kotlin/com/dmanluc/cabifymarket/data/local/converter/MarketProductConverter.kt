@@ -1,9 +1,9 @@
 package com.dmanluc.cabifymarket.data.local.converter
 
 import androidx.room.TypeConverter
-import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
-import com.dmanluc.cabifymarket.domain.entity.Product
-import com.dmanluc.cabifymarket.domain.entity.ProductDiscountRule
+import com.dmanluc.cabifymarket.domain.model.CurrencyAmount
+import com.dmanluc.cabifymarket.domain.model.Product
+import com.dmanluc.cabifymarket.domain.model.ProductDiscountRule
 import com.google.gson.Gson
 import org.koin.core.KoinComponent
 import org.koin.core.inject

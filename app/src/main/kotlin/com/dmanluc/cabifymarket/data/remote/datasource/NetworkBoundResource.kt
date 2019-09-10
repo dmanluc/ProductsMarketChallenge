@@ -35,7 +35,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
             val dbResult = loadFromDb()
             if (shouldFetch(dbResult)) {
                 try {
-                    fetchFromNetwork(dbResult)
+                    fetchFromNetwork()
                 } catch (e: Exception) {
                     Log.e("NetworkBoundResource", "An error happened: $e")
                     setValue(Resource.error(e, loadFromDb()))
@@ -50,7 +50,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
     fun asLiveData() = result as LiveData<Resource<ResultType>>
 
-    private suspend fun fetchFromNetwork(dbResult: ResultType) {
+    private suspend fun fetchFromNetwork() {
         Log.d(NetworkBoundResource::class.java.name, "Fetch data from network")
         val apiResponse = createCallAsync().await()
         Log.d(NetworkBoundResource::class.java.name, "Data fetched from network")

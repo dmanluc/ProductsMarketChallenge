@@ -18,8 +18,8 @@ import androidx.test.filters.LargeTest
 import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.di.marketProductsModule
-import com.dmanluc.cabifymarket.domain.entity.Product
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.domain.model.Product
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import com.dmanluc.cabifymarket.domain.repository.MarketProductsLocalRepository
 import com.dmanluc.cabifymarket.domain.repository.MarketRepository
 import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository

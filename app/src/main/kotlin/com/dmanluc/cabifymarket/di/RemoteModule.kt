@@ -7,9 +7,9 @@ import com.dmanluc.cabifymarket.data.remote.api.MarketApi
 import com.dmanluc.cabifymarket.data.remote.datasource.MarketRemoteDataSource
 import com.dmanluc.cabifymarket.data.remote.datasource.MarketRemoteDataSourceImpl
 import com.dmanluc.cabifymarket.data.remote.mapper.ProductEntityMapper
-import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.ProductDiscountRule
+import com.dmanluc.cabifymarket.domain.model.BulkDiscountRule
+import com.dmanluc.cabifymarket.domain.model.FreePerQuantityDiscountRule
+import com.dmanluc.cabifymarket.domain.model.ProductDiscountRule
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor

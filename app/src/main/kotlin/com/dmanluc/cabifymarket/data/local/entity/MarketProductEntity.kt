@@ -1,12 +1,12 @@
-package com.dmanluc.cabifymarket.data.local.model
+package com.dmanluc.cabifymarket.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.dmanluc.cabifymarket.data.local.converter.MarketProductConverter
-import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
-import com.dmanluc.cabifymarket.domain.entity.Product
-import com.dmanluc.cabifymarket.domain.entity.ProductDiscountRule
+import com.dmanluc.cabifymarket.domain.model.CurrencyAmount
+import com.dmanluc.cabifymarket.domain.model.Product
+import com.dmanluc.cabifymarket.domain.model.ProductDiscountRule
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>

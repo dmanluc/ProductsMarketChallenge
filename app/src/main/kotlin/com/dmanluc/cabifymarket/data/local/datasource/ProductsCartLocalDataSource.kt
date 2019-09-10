@@ -2,7 +2,7 @@ package com.dmanluc.cabifymarket.data.local.datasource
 
 import androidx.lifecycle.LiveData
 import com.dmanluc.cabifymarket.utils.Resource
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>

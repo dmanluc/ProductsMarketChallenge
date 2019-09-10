@@ -1,11 +1,11 @@
-package com.dmanluc.cabifymarket.data.local.model
+package com.dmanluc.cabifymarket.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.dmanluc.cabifymarket.data.local.converter.ShoppingCartConverter
-import com.dmanluc.cabifymarket.domain.entity.Product
+import com.dmanluc.cabifymarket.domain.model.Product
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>

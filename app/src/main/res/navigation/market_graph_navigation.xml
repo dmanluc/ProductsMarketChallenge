@@ -25,6 +25,6 @@
 
         <argument
                 android:name="productsCart"
-                app:argType="com.dmanluc.cabifymarket.domain.entity.ProductsCart" />
+                app:argType="com.dmanluc.cabifymarket.domain.model.ProductsCart" />
     </fragment>
 </navigation>

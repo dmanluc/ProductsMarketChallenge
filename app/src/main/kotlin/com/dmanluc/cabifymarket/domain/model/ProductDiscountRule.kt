@@ -1,4 +1,4 @@
-package com.dmanluc.cabifymarket.domain.entity
+package com.dmanluc.cabifymarket.domain.model
 
 import java.io.Serializable
 

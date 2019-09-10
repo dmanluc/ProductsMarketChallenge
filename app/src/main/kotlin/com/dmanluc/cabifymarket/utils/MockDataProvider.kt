@@ -1,15 +1,15 @@
 package com.dmanluc.cabifymarket.utils
 
+import com.dmanluc.cabifymarket.data.local.entity.MarketProductEntity
+import com.dmanluc.cabifymarket.data.local.entity.ShoppingCartEntity
 import com.dmanluc.cabifymarket.data.local.mapper.ProductDomainToDatabaseEntityMapper
 import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEntityMapper
-import com.dmanluc.cabifymarket.data.local.model.MarketProductEntity
-import com.dmanluc.cabifymarket.data.local.model.ShoppingCartEntity
 import com.dmanluc.cabifymarket.data.remote.model.MarketApiResponse
-import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
-import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.Product
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.domain.model.BulkDiscountRule
+import com.dmanluc.cabifymarket.domain.model.CurrencyAmount
+import com.dmanluc.cabifymarket.domain.model.FreePerQuantityDiscountRule
+import com.dmanluc.cabifymarket.domain.model.Product
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import java.io.File
 
 object MockDataProvider {
@@ -98,8 +98,8 @@ object MockDataProvider {
     }
 
     fun readJsonAsString(path: String): String {
-        val uri = this.javaClass.classLoader.getResource(path)
-        val file = File(uri.path)
+        val uri = this.javaClass.classLoader?.getResource(path)
+        val file = File(uri?.path.orEmpty())
         return String(file.readBytes())
     }
 

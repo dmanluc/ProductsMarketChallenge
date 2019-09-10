@@ -1,16 +1,18 @@
-package com.dmanluc.cabifymarket.domain.entity
+package com.dmanluc.cabifymarket.domain.model
 
 /**
- * Discount rule for a bulk quantity discount (e.g. starting 3 or more product at X €)
+ * Domain model of a discount rule for a bulk quantity discount (e.g. starting 3 or more product at X €)
  *
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
  */
-class BulkDiscountRule(private val code: String,
-                       private val description: String,
-                       val buyQuantity: Int,
-                       private val priceWithDiscount: Double) : ProductDiscountRule {
+class BulkDiscountRule(
+    private val code: String,
+    private val description: String,
+    val buyQuantity: Int,
+    private val priceWithDiscount: Double
+) : ProductDiscountRule {
 
     override fun provideCode(): String {
         return code

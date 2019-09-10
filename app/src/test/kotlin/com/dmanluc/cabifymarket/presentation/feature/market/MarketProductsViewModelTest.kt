@@ -7,11 +7,11 @@ import androidx.test.filters.SmallTest
 import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.data.remote.utils.getOrAwaitValue
 import com.dmanluc.cabifymarket.data.remote.utils.observeForTesting
-import com.dmanluc.cabifymarket.domain.entity.Product
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
-import com.dmanluc.cabifymarket.domain.interactor.GetLastSavedProductsCartInteractor
-import com.dmanluc.cabifymarket.domain.interactor.GetProductsInteractor
-import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
+import com.dmanluc.cabifymarket.domain.model.Product
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
+import com.dmanluc.cabifymarket.domain.usecase.GetLocalProductsCartUseCase
+import com.dmanluc.cabifymarket.domain.usecase.GetMarketProductsUseCase
+import com.dmanluc.cabifymarket.domain.usecase.SaveLocalProductsCartUseCase
 import com.dmanluc.cabifymarket.presentation.navigation.NavigationCommand
 import com.dmanluc.cabifymarket.utils.AppDispatchers
 import com.dmanluc.cabifymarket.utils.Event
@@ -47,10 +47,10 @@ class MarketProductsViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var marketProductsInteractor: GetProductsInteractor
-    private lateinit var saveProductsCartInteractor: SaveProductsCartInteractor
+    private lateinit var marketProductsUseCase: GetMarketProductsUseCase
+    private lateinit var saveLocalProductsCartUseCase: SaveLocalProductsCartUseCase
     private lateinit var marketProductsViewModel: MarketProductsViewModel
-    private lateinit var lastSavedProductsCartInteractor: GetLastSavedProductsCartInteractor
+    private lateinit var localProductsCartUseCase: GetLocalProductsCartUseCase
     private val dispatchers = AppDispatchers(Dispatchers.Unconfined, Dispatchers.Unconfined)
 
     private val mockProductListResource = Resource.success(MockDataProvider.createMockProductList())
@@ -58,28 +58,28 @@ class MarketProductsViewModelTest {
 
     @Before
     fun setUp() {
-        marketProductsInteractor = mockk()
-        saveProductsCartInteractor = mockk()
-        lastSavedProductsCartInteractor = mockk()
+        marketProductsUseCase = mockk()
+        saveLocalProductsCartUseCase = mockk()
+        localProductsCartUseCase = mockk()
 
         coEvery {
-            marketProductsInteractor.invoke(any())
+            marketProductsUseCase.invoke(any())
         } returns MutableLiveData<Resource<List<Product>>>().apply {
             value = mockProductListResource
         }
 
-        coEvery { saveProductsCartInteractor.invoke(any()) } just Runs
+        coEvery { saveLocalProductsCartUseCase.invoke(any()) } just Runs
 
         coEvery {
-            lastSavedProductsCartInteractor.invoke()
+            localProductsCartUseCase.invoke()
         } returns MutableLiveData<Resource<ProductsCart>>().apply {
             value = mockProductCartResource
         }
 
         marketProductsViewModel = MarketProductsViewModel(
-            marketProductsInteractor,
-            saveProductsCartInteractor,
-            lastSavedProductsCartInteractor,
+            marketProductsUseCase,
+            saveLocalProductsCartUseCase,
+            localProductsCartUseCase,
             dispatchers
         )
     }
@@ -104,15 +104,15 @@ class MarketProductsViewModelTest {
 
         val result = Resource.error(Exception("fail"), null)
         coEvery {
-            marketProductsInteractor(forceRefresh = false)
+            marketProductsUseCase(forceRefresh = false)
         } returns MutableLiveData<Resource<List<Product>>>().apply {
             value = result
         }
 
         marketProductsViewModel = MarketProductsViewModel(
-            marketProductsInteractor,
-            saveProductsCartInteractor,
-            lastSavedProductsCartInteractor,
+            marketProductsUseCase,
+            saveLocalProductsCartUseCase,
+            localProductsCartUseCase,
             dispatchers
         )
 
@@ -149,8 +149,8 @@ class MarketProductsViewModelTest {
                 }
 
                 coVerify(exactly = 1) {
-                    saveProductsCartInteractor.invoke(any())
-                    lastSavedProductsCartInteractor.invoke()
+                    saveLocalProductsCartUseCase.invoke(any())
+                    localProductsCartUseCase.invoke()
                 }
 
                 confirmVerified(observer)

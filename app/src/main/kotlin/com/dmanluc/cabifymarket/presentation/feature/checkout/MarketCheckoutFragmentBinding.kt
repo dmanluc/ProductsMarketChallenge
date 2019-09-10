@@ -7,9 +7,9 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dmanluc.cabifymarket.R
-import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
-import com.dmanluc.cabifymarket.domain.entity.Product
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
+import com.dmanluc.cabifymarket.domain.model.CurrencyAmount
+import com.dmanluc.cabifymarket.domain.model.Product
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import com.dmanluc.cabifymarket.utils.hide
 import com.dmanluc.cabifymarket.utils.loadImage
 import com.dmanluc.cabifymarket.utils.show

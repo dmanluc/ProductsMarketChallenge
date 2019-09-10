@@ -1,7 +1,7 @@
 package com.dmanluc.cabifymarket.data.local.dao
 
-import com.dmanluc.cabifymarket.data.local.model.ShoppingCartEntity
-import com.dmanluc.cabifymarket.domain.entity.Product
+import com.dmanluc.cabifymarket.data.local.entity.ShoppingCartEntity
+import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.utils.MockDataProvider
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert

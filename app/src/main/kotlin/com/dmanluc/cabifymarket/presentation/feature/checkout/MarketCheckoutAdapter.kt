@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.databinding.ItemCheckoutProductBinding
-import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.CurrencyAmount
-import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.Product
+import com.dmanluc.cabifymarket.domain.model.BulkDiscountRule
+import com.dmanluc.cabifymarket.domain.model.CurrencyAmount
+import com.dmanluc.cabifymarket.domain.model.FreePerQuantityDiscountRule
+import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.presentation.feature.market.MarketProductItemDiffCallback
 import com.dmanluc.cabifymarket.utils.hide
 import com.dmanluc.cabifymarket.utils.show

@@ -8,9 +8,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.dmanluc.cabifymarket.data.local.AppDatabase
 import com.dmanluc.cabifymarket.data.local.typeadapter.InterfaceAdapter
 import com.dmanluc.cabifymarket.data.local.typeadapter.RuntimeTypeAdapterFactory
-import com.dmanluc.cabifymarket.domain.entity.BulkDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.FreePerQuantityDiscountRule
-import com.dmanluc.cabifymarket.domain.entity.ProductDiscountRule
+import com.dmanluc.cabifymarket.domain.model.BulkDiscountRule
+import com.dmanluc.cabifymarket.domain.model.FreePerQuantityDiscountRule
+import com.dmanluc.cabifymarket.domain.model.ProductDiscountRule
 import com.google.gson.GsonBuilder
 import org.junit.Before
 import org.junit.Rule

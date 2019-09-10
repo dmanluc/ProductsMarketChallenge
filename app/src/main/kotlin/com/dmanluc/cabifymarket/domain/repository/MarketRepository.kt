@@ -1,8 +1,8 @@
 package com.dmanluc.cabifymarket.domain.repository
 
 import androidx.lifecycle.LiveData
+import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.utils.Resource
-import com.dmanluc.cabifymarket.domain.entity.Product
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>

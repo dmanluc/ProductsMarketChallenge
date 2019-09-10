@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.dmanluc.cabifymarket.data.local.dao.MarketProductsDao
 import com.dmanluc.cabifymarket.data.local.mapper.MarketProductDatabaseEntityToDomainMapper
 import com.dmanluc.cabifymarket.utils.Resource
-import com.dmanluc.cabifymarket.domain.entity.Product
+import com.dmanluc.cabifymarket.domain.model.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext

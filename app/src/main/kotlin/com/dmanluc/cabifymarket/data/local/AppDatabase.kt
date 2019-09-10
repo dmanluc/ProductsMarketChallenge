@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.dmanluc.cabifymarket.data.local.dao.MarketProductsDao
 import com.dmanluc.cabifymarket.data.local.dao.ShoppingCartDao
-import com.dmanluc.cabifymarket.data.local.model.MarketProductEntity
-import com.dmanluc.cabifymarket.data.local.model.ShoppingCartEntity
+import com.dmanluc.cabifymarket.data.local.entity.MarketProductEntity
+import com.dmanluc.cabifymarket.data.local.entity.ShoppingCartEntity
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>

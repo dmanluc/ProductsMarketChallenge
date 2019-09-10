@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.utils.Resource
-import com.dmanluc.cabifymarket.domain.entity.Product
-import com.dmanluc.cabifymarket.domain.entity.ProductsCart
-import com.dmanluc.cabifymarket.domain.interactor.GetLastSavedProductsCartInteractor
-import com.dmanluc.cabifymarket.domain.interactor.GetProductsInteractor
-import com.dmanluc.cabifymarket.domain.interactor.SaveProductsCartInteractor
+import com.dmanluc.cabifymarket.domain.model.Product
+import com.dmanluc.cabifymarket.domain.model.ProductsCart
+import com.dmanluc.cabifymarket.domain.usecase.GetLocalProductsCartUseCase
+import com.dmanluc.cabifymarket.domain.usecase.GetMarketProductsUseCase
+import com.dmanluc.cabifymarket.domain.usecase.SaveLocalProductsCartUseCase
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 import com.dmanluc.cabifymarket.utils.AppDispatchers
 import com.dmanluc.cabifymarket.utils.Event
@@ -26,9 +26,9 @@ import kotlinx.coroutines.withContext
  * @since    2019-07-02.
  */
 class MarketProductsViewModel(
-    private val getProductsInteractor: GetProductsInteractor,
-    private val saveProductsCartInteractor: SaveProductsCartInteractor,
-    private val getLastSavedProductsCartInteractor: GetLastSavedProductsCartInteractor,
+    private val getMarketProductsUseCase: GetMarketProductsUseCase,
+    private val saveLocalProductsCartUseCase: SaveLocalProductsCartUseCase,
+    private val getLocalProductsCartUseCase: GetLocalProductsCartUseCase,
     private val dispatchers: AppDispatchers
 ) : BaseViewModel() {
 
@@ -53,7 +53,7 @@ class MarketProductsViewModel(
     private fun fetchMarketProducts(forceRefresh: Boolean = false) {
         viewModelScope.launch(dispatchers.main) {
             withContext(dispatchers.io) {
-                _productsSource = getProductsInteractor(forceRefresh)
+                _productsSource = getMarketProductsUseCase(forceRefresh)
             }
             _products.observeAndMapValue(_productsSource) {
                 if (it.status == Resource.Status.ERROR) {
@@ -68,7 +68,7 @@ class MarketProductsViewModel(
     fun checkLastSavedProductsCart(productsFromMarketResource: Resource<List<Product>>) {
         if (productsFromMarketResource.status == Resource.Status.SUCCESS) {
             viewModelScope.launch(dispatchers.main) {
-                _productsCartSource = getLastSavedProductsCartInteractor()
+                _productsCartSource = getLocalProductsCartUseCase()
                 _productsCart.observeAndMapValue(_productsCartSource) {
                     if (it.status == Resource.Status.ERROR) {
                         _snackbarErrorWithStringResId.value = Event(R.string.general_error_api_message)
@@ -109,7 +109,7 @@ class MarketProductsViewModel(
 
     private fun saveProductsCart(cart: ProductsCart) {
         viewModelScope.launch(dispatchers.main) {
-            saveProductsCartInteractor(cart)
+            saveLocalProductsCartUseCase(cart)
         }
     }
 

@@ -2,7 +2,7 @@ package com.dmanluc.cabifymarket.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.dmanluc.cabifymarket.data.local.model.MarketProductEntity
+import com.dmanluc.cabifymarket.data.local.entity.MarketProductEntity
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
