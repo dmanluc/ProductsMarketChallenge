@@ -19,8 +19,16 @@ import com.dmanluc.cabifymarket.utils.show
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener
 import kotlinx.android.synthetic.main.item_market_product.view.*
 
-class MarketProductsAdapter(private val onAddProductToCart: ((Int, Product) -> Unit)) :
-    RecyclerView.Adapter<MarketProductsAdapter.ProductViewHolder>() {
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * Adapter which populates market product list with market product items
+ *
+ */
+class MarketProductsAdapter(
+    private val onAddProductToCart: ((Int, Product) -> Unit)
+) : RecyclerView.Adapter<MarketProductsAdapter.ProductViewHolder>() {
 
     private val items: MutableList<Product> = mutableListOf()
 
@@ -90,8 +98,10 @@ class MarketProductsAdapter(private val onAddProductToCart: ((Int, Product) -> U
             }
         }
 
-        private fun showNewProductPriceWithDiscount(priceWithDiscount: CurrencyAmount,
-                                                    priceWithoutDiscount: CurrencyAmount) {
+        private fun showNewProductPriceWithDiscount(
+            priceWithDiscount: CurrencyAmount,
+            priceWithoutDiscount: CurrencyAmount
+        ) {
             itemView.productsTotalPriceWithoutDiscount.text = SpannableString(
                 "${priceWithoutDiscount.formatCurrencyInLocale()} / ud."
             ).apply {

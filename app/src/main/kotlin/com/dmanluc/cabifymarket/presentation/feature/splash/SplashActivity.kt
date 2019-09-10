@@ -9,6 +9,9 @@ import com.dmanluc.cabifymarket.presentation.MarketActivity
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
+ *
+ * Initial app activity to show splash screen
+ *
  */
 class SplashActivity : AppCompatActivity() {
 

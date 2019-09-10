@@ -5,7 +5,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dmanluc.cabifymarket.R
-import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import com.dmanluc.cabifymarket.domain.usecase.GetLocalProductsCartUseCase
@@ -14,6 +13,7 @@ import com.dmanluc.cabifymarket.domain.usecase.SaveLocalProductsCartUseCase
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 import com.dmanluc.cabifymarket.utils.AppDispatchers
 import com.dmanluc.cabifymarket.utils.Event
+import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.utils.notifyObserver
 import com.dmanluc.cabifymarket.utils.observeAndMapValue
 import com.dmanluc.cabifymarket.utils.safeLet
@@ -24,6 +24,9 @@ import kotlinx.coroutines.withContext
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
+ *
+ * View model for market products fragment
+ *
  */
 class MarketProductsViewModel(
     private val getMarketProductsUseCase: GetMarketProductsUseCase,
@@ -65,8 +68,10 @@ class MarketProductsViewModel(
         }
     }
 
-    fun checkLastSavedProductsCart(productsFromMarketResource: Resource<List<Product>>) {
-        if (productsFromMarketResource.status == Resource.Status.SUCCESS) {
+    fun checkLocalProductsCart(productsFromMarketResource: Resource<List<Product>>) {
+        if (productsFromMarketResource.status == Resource.Status.SUCCESS
+            || productsFromMarketResource.status == Resource.Status.ERROR) {
+
             viewModelScope.launch(dispatchers.main) {
                 _productsCartSource = getLocalProductsCartUseCase()
                 _productsCart.observeAndMapValue(_productsCartSource) {

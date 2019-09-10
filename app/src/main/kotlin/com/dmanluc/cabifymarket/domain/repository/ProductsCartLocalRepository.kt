@@ -11,10 +11,10 @@ import com.dmanluc.cabifymarket.utils.Resource
  */
 interface ProductsCartLocalRepository {
 
-    suspend fun saveProductsCart(cart: ProductsCart)
+    suspend fun saveLocalProductsCart(cart: ProductsCart)
 
-    suspend fun getLastSavedProductsCart(): LiveData<Resource<ProductsCart>>
+    suspend fun getLocalProductsCart(): LiveData<Resource<ProductsCart>>
 
-    suspend fun deleteProductsCart(productsCart: ProductsCart)
+    suspend fun deleteLocalProductsCart(productsCart: ProductsCart)
 
 }

@@ -12,6 +12,10 @@ import com.dmanluc.cabifymarket.R
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
+ *
+ * Main app activity which will host two fragments for two screens: the first one showing
+ * the market product list and the second one to perform the checkout of the user shopping cart
+ *
  */
 class MarketActivity : AppCompatActivity() {
 

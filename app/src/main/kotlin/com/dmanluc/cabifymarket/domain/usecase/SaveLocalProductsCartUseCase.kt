@@ -14,7 +14,7 @@ import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
 class SaveLocalProductsCartUseCase(private val repository: ProductsCartLocalRepository) {
 
     suspend operator fun invoke(cart: ProductsCart) {
-        return repository.saveProductsCart(cart)
+        return repository.saveLocalProductsCart(cart)
     }
 
 }

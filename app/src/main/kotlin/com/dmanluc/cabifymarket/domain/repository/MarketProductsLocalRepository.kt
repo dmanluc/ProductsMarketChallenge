@@ -11,6 +11,6 @@ import com.dmanluc.cabifymarket.utils.Resource
  */
 interface MarketProductsLocalRepository {
 
-    suspend fun getProducts(): LiveData<Resource<List<Product>>>
+    suspend fun getLocalProducts(): LiveData<Resource<List<Product>>>
 
 }

@@ -16,7 +16,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.dmanluc.cabifymarket.R
-import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.di.marketProductsModule
 import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.domain.model.ProductsCart
@@ -30,6 +29,7 @@ import com.dmanluc.cabifymarket.presentation.feature.market.MarketProductsFragme
 import com.dmanluc.cabifymarket.presentation.feature.market.MarketProductsFragmentDirections
 import com.dmanluc.cabifymarket.utils.AppDispatchers
 import com.dmanluc.cabifymarket.utils.MockDataProvider
+import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.utils.executePendingDataBindingTransactions
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -81,7 +81,7 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
             )
         }
 
-        coEvery { localProductsCartRepository.getLastSavedProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
+        coEvery { localProductsCartRepository.getLocalProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
             postValue(
                 Resource.success(MockDataProvider.createMockProductsCart())
             )
@@ -107,6 +107,12 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
             )
         }
 
+        coEvery { localProductsCartRepository.getLocalProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
+            postValue(
+                Resource.success(ProductsCart())
+            )
+        }
+
         launchFragment()
 
         onView(withId(R.id.emptyProductsTextView))
@@ -115,6 +121,7 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
             .check(matches(ViewMatchers.isDisplayed()))
         onView(withId(com.google.android.material.R.id.snackbar_text))
             .check(matches(ViewMatchers.withText("wtf")))
+        onView(withId(R.id.cartCheckout)).check(matches(not(isEnabled())))
     }
 
     @Test
@@ -124,6 +131,12 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
                 Resource.error(
                     Exception("no_internet"), MockDataProvider.createMockProductList()
                 )
+            )
+        }
+
+        coEvery { localProductsCartRepository.getLocalProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
+            postValue(
+                Resource.success(MockDataProvider.createMockProductsCart())
             )
         }
 
@@ -137,6 +150,7 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
         onView(withId(R.id.productsRecycler))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
         onView(withId(R.id.productsRecycler)).check(withItemCount(3))
+        onView(withId(R.id.cartCheckout)).check(matches(isEnabled()))
     }
 
     @Test
@@ -148,7 +162,7 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
             )
         }
 
-        coEvery { localProductsCartRepository.getLastSavedProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
+        coEvery { localProductsCartRepository.getLocalProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
             postValue(
                 Resource.success(mockProductsCart)
             )
@@ -175,13 +189,13 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
             )
         }
 
-        coEvery { localProductsCartRepository.getLastSavedProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
+        coEvery { localProductsCartRepository.getLocalProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
             postValue(
-                Resource.success(ProductsCart())
+                Resource.success(MockDataProvider.createMockProductsCart())
             )
         }
 
-        coEvery { localProductsCartRepository.saveProductsCart(any()) } just Runs
+        coEvery { localProductsCartRepository.saveLocalProductsCart(any()) } just Runs
 
         launchFragment()
 
@@ -206,13 +220,13 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
             )
         }
 
-        coEvery { localProductsCartRepository.getLastSavedProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
+        coEvery { localProductsCartRepository.getLocalProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
             postValue(
                 Resource.success(ProductsCart())
             )
         }
 
-        coEvery { localProductsCartRepository.saveProductsCart(any()) } just Runs
+        coEvery { localProductsCartRepository.saveLocalProductsCart(any()) } just Runs
 
         launchFragment()
 

@@ -20,8 +20,17 @@ import com.dmanluc.cabifymarket.utils.show
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener
 import kotlinx.android.synthetic.main.item_checkout_product.view.*
 
-class MarketCheckoutAdapter(private val onProductQuantityChanged: ((Int, Product) -> Unit),
-                            private val onRemoveProductFromCart: ((Product) -> Unit)) :
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * Adapter which populates checkout product list with user products cart items
+ *
+ */
+class MarketCheckoutAdapter(
+    private val onProductQuantityChanged: ((Int, Product) -> Unit),
+    private val onRemoveProductFromCart: ((Product) -> Unit)
+) :
     RecyclerView.Adapter<MarketCheckoutAdapter.ProductViewHolder>() {
 
     private var items: LinkedHashMap<Product, Int> = linkedMapOf()
@@ -120,8 +129,10 @@ class MarketCheckoutAdapter(private val onProductQuantityChanged: ((Int, Product
             }
         }
 
-        private fun showNewProductsTotalPriceWithDiscount(totalPriceWithDiscount: CurrencyAmount,
-                                                          totalPriceWithoutDiscount: CurrencyAmount) {
+        private fun showNewProductsTotalPriceWithDiscount(
+            totalPriceWithDiscount: CurrencyAmount,
+            totalPriceWithoutDiscount: CurrencyAmount
+        ) {
             itemView.productsTotalPriceWithoutDiscount.text = SpannableString(
                 totalPriceWithoutDiscount.formatCurrencyInLocale()
             ).apply {
@@ -138,8 +149,10 @@ class MarketCheckoutAdapter(private val onProductQuantityChanged: ((Int, Product
             itemView.productsTotalPriceWithoutDiscount.hide()
         }
 
-        private fun updateProductsTotalPriceForFreePerQuantityDiscount(product: Product,
-                                                                       quantity: Int) {
+        private fun updateProductsTotalPriceForFreePerQuantityDiscount(
+            product: Product,
+            quantity: Int
+        ) {
             val discountRule = product.discountRule as FreePerQuantityDiscountRule
             when {
                 quantity <= discountRule.buyQuantity -> {

@@ -2,9 +2,9 @@ package com.dmanluc.cabifymarket.data.local.repository
 
 import androidx.lifecycle.LiveData
 import com.dmanluc.cabifymarket.data.local.datasource.ProductsCartLocalDataSource
-import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
+import com.dmanluc.cabifymarket.utils.Resource
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
@@ -17,16 +17,16 @@ import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
 class ProductsCartLocalRepositoryImpl(private val localDataSource: ProductsCartLocalDataSource) :
     ProductsCartLocalRepository {
 
-    override suspend fun saveProductsCart(cart: ProductsCart) {
-        localDataSource.saveProductsCart(cart)
+    override suspend fun saveLocalProductsCart(cart: ProductsCart) {
+        localDataSource.saveLocalProductsCart(cart)
     }
 
-    override suspend fun getLastSavedProductsCart(): LiveData<Resource<ProductsCart>> {
-        return localDataSource.getLastSavedProductsCart()
+    override suspend fun getLocalProductsCart(): LiveData<Resource<ProductsCart>> {
+        return localDataSource.getLocalProductsCart()
     }
 
-    override suspend fun deleteProductsCart(productsCart: ProductsCart) {
-        localDataSource.deleteProductsCart(productsCart)
+    override suspend fun deleteLocalProductsCart(productsCart: ProductsCart) {
+        localDataSource.deleteLocalProductsCart(productsCart)
     }
 
 }

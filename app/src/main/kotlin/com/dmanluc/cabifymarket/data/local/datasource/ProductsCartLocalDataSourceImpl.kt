@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.dmanluc.cabifymarket.data.local.dao.ShoppingCartDao
 import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEntityMapper
 import com.dmanluc.cabifymarket.data.local.mapper.ShoppingCartDatabaseEntityToDomainMapper
-import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.model.ProductsCart
+import com.dmanluc.cabifymarket.utils.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext
@@ -33,7 +33,7 @@ class ProductsCartLocalDataSourceImpl(
         cacheDataSource.manageExpiration(enable = false)
     }
 
-    override suspend fun saveProductsCart(cart: ProductsCart) {
+    override suspend fun saveLocalProductsCart(cart: ProductsCart) {
         cacheDataSource.save(cart)
 
         CoroutineScope(coroutineContext).launch {
@@ -41,7 +41,7 @@ class ProductsCartLocalDataSourceImpl(
         }
     }
 
-    override suspend fun getLastSavedProductsCart(): LiveData<Resource<ProductsCart>> {
+    override suspend fun getLocalProductsCart(): LiveData<Resource<ProductsCart>> {
         val cachedCart = cacheDataSource.get(ProductsCart::class.java)
         if (cachedCart != null) {
             val newValue = Resource.success(cachedCart)
@@ -50,15 +50,19 @@ class ProductsCartLocalDataSourceImpl(
         }
 
         CoroutineScope(coroutineContext).launch {
-            val newValue =
-                Resource.success(shoppingCartDatabaseEntityToDomainMapper.mapFrom(dao.getShoppingCart()))
-            if (result.value != newValue) result.postValue(newValue)
+            try {
+                val newValue =
+                    Resource.success(shoppingCartDatabaseEntityToDomainMapper.mapFrom(dao.getShoppingCart()))
+                if (result.value != newValue) result.postValue(newValue)
+            } catch (exception: Exception) {
+                result.postValue(Resource.error(exception))
+            }
         }
 
         return result
     }
 
-    override suspend fun deleteProductsCart(productsCart: ProductsCart) {
+    override suspend fun deleteLocalProductsCart(productsCart: ProductsCart) {
         cacheDataSource.clear()
 
         CoroutineScope(coroutineContext).launch {

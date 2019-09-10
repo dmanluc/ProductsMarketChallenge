@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dmanluc.cabifymarket.data.local.dao.MarketProductsDao
 import com.dmanluc.cabifymarket.data.local.mapper.MarketProductDatabaseEntityToDomainMapper
-import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.model.Product
+import com.dmanluc.cabifymarket.utils.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext
@@ -21,8 +21,7 @@ class MarketProductsLocalDataSourceImpl(
     private val dao: MarketProductsDao,
     private val databaseToDomainMapper: MarketProductDatabaseEntityToDomainMapper,
     cacheDataSource: CacheDataSource
-) :
-    MarketProductsLocalDataSource {
+) : MarketProductsLocalDataSource {
 
     private val result = MutableLiveData<Resource<List<Product>>>()
 
@@ -30,11 +29,15 @@ class MarketProductsLocalDataSourceImpl(
         cacheDataSource.manageExpiration(enable = false)
     }
 
-    override suspend fun getProducts(): LiveData<Resource<List<Product>>> {
+    override suspend fun getLocalProducts(): LiveData<Resource<List<Product>>> {
         CoroutineScope(coroutineContext).launch {
-            val newValue =
-                Resource.success(dao.getMarketProducts().map { databaseToDomainMapper.mapFrom(it) })
-            if (result.value != newValue) result.postValue(newValue)
+            try {
+                val newValue =
+                    Resource.success(dao.getMarketProducts().map { databaseToDomainMapper.mapFrom(it) })
+                if (result.value != newValue) result.postValue(newValue)
+            } catch (exception: Exception) {
+                result.postValue(Resource.error(exception))
+            }
         }
 
         return result

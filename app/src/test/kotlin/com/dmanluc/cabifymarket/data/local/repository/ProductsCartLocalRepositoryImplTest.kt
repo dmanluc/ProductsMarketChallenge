@@ -72,7 +72,7 @@ class ProductsCartLocalRepositoryImplTest {
         every { domainToDatabaseEntityMapper.mapFrom(any()) } returns mockProductsCartEntity
 
         runBlocking {
-            repository.saveProductsCart(mockProductsCart)
+            repository.saveLocalProductsCart(mockProductsCart)
         }
 
         verifyOrder {
@@ -92,7 +92,7 @@ class ProductsCartLocalRepositoryImplTest {
         every { cacheService.get(ProductsCart::class.java) } returns mockProductsCart
 
         runBlocking {
-            repository.getLastSavedProductsCart().observeForever(observer)
+            repository.getLocalProductsCart().observeForever(observer)
         }
 
         verifyOrder {
@@ -113,7 +113,7 @@ class ProductsCartLocalRepositoryImplTest {
         every { databaseEntityToDomainMapper.mapFrom(any()) } returns mockProductsCart
 
         runBlocking {
-            repository.getLastSavedProductsCart().observeForever(observer)
+            repository.getLocalProductsCart().observeForever(observer)
         }
 
         verifyOrder {
@@ -138,7 +138,7 @@ class ProductsCartLocalRepositoryImplTest {
         every { domainToDatabaseEntityMapper.mapFrom(any()) } returns mockProductsCartEntity
 
         runBlocking {
-            repository.deleteProductsCart(mockProductsCart)
+            repository.deleteLocalProductsCart(mockProductsCart)
         }
 
         verifyOrder {

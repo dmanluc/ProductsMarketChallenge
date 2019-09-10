@@ -14,6 +14,13 @@ import com.dmanluc.cabifymarket.utils.hide
 import com.dmanluc.cabifymarket.utils.loadImage
 import com.dmanluc.cabifymarket.utils.show
 
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * Custom data bindings for checkout fragment
+ *
+ */
 object MarketCheckoutFragmentBinding {
 
     @BindingAdapter("cartProductItems")

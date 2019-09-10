@@ -2,7 +2,6 @@ package com.dmanluc.cabifymarket.presentation.base
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -16,6 +15,9 @@ import com.google.android.material.snackbar.Snackbar
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
+ *
+ * Base fragment template which handles snackbar messages and navigation operations
+ *
  */
 abstract class BaseFragment : Fragment() {
 
@@ -37,10 +39,6 @@ abstract class BaseFragment : Fragment() {
 
     abstract fun getViewModel(): BaseViewModel
 
-    /**
-     * Observe a [NavigationCommand] [Event] [LiveData].
-     * When this [LiveData] is updated, [Fragment] will navigate to its destination
-     */
     private fun observeNavigation(viewModel: BaseViewModel) {
         viewModel.navigation.observe(viewLifecycleOwner, Observer {
             it?.getContentIfNotHandled()?.let { command ->
@@ -54,9 +52,6 @@ abstract class BaseFragment : Fragment() {
         })
     }
 
-    /**
-     * [FragmentNavigatorExtras] mainly used to enable Shared Element transition
-     */
     open fun getExtras(): FragmentNavigator.Extras = FragmentNavigatorExtras()
 
 }

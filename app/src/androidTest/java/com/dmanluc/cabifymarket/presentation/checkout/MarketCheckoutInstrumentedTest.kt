@@ -144,7 +144,7 @@ class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
 
     @Test
     fun completePayment_shouldFinishCheckoutFlow() {
-        coEvery { localProductsCartRepository.deleteProductsCart(any()) } just Runs
+        coEvery { localProductsCartRepository.deleteLocalProductsCart(any()) } just Runs
 
         onView(withId(R.id.checkoutOrderInfo)).perform(swipeUp())
         onView(withId(R.id.cartPayment)).perform(click())

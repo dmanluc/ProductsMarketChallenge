@@ -16,6 +16,9 @@ import kotlinx.coroutines.launch
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-08-20.
+ *
+ * View model for checkout fragment
+ *
  */
 class MarketCheckoutViewModel(
     private val deleteLocalProductsCartUseCase: DeleteLocalProductsCartUseCase

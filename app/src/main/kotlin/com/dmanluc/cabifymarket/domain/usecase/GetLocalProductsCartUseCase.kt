@@ -16,7 +16,7 @@ import com.dmanluc.cabifymarket.utils.Resource
 class GetLocalProductsCartUseCase(private val repository: ProductsCartLocalRepository) {
 
     suspend operator fun invoke(): LiveData<Resource<ProductsCart>> {
-        return repository.getLastSavedProductsCart()
+        return repository.getLocalProductsCart()
     }
 
 }

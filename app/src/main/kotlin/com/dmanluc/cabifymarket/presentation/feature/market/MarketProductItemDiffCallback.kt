@@ -3,8 +3,10 @@ package com.dmanluc.cabifymarket.presentation.feature.market
 import androidx.recyclerview.widget.DiffUtil
 import com.dmanluc.cabifymarket.domain.model.Product
 
-class MarketProductItemDiffCallback(private val oldList: List<Product>,
-                                    private val newList: List<Product>) : DiffUtil.Callback() {
+class MarketProductItemDiffCallback(
+    private val oldList: List<Product>,
+    private val newList: List<Product>
+) : DiffUtil.Callback() {
 
     override fun getOldListSize() = oldList.size
 

@@ -20,6 +20,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-08-20.
+ *
+ * Second flow fragment which shows checkout process for user products cart and perform fake payment process response
+ *
  */
 class MarketCheckoutFragment : BaseFragment() {
 
@@ -32,9 +35,11 @@ class MarketCheckoutFragment : BaseFragment() {
 
     override fun getViewModel(): BaseViewModel = viewModel
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentMarketCheckoutBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -45,7 +50,7 @@ class MarketCheckoutFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         setupUI()
-        
+
         viewModel.loadCartProducts(args.productsCart)
     }
 
@@ -70,7 +75,8 @@ class MarketCheckoutFragment : BaseFragment() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
                     val layoutParams =
                         binding.cartProductsRecycler.layoutParams as CoordinatorLayout.LayoutParams
-                    layoutParams.height = bottomSheet.top + binding.cartProductsRecycler.paddingBottom
+                    layoutParams.height =
+                        bottomSheet.top + binding.cartProductsRecycler.paddingBottom
                     binding.cartProductsRecycler.apply {
                         setLayoutParams(layoutParams)
                         requestLayout()
@@ -85,7 +91,8 @@ class MarketCheckoutFragment : BaseFragment() {
                             countingIdlingResource.decrement()
                         BottomSheetBehavior.STATE_DRAGGING ->
                             countingIdlingResource.increment()
-                       else -> {}
+                        else -> {
+                        }
                     }
                 }
             })
@@ -98,6 +105,7 @@ class MarketCheckoutFragment : BaseFragment() {
 
         binding.cartPayment.run {
             setOnClickListener {
+                // In a real context, when clicked it should launch a API call or whatever from view model to perform payment process.
                 activity?.let { context ->
                     morphDoneAndRevert(context) { viewModel.closeFlow() }
                 }

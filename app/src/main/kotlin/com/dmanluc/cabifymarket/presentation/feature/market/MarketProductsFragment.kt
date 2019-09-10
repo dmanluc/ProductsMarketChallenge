@@ -14,6 +14,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
+ *
+ * First flow fragment which shows market product list from remote data source and user can add them to the shopping cart
+ *
  */
 class MarketProductsFragment : BaseFragment() {
 
@@ -40,7 +43,7 @@ class MarketProductsFragment : BaseFragment() {
         configureRecyclerView()
 
         viewModel.products.observe(viewLifecycleOwner, Observer {
-            viewModel.checkLastSavedProductsCart(it)
+            viewModel.checkLocalProductsCart(it)
         })
     }
 

@@ -9,15 +9,22 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.dmanluc.cabifymarket.R
-import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.model.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.domain.model.ProductsCart
+import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.utils.hide
 import com.dmanluc.cabifymarket.utils.loadImage
 import com.dmanluc.cabifymarket.utils.orFalse
 import com.dmanluc.cabifymarket.utils.show
 
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * Custom data bindings for market products fragment
+ *
+ */
 object MarketProductsFragmentBinding {
 
     @BindingAdapter("showWhenLoading")

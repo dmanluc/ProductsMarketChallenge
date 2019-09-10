@@ -69,7 +69,7 @@ class MarketProductsLocalRepositoryImplTest {
         every { databaseEntityToDomainMapper.mapFrom(mockProductsEntities[2]) } returns mockProducts[2]
 
         runBlocking {
-            repository.getProducts().observeForever(observer)
+            repository.getLocalProducts().observeForever(observer)
         }
 
         verifyOrder {

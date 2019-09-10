@@ -1,13 +1,16 @@
 package com.dmanluc.cabifymarket.presentation.navigation
 
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 
 /**
- * A simple sealed class to handle more properly
- * navigation from a [ViewModel]
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * Sealed class to handle more properly navigation from a view model
+ *
  */
 sealed class NavigationCommand {
+
     data class To(val directions: NavDirections) : NavigationCommand()
     object Back : NavigationCommand()
 }
