@@ -95,9 +95,7 @@ class MarketProductsViewModelTest {
 
         with(marketProductsViewModel) {
             products.getOrAwaitValue()
-            productsCart.getOrAwaitValue() {
-                checkLocalProductsCart(mockProductListSuccessResource)
-            }
+            productsCart.getOrAwaitValue()
 
             products.observeForTesting(productsObserver) {
                 verify {
@@ -154,9 +152,7 @@ class MarketProductsViewModelTest {
 
         with(marketProductsViewModel) {
             products.getOrAwaitValue()
-            productsCart.getOrAwaitValue() {
-                checkLocalProductsCart(mockProductListSuccessResource)
-            }
+            productsCart.getOrAwaitValue()
 
             products.observeForTesting(productsObserver) {
                 verify {
@@ -214,9 +210,7 @@ class MarketProductsViewModelTest {
 
         with(marketProductsViewModel) {
             products.getOrAwaitValue()
-            productsCart.getOrAwaitValue() {
-                checkLocalProductsCart(mockProductListErrorResourceWithNoLocalData)
-            }
+            productsCart.getOrAwaitValue()
 
             products.observeForTesting(productsObserver) {
                 verify {
@@ -279,9 +273,7 @@ class MarketProductsViewModelTest {
 
         with(marketProductsViewModel) {
             products.getOrAwaitValue()
-            productsCart.getOrAwaitValue() {
-                checkLocalProductsCart(mockProductListErrorResourceWithLocalData)
-            }
+            productsCart.getOrAwaitValue()
 
             products.observeForTesting(productsObserver) {
                 verify {
@@ -347,9 +339,8 @@ class MarketProductsViewModelTest {
 
         with(marketProductsViewModel) {
             products.getOrAwaitValue()
-            productsCart.getOrAwaitValue() {
-                checkLocalProductsCart(mockProductListSuccessResource)
-            }
+            productsCart.getOrAwaitValue()
+
             productsCart.observeForTesting(observer) {
                 addProductToCart(1, mockProductList.first())
 
@@ -397,9 +388,7 @@ class MarketProductsViewModelTest {
 
         with(marketProductsViewModel) {
             products.getOrAwaitValue()
-            productsCart.getOrAwaitValue() {
-                checkLocalProductsCart(mockProductListSuccessResource)
-            }
+            productsCart.getOrAwaitValue()
         }
 
         val event = Event(

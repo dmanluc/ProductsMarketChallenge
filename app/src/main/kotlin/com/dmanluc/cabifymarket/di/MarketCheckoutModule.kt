@@ -16,5 +16,5 @@ import org.koin.dsl.module
  */
 val marketCheckoutModule: Module = module {
     factory { DeleteLocalProductsCartUseCase(get()) }
-    viewModel { MarketCheckoutViewModel(get()) }
+    viewModel { MarketCheckoutViewModel(get(), get()) }
 }

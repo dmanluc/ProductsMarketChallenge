@@ -23,6 +23,7 @@ import com.dmanluc.cabifymarket.R
 import com.dmanluc.cabifymarket.di.marketCheckoutModule
 import com.dmanluc.cabifymarket.domain.model.CurrencyAmount
 import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
+import com.dmanluc.cabifymarket.domain.usecase.SaveLocalProductsCartUseCase
 import com.dmanluc.cabifymarket.espressoRecyclerViewActions.RecyclerViewHolderItemViewAction
 import com.dmanluc.cabifymarket.espressoRecyclerViewActions.RecyclerViewItemCountAssertion.Companion.withItemCount
 import com.dmanluc.cabifymarket.presentation.feature.checkout.MarketCheckoutAdapter
@@ -62,9 +63,13 @@ class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
 
     @Before
     fun setUp() {
+        coEvery { localProductsCartRepository.saveLocalProductsCart(any()) } just Runs
+        coEvery { localProductsCartRepository.deleteLocalProductsCart(any()) } just Runs
+        
         startKoin {
             modules(listOf(module {
                 factory { localProductsCartRepository }
+                factory { SaveLocalProductsCartUseCase(localProductsCartRepository) }
             }, marketCheckoutModule))
         }
 
@@ -144,8 +149,6 @@ class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
 
     @Test
     fun completePayment_shouldFinishCheckoutFlow() {
-        coEvery { localProductsCartRepository.deleteLocalProductsCart(any()) } just Runs
-
         onView(withId(R.id.checkoutOrderInfo)).perform(swipeUp())
         onView(withId(R.id.cartPayment)).perform(click())
 

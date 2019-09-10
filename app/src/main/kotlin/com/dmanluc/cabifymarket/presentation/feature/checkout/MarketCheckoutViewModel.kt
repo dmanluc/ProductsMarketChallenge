@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import com.dmanluc.cabifymarket.domain.usecase.DeleteLocalProductsCartUseCase
+import com.dmanluc.cabifymarket.domain.usecase.SaveLocalProductsCartUseCase
 import com.dmanluc.cabifymarket.presentation.base.BaseViewModel
 import com.dmanluc.cabifymarket.utils.Event
 import com.dmanluc.cabifymarket.utils.notifyObserver
@@ -21,6 +22,7 @@ import kotlinx.coroutines.launch
  *
  */
 class MarketCheckoutViewModel(
+    private val saveLocalProductsCartUseCase: SaveLocalProductsCartUseCase,
     private val deleteLocalProductsCartUseCase: DeleteLocalProductsCartUseCase
 ) : BaseViewModel() {
 
@@ -59,6 +61,14 @@ class MarketCheckoutViewModel(
                 _productsCart.postNotifyObserver()
             }
             _finishCheckoutFlow.value = Event(Unit)
+        }
+    }
+
+    fun saveProductsCart() {
+        _productsCart.value?.let {
+            GlobalScope.launch {
+                saveLocalProductsCartUseCase.invoke(it)
+            }
         }
     }
 

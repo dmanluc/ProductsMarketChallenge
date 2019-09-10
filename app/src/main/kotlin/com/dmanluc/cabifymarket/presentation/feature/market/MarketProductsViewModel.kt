@@ -63,12 +63,13 @@ class MarketProductsViewModel(
                     _snackbarErrorWithStringLiteral.value = Event(it.error?.message.orEmpty())
                 }
 
+                checkLocalProductsCart(it)
                 it
             }
         }
     }
 
-    fun checkLocalProductsCart(productsFromMarketResource: Resource<List<Product>>) {
+    private fun checkLocalProductsCart(productsFromMarketResource: Resource<List<Product>>) {
         if (productsFromMarketResource.status == Resource.Status.SUCCESS
             || productsFromMarketResource.status == Resource.Status.ERROR) {
 
@@ -119,7 +120,7 @@ class MarketProductsViewModel(
     }
 
     fun goToCheckout() {
-        productsCart.value?.let {
+        _productsCart.value?.let {
             navigate(MarketProductsFragmentDirections.actionGoToCheckout(it))
         }
     }

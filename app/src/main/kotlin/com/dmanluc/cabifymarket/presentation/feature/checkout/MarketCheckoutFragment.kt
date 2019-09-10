@@ -113,4 +113,9 @@ class MarketCheckoutFragment : BaseFragment() {
         }
     }
 
+    override fun onPause() {
+        viewModel.saveProductsCart()
+        super.onPause()
+    }
+
 }

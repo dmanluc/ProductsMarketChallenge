@@ -21,7 +21,7 @@ data class ProductsCart(private val cart: LinkedHashMap<Product, Int> = linkedMa
     }
 
     fun updateProduct(newQuantity: Int, product: Product) {
-        if (cart[product] != null && newQuantity > 0) {
+        if (cart.containsKey(product) && newQuantity > 0) {
             cart[product] = newQuantity
         }
     }

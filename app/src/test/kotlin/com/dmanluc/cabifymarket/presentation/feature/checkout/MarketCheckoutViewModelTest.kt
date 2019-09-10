@@ -6,10 +6,12 @@ import androidx.test.filters.SmallTest
 import com.dmanluc.cabifymarket.data.remote.utils.observeForTesting
 import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import com.dmanluc.cabifymarket.domain.usecase.DeleteLocalProductsCartUseCase
+import com.dmanluc.cabifymarket.domain.usecase.SaveLocalProductsCartUseCase
 import com.dmanluc.cabifymarket.utils.Event
 import com.dmanluc.cabifymarket.utils.MockDataProvider
 import io.mockk.Runs
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.confirmVerified
 import io.mockk.just
 import io.mockk.mockk
@@ -36,16 +38,19 @@ class MarketCheckoutViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
+    private lateinit var saveLocalProductsCartUseCase: SaveLocalProductsCartUseCase
     private lateinit var deleteLocalProductsCartUseCase: DeleteLocalProductsCartUseCase
     private lateinit var marketCheckoutViewModel: MarketCheckoutViewModel
 
     @Before
     fun setUp() {
+        saveLocalProductsCartUseCase = mockk()
         deleteLocalProductsCartUseCase = mockk()
 
+        coEvery { saveLocalProductsCartUseCase.invoke(any()) } just Runs
         coEvery { deleteLocalProductsCartUseCase.invoke(any()) } just Runs
 
-        marketCheckoutViewModel = MarketCheckoutViewModel(deleteLocalProductsCartUseCase)
+        marketCheckoutViewModel = MarketCheckoutViewModel(saveLocalProductsCartUseCase, deleteLocalProductsCartUseCase)
 
         val mockProductsCart = MockDataProvider.createMockProductsCart()
         marketCheckoutViewModel.loadCartProducts(mockProductsCart)
@@ -136,6 +141,19 @@ class MarketCheckoutViewModelTest {
                 Assert.assertEquals(cartSlot.captured.size(), 0)
 
                 finishCheckoutFlow.removeObserver(closeEventObserver)
+            }
+        }
+    }
+
+    @Test
+    fun saveProductsCart() {
+        with(marketCheckoutViewModel) {
+            productsCart.observeForTesting() {
+                saveProductsCart()
+
+                coVerify(exactly = 1) {
+                    saveLocalProductsCartUseCase.invoke(any())
+                }
             }
         }
     }
