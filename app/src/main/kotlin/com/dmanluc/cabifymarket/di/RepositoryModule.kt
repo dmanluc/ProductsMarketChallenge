@@ -20,8 +20,8 @@ import org.koin.dsl.module
  *
  */
 val repositoryModule: Module = module {
-    factory { AppDispatchers(Dispatchers.Main, Dispatchers.IO) }
-    factory<MarketRepository> { MarketRepositoryImpl(get()) }
-    factory<MarketProductsLocalRepository> { MarketProductsLocalRepositoryImpl(get()) }
-    factory<ProductsCartLocalRepository> { ProductsCartLocalRepositoryImpl(get()) }
+    single { AppDispatchers(Dispatchers.Main, Dispatchers.IO) }
+    single<MarketRepository> { MarketRepositoryImpl(get()) }
+    single<MarketProductsLocalRepository> { MarketProductsLocalRepositoryImpl(get()) }
+    single<ProductsCartLocalRepository> { ProductsCartLocalRepositoryImpl(get()) }
 }
