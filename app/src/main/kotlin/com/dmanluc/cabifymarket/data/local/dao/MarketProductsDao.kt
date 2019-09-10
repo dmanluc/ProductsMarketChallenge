@@ -8,6 +8,9 @@ import com.dmanluc.cabifymarket.data.local.model.MarketProductEntity
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-08-31.
+ *
+ * Custom DAO for inserting and saving market products
+ *
  */
 @Dao
 abstract class MarketProductsDao : BaseDao<MarketProductEntity>() {

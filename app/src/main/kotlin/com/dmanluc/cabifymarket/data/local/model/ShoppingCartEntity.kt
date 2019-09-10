@@ -11,6 +11,9 @@ import com.dmanluc.cabifymarket.domain.entity.Product
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-09.
+ *
+ * Room database entity which models domain products cart entity
+ *
  */
 @Entity(tableName = "shoppingCart")
 @TypeConverters(ShoppingCartConverter::class)

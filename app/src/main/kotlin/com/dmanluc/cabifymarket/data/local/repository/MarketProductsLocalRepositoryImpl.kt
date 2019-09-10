@@ -10,6 +10,9 @@ import com.dmanluc.cabifymarket.domain.repository.MarketProductsLocalRepository
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-09.
+ *
+ * Implementation of local market products repository to obtain saved products from local app database
+ *
  */
 class MarketProductsLocalRepositoryImpl(private val localDataSource: MarketProductsLocalDataSource) :
     MarketProductsLocalRepository {

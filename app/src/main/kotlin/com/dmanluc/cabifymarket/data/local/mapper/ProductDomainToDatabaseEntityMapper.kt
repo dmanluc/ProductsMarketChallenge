@@ -8,6 +8,9 @@ import com.dmanluc.cabifymarket.utils.EntityMapper
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-08-31.
+ *
+ * Mapper to convert between domain product entity and database product entity
+ *
  */
 class ProductDomainToDatabaseEntityMapper : EntityMapper<Product, MarketProductEntity> {
 

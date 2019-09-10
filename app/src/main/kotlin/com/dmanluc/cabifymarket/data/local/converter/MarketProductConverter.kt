@@ -8,6 +8,13 @@ import com.google.gson.Gson
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * Specific Room type converter for domain product entity to be able to get it and save it from/to database
+ *
+ */
 class MarketProductConverter : KoinComponent {
 
     private val gson: Gson by inject()

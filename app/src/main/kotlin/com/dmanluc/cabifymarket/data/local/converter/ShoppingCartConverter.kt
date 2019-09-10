@@ -8,6 +8,13 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.qualifier.named
 
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * Specific Room type converter for domain products cart entity to be able to get it and save it from/to database
+ *
+ */
 class ShoppingCartConverter : KoinComponent {
 
     private val gson: Gson by inject(named("shoppingCartDatabaseConverterGson"))

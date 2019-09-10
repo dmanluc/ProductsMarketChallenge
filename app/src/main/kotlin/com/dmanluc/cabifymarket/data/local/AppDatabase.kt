@@ -13,6 +13,9 @@ import com.dmanluc.cabifymarket.data.local.model.ShoppingCartEntity
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-09.
+ *
+ * Room app database declaration
+ *
  */
 @Database(
     entities = [MarketProductEntity::class, ShoppingCartEntity::class],

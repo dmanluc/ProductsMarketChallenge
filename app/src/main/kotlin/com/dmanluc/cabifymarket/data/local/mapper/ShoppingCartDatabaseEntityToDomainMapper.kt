@@ -8,6 +8,9 @@ import com.dmanluc.cabifymarket.utils.EntityMapper
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-09.
+ *
+ * Mapper to convert between database shopping cart entity and domain products cart entity
+ *
  */
 class ShoppingCartDatabaseEntityToDomainMapper : EntityMapper<ShoppingCartEntity?, ProductsCart?> {
 

@@ -4,6 +4,13 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.dmanluc.cabifymarket.data.local.model.ShoppingCartEntity
 
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * Custom DAO for inserting and saving current user products cart
+ *
+ */
 @Dao
 abstract class ShoppingCartDao : BaseDao<ShoppingCartEntity>() {
 

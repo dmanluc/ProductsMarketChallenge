@@ -10,9 +10,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext
 
-class MarketProductsLocalDataSourceImpl(private val dao: MarketProductsDao,
-                                        private val databaseToDomainMapper: MarketProductDatabaseEntityToDomainMapper,
-                                        cacheDataSource: CacheDataSource) :
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ *
+ * Implementation of a local data source which obtains market products from local app database
+ *
+ */
+class MarketProductsLocalDataSourceImpl(
+    private val dao: MarketProductsDao,
+    private val databaseToDomainMapper: MarketProductDatabaseEntityToDomainMapper,
+    cacheDataSource: CacheDataSource
+) :
     MarketProductsLocalDataSource {
 
     private val result = MutableLiveData<Resource<List<Product>>>()

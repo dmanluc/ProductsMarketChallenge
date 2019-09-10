@@ -15,11 +15,16 @@ import kotlin.coroutines.coroutineContext
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-02.
+ *
+ * Implementation of a local data source which save/obtains current user products cart to/from local app database
+ *
  */
-class ProductsCartLocalDataSourceImpl(private val dao: ShoppingCartDao,
-                                      private val productsCartDomainToEntityMapper: ProductsCartDomainToDatabaseEntityMapper,
-                                      private val shoppingCartDatabaseEntityToDomainMapper: ShoppingCartDatabaseEntityToDomainMapper,
-                                      private val cacheDataSource: CacheDataSource) :
+class ProductsCartLocalDataSourceImpl(
+    private val dao: ShoppingCartDao,
+    private val productsCartDomainToEntityMapper: ProductsCartDomainToDatabaseEntityMapper,
+    private val shoppingCartDatabaseEntityToDomainMapper: ShoppingCartDatabaseEntityToDomainMapper,
+    private val cacheDataSource: CacheDataSource
+) :
     ProductsCartLocalDataSource {
 
     private val result = MutableLiveData<Resource<ProductsCart>>()

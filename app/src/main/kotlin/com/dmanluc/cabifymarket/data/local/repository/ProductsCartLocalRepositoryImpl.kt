@@ -10,6 +10,9 @@ import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-07-09.
+ *
+ * Implementation of local products cart repository to obtain/save/delete saved user products cart from local app database
+ *
  */
 class ProductsCartLocalRepositoryImpl(private val localDataSource: ProductsCartLocalDataSource) :
     ProductsCartLocalRepository {

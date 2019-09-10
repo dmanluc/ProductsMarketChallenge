@@ -1,12 +1,17 @@
 package com.dmanluc.cabifymarket.data.local.datasource
 
-import java.util.*
+import java.util.Calendar
+import java.util.GregorianCalendar
+import java.util.HashMap
 import java.util.concurrent.TimeUnit
 
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
  * @since    2019-08-18.
+ *
+ * Implementation of a local data source which caches data in memory (optionally add a data validation time)
+ *
  */
 class CacheDataSourceImpl : CacheDataSource {
 

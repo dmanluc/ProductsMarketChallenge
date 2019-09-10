@@ -1,6 +1,13 @@
 package com.dmanluc.cabifymarket.data.local.typeadapter
 
-import com.google.gson.*
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonParseException
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonSerializer
 import java.lang.reflect.Type
 
 
@@ -17,9 +24,11 @@ class InterfaceAdapter<T : Any> : JsonDeserializer<T>, JsonSerializer<T> {
     }
 
     @Throws(JsonParseException::class)
-    override fun deserialize(jsonElement: JsonElement,
-                             type: Type,
-                             jsonDeserializationContext: JsonDeserializationContext): T {
+    override fun deserialize(
+        jsonElement: JsonElement,
+        type: Type,
+        jsonDeserializationContext: JsonDeserializationContext
+    ): T {
         val jsonObject = jsonElement.asJsonObject
         val prim = jsonObject.get(CLASSNAME) as JsonPrimitive
         val className = prim.asString
@@ -28,9 +37,11 @@ class InterfaceAdapter<T : Any> : JsonDeserializer<T>, JsonSerializer<T> {
     }
 
 
-    override fun serialize(jsonElement: T,
-                           type: Type,
-                           jsonSerializationContext: JsonSerializationContext): JsonElement {
+    override fun serialize(
+        jsonElement: T,
+        type: Type,
+        jsonSerializationContext: JsonSerializationContext
+    ): JsonElement {
         return JsonObject().apply {
             addProperty(CLASSNAME, jsonElement::class.java.name)
             add(DATA, jsonSerializationContext.serialize(jsonElement))
