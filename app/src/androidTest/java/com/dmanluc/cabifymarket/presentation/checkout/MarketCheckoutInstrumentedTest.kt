@@ -48,7 +48,12 @@ import org.koin.test.AutoCloseKoinTest
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  *
- * https://stackoverflow.com/questions/40703567/how-do-i-make-espresso-wait-until-data-binding-has-updated-the-view-with-the-dat/52390905#52390905
+ * To solve the problem waiting for data binding to get view updated with data model in Espresso UI tests:
+ * @see: https://stackoverflow.com/questions/40703567/how-do-i-make-espresso-wait-until-data-binding-has-updated-the-view-with-the-dat/52390905#52390905
+ *
+ * Also, executePendingBindings on component data binding should be enough: the binding will be executed
+immediately when calling that method, and not during the next frame of Choreographer
+ *
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest

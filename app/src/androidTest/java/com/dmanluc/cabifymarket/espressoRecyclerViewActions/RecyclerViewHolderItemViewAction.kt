@@ -8,7 +8,10 @@ import org.hamcrest.Matcher
 /**
  * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version  1
- * @since    2019-09-08.
+ * @since    2019-09-08
+ *
+ * Espresso view action to perform click on a specific view in a recycler view holder
+ *
  */
 class RecyclerViewHolderItemViewAction private constructor(private val childItemViewId: Int) :
     ViewAction {

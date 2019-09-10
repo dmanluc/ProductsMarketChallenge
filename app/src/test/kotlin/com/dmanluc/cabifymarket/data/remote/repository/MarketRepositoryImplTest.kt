@@ -32,7 +32,7 @@ import org.junit.Rule
 import org.junit.Test
 
 /**
- * @author Daniel Manrique Lucas <dmanluc91></dmanluc91>@gmail.com>
+ * @author Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version 1
  * @since 2019-08-30.
  */

@@ -8,6 +8,14 @@ import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 
+/**
+ * @author   Daniel Manrique Lucas <dmanluc91@gmail.com>
+ * @version  1
+ * @since    2019-09-08
+ *
+ * Espresso view action to check for recycler view item count
+ *
+ */
 class RecyclerViewItemCountAssertion private constructor(private val matcher: Matcher<Int>) :
     ViewAssertion {
 

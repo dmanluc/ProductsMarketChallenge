@@ -8,10 +8,10 @@ import com.dmanluc.cabifymarket.data.local.datasource.MarketProductsLocalDataSou
 import com.dmanluc.cabifymarket.data.local.datasource.MarketProductsLocalDataSourceImpl
 import com.dmanluc.cabifymarket.data.local.mapper.MarketProductDatabaseEntityToDomainMapper
 import com.dmanluc.cabifymarket.data.remote.utils.CoroutinesMainDispatcherRule
-import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.domain.repository.MarketProductsLocalRepository
 import com.dmanluc.cabifymarket.utils.MockDataProvider
+import com.dmanluc.cabifymarket.utils.Resource
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
@@ -25,7 +25,7 @@ import org.junit.Rule
 import org.junit.Test
 
 /**
- * @author Daniel Manrique Lucas <dmanluc91></dmanluc91>@gmail.com>
+ * @author Daniel Manrique Lucas <dmanluc91@gmail.com>
  * @version 1
  * @since 2019-09-10.
  */
