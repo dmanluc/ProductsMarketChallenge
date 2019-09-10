@@ -23,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun shoppingCartDao(): ShoppingCartDao
 
-    abstract fun marketProductDao(): MarketProductsDao
+    abstract fun marketProductsDao(): MarketProductsDao
 
     companion object {
         fun buildDatabase(context: Context): AppDatabase = Room.databaseBuilder(

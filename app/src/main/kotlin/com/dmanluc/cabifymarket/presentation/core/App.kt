@@ -1,7 +1,13 @@
-package com.dmanluc.cabifymarket
+package com.dmanluc.cabifymarket.presentation.core
 
 import android.app.Application
-import com.dmanluc.cabifymarket.di.*
+import com.dmanluc.cabifymarket.BuildConfig
+import com.dmanluc.cabifymarket.di.createRemoteModule
+import com.dmanluc.cabifymarket.di.interactorModule
+import com.dmanluc.cabifymarket.di.localModule
+import com.dmanluc.cabifymarket.di.marketCheckoutModule
+import com.dmanluc.cabifymarket.di.marketFeatureModule
+import com.dmanluc.cabifymarket.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

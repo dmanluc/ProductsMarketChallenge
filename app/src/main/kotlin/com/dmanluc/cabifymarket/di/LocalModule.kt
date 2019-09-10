@@ -1,7 +1,12 @@
 package com.dmanluc.cabifymarket.di
 
 import com.dmanluc.cabifymarket.data.local.AppDatabase
-import com.dmanluc.cabifymarket.data.local.datasource.*
+import com.dmanluc.cabifymarket.data.local.datasource.CacheDataSource
+import com.dmanluc.cabifymarket.data.local.datasource.CacheDataSourceImpl
+import com.dmanluc.cabifymarket.data.local.datasource.MarketProductsLocalDataSource
+import com.dmanluc.cabifymarket.data.local.datasource.MarketProductsLocalDataSourceImpl
+import com.dmanluc.cabifymarket.data.local.datasource.ProductsCartLocalDataSource
+import com.dmanluc.cabifymarket.data.local.datasource.ProductsCartLocalDataSourceImpl
 import com.dmanluc.cabifymarket.data.local.mapper.MarketProductDatabaseEntityToDomainMapper
 import com.dmanluc.cabifymarket.data.local.mapper.ProductDomainToDatabaseEntityMapper
 import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEntityMapper
@@ -24,7 +29,7 @@ val localModule: Module = module {
 
     factory { get<AppDatabase>(named(DATABASE)).shoppingCartDao() }
 
-    factory { get<AppDatabase>(named(DATABASE)).marketProductDao() }
+    factory { get<AppDatabase>(named(DATABASE)).marketProductsDao() }
 
     single { ProductsCartDomainToDatabaseEntityMapper() }
 
