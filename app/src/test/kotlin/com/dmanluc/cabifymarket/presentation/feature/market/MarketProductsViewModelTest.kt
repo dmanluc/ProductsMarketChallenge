@@ -46,10 +46,6 @@ class MarketProductsViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var marketProductsUseCase: GetMarketProductsUseCase
-    private lateinit var saveLocalProductsCartUseCase: SaveLocalProductsCartUseCase
-    private lateinit var marketProductsViewModel: MarketProductsViewModel
-    private lateinit var localProductsCartUseCase: GetLocalProductsCartUseCase
     private val dispatchers = AppDispatchers(Dispatchers.Unconfined, Dispatchers.Unconfined)
 
     private val mockProductListSuccessResource =
@@ -61,6 +57,11 @@ class MarketProductsViewModelTest {
     private val mockEmptyProductCartSuccessResource = Resource.success(ProductsCart())
     private val mockNotEmptyProductCartSuccessResource =
         Resource.success(MockDataProvider.createMockProductsCart())
+
+    private lateinit var marketProductsUseCase: GetMarketProductsUseCase
+    private lateinit var saveLocalProductsCartUseCase: SaveLocalProductsCartUseCase
+    private lateinit var marketProductsViewModel: MarketProductsViewModel
+    private lateinit var localProductsCartUseCase: GetLocalProductsCartUseCase
 
     @Before
     fun setUp() {

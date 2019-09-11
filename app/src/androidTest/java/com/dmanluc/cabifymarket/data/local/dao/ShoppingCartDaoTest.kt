@@ -30,7 +30,7 @@ class ShoppingCartDaoTest : BaseDaoTest() {
     }
 
     @Test
-    fun saveMarketProducts_shouldUpdateDataInDatabase() = runBlocking {
+    fun saveProductsCart_shouldUpdateDataInDatabase() = runBlocking {
         val newMockProductCartEntity = ShoppingCartEntity(mockProductCartEntity.cart.mapValues { Random.nextInt() } as LinkedHashMap<Product, Int>)
 
         database.shoppingCartDao().saveShoppingCart(newMockProductCartEntity)

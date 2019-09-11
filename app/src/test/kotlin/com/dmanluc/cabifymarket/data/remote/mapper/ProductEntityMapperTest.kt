@@ -43,25 +43,25 @@ class ProductEntityMapperTest {
     fun `map market api response to domain product list`() {
         val mockMarketApiResponse = MockDataProvider.createMockMarketProductsApiResponse()
 
-        val result = mapper.mapFrom(mockMarketApiResponse)
+        val mapperResult = mapper.mapFrom(mockMarketApiResponse)
 
         verifyOrder {
             assetManager.readJsonAssetFileName(any())
         }
 
-        Assert.assertEquals(result.size, mockMarketApiResponse.products?.size)
+        Assert.assertEquals(mapperResult.size, mockMarketApiResponse.products?.size)
 
-        with(result[0]) {
+        with(mapperResult[0]) {
             Assert.assertThat(this.type, `is`(Product.Type.MUG))
             Assert.assertThat(this.discountRule, nullValue())
         }
 
-        with(result[1]) {
+        with(mapperResult[1]) {
             Assert.assertThat(this.type, `is`(Product.Type.TSHIRT))
             Assert.assertThat(this.discountRule, instanceOf(BulkDiscountRule::class.java))
         }
 
-        with(result[2]) {
+        with(mapperResult[2]) {
             Assert.assertThat(this.type, `is`(Product.Type.VOUCHER))
             Assert.assertThat(
                 this.discountRule,

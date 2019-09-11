@@ -38,12 +38,13 @@ class MarketProductsLocalRepositoryImplTest {
     @get:Rule
     var coroutinesMainDispatcherRule: CoroutinesMainDispatcherRule = CoroutinesMainDispatcherRule()
 
-    private lateinit var observer: Observer<Resource<List<Product>>>
-    private lateinit var repository: MarketProductsLocalRepository
-    private lateinit var localDataSource: MarketProductsLocalDataSource
     private val databaseEntityToDomainMapper = mockk<MarketProductDatabaseEntityToDomainMapper>()
     private val productsDao = mockk<MarketProductsDao>(relaxed = true)
     private val cacheService = mockk<CacheDataSource>(relaxed = true)
+
+    private lateinit var observer: Observer<Resource<List<Product>>>
+    private lateinit var repository: MarketProductsLocalRepository
+    private lateinit var localDataSource: MarketProductsLocalDataSource
 
     @Before
     fun setUp() {

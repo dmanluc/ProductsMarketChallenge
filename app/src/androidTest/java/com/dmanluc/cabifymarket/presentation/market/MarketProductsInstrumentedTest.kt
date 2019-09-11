@@ -55,12 +55,15 @@ import org.koin.test.AutoCloseKoinTest
  * @see: https://stackoverflow.com/questions/40703567/how-do-i-make-espresso-wait-until-data-binding-has-updated-the-view-with-the-dat/52390905#52390905
  *
  * Also, executePendingBindings on component data binding should be enough: the binding will be executed
-   immediately when calling that method, and not during the next frame of Choreographer
+immediately when calling that method, and not during the next frame of Choreographer
  *
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
+
+    private val mockProducts = MockDataProvider.createMockProductList()
+    private val mockProductsCart = MockDataProvider.createMockProductsCart()
 
     private var marketRepository = mockk<MarketRepository>()
     private var localProductsCartRepository = mockk<ProductsCartLocalRepository>()
@@ -79,16 +82,16 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
     }
 
     @Test
-    fun testRecyclerViewContainsItems() {
+    fun fetchProductsOnFragmentLaunch_whenSuccessFetchingData_shouldUpdateProductList() {
         coEvery { marketRepository.getProducts(any()) } returns MutableLiveData<Resource<List<Product>>>().apply {
             postValue(
-                Resource.success(MockDataProvider.createMockProductList())
+                Resource.success(mockProducts)
             )
         }
 
         coEvery { localProductsCartRepository.getLocalProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
             postValue(
-                Resource.success(MockDataProvider.createMockProductsCart())
+                Resource.success(mockProductsCart)
             )
         }
 
@@ -103,7 +106,7 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
     }
 
     @Test
-    fun testScreenBehaviorWhenError() {
+    fun fetchProductsOnFragmentLaunch_whenErrorFetchingAndNoLocalProductsDataFound_shouldShowEmptyProductListInfo() {
         coEvery { marketRepository.getProducts(any()) } returns MutableLiveData<Resource<List<Product>>>().apply {
             postValue(
                 Resource.error(
@@ -130,18 +133,18 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
     }
 
     @Test
-    fun testRefreshWhenError() {
+    fun fetchProductsOnFragmentLaunch_whenNoInternetAndLocalProductsDataFound_shouldUpdateListWithLocalItems() {
         coEvery { marketRepository.getProducts(any()) } returns MutableLiveData<Resource<List<Product>>>().apply {
             postValue(
                 Resource.error(
-                    Exception("no_internet"), MockDataProvider.createMockProductList()
+                    Exception("no_internet"), mockProducts
                 )
             )
         }
 
         coEvery { localProductsCartRepository.getLocalProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
             postValue(
-                Resource.success(MockDataProvider.createMockProductsCart())
+                Resource.success(mockProductsCart)
             )
         }
 
@@ -159,11 +162,10 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
     }
 
     @Test
-    fun testNavigationToDetailScreen() {
-        val mockProductsCart = MockDataProvider.createMockProductsCart()
+    fun clickOnCheckoutButton_shouldLaunchCheckoutScreen() {
         coEvery { marketRepository.getProducts(any()) } returns MutableLiveData<Resource<List<Product>>>().apply {
             postValue(
-                Resource.success(MockDataProvider.createMockProductList())
+                Resource.success(mockProducts)
             )
         }
 
@@ -187,16 +189,16 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
     }
 
     @Test
-    fun testEnableCheckoutButton() {
+    fun addProductToShoppingCart_shouldEnableCheckoutButton() {
         coEvery { marketRepository.getProducts(any()) } returns MutableLiveData<Resource<List<Product>>>().apply {
             postValue(
-                Resource.success(MockDataProvider.createMockProductList())
+                Resource.success(mockProducts)
             )
         }
 
         coEvery { localProductsCartRepository.getLocalProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
             postValue(
-                Resource.success(MockDataProvider.createMockProductsCart())
+                Resource.success(mockProductsCart)
             )
         }
 
@@ -218,10 +220,31 @@ class MarketProductsInstrumentedTest : AutoCloseKoinTest() {
     }
 
     @Test
-    fun testDisableCheckoutButton() {
+    fun fetchProductsOnFragmentLaunch_whenLocalProductsCartFound_shouldShowCheckoutButtonEnabled() {
         coEvery { marketRepository.getProducts(any()) } returns MutableLiveData<Resource<List<Product>>>().apply {
             postValue(
-                Resource.success(MockDataProvider.createMockProductList())
+                Resource.success(mockProducts)
+            )
+        }
+
+        coEvery { localProductsCartRepository.getLocalProductsCart() } returns MutableLiveData<Resource<ProductsCart>>().apply {
+            postValue(
+                Resource.success(mockProductsCart)
+            )
+        }
+
+        coEvery { localProductsCartRepository.saveLocalProductsCart(any()) } just Runs
+
+        launchFragment()
+
+        onView(withId(R.id.cartCheckout)).check(matches(isEnabled()))
+    }
+
+    @Test
+    fun fetchProductsOnFragmentLaunch_whenNoLocalProductsCartFound_shouldShowCheckoutButtonDisabled() {
+        coEvery { marketRepository.getProducts(any()) } returns MutableLiveData<Resource<List<Product>>>().apply {
+            postValue(
+                Resource.success(mockProducts)
             )
         }
 

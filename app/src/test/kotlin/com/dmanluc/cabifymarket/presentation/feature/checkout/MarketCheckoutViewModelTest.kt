@@ -57,7 +57,7 @@ class MarketCheckoutViewModelTest {
     }
 
     @Test
-    fun loadCartProducts() {
+    fun `load products cart in view model`() {
         val observer = mockk<Observer<ProductsCart>>(relaxed = true)
 
         marketCheckoutViewModel.productsCart.observeForTesting(observer) {
@@ -74,7 +74,7 @@ class MarketCheckoutViewModelTest {
     }
 
     @Test
-    fun updateProductCartQuantity() {
+    fun `update product quantity in products cart`() {
         val observer = mockk<Observer<ProductsCart>>(relaxed = true)
         val mockProduct = MockDataProvider.createMockProductList().first()
 
@@ -96,7 +96,7 @@ class MarketCheckoutViewModelTest {
     }
 
     @Test
-    fun removeProductFromCart() {
+    fun `remove product from products cart`() {
         val observer = mockk<Observer<ProductsCart>>(relaxed = true)
         val mockProduct = MockDataProvider.createMockProductList().first()
 
@@ -118,35 +118,41 @@ class MarketCheckoutViewModelTest {
     }
 
     @Test
-    fun clearCartAndCloseFlow() {
+    fun `finish checkout flow and delete products cart`() {
         val cartObserver = mockk<Observer<ProductsCart>>(relaxed = true)
         val closeEventObserver = mockk<Observer<Event<Unit>>>(relaxed = true)
 
         with(marketCheckoutViewModel) {
+            closeFlow()
+
             productsCart.observeForTesting(cartObserver) {
-                finishCheckoutFlow.observeForever(closeEventObserver)
-
-                closeFlow()
-
                 val cartSlot = slot<ProductsCart>()
 
                 verify {
                     cartObserver.onChanged(capture(cartSlot))
-                    closeEventObserver.onChanged(any())
+                }
+
+                coVerify {
+                    deleteLocalProductsCartUseCase.invoke(any())
                 }
 
                 confirmVerified(cartObserver)
-                confirmVerified(closeEventObserver)
 
                 Assert.assertEquals(cartSlot.captured.size(), 0)
+            }
 
-                finishCheckoutFlow.removeObserver(closeEventObserver)
+            finishCheckoutFlow.observeForTesting(closeEventObserver) {
+                verify {
+                    closeEventObserver.onChanged(any())
+                }
+
+                confirmVerified(closeEventObserver)
             }
         }
     }
 
     @Test
-    fun saveProductsCart() {
+    fun `save products cart to local database`() {
         with(marketCheckoutViewModel) {
             productsCart.observeForTesting() {
                 saveProductsCart()

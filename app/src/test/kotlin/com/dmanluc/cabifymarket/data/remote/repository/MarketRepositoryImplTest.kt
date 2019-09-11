@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.dmanluc.cabifymarket.data.local.dao.MarketProductsDao
+import com.dmanluc.cabifymarket.data.local.entity.MarketProductEntity
 import com.dmanluc.cabifymarket.data.local.mapper.MarketProductDatabaseEntityToDomainMapper
 import com.dmanluc.cabifymarket.data.local.mapper.ProductDomainToDatabaseEntityMapper
 import com.dmanluc.cabifymarket.data.remote.api.MarketApi
@@ -11,11 +12,11 @@ import com.dmanluc.cabifymarket.data.remote.datasource.MarketRemoteDataSource
 import com.dmanluc.cabifymarket.data.remote.datasource.MarketRemoteDataSourceImpl
 import com.dmanluc.cabifymarket.data.remote.mapper.ProductEntityMapper
 import com.dmanluc.cabifymarket.data.remote.utils.CoroutinesMainDispatcherRule
-import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.model.Product
 import com.dmanluc.cabifymarket.domain.repository.MarketRepository
 import com.dmanluc.cabifymarket.utils.MockDataProvider.createMockMarketProductsApiResponse
 import com.dmanluc.cabifymarket.utils.MockDataProvider.createMockProductList
+import com.dmanluc.cabifymarket.utils.Resource
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
@@ -45,15 +46,21 @@ class MarketRepositoryImplTest {
     @get:Rule
     var coroutinesMainDispatcherRule: CoroutinesMainDispatcherRule = CoroutinesMainDispatcherRule()
 
-    private lateinit var observer: Observer<Resource<List<Product>>>
-    private lateinit var productsRepository: MarketRepository
-    private lateinit var remoteDataSource: MarketRemoteDataSource
     private val entityMapper = mockk<ProductEntityMapper>()
     private val domainToDatabaseEntityMapper = ProductDomainToDatabaseEntityMapper()
     private val databaseEntityToDomainMapper = MarketProductDatabaseEntityToDomainMapper()
     private val marketService = mockk<MarketApi>()
     private val productsDao = mockk<MarketProductsDao>(relaxed = true)
 
+    private val mockProducts = createMockProductList()
+    private val mockProductsEntities: List<MarketProductEntity>
+        get() {
+            return mockProducts.map { domainToDatabaseEntityMapper.mapFrom(it) }
+        }
+
+    private lateinit var observer: Observer<Resource<List<Product>>>
+    private lateinit var productsRepository: MarketRepository
+    private lateinit var remoteDataSource: MarketRemoteDataSource
 
     @Before
     fun setUp() {
@@ -93,8 +100,6 @@ class MarketRepositoryImplTest {
 
     @Test
     fun `get products from remote API and save them to local database`() {
-        val mockProducts = createMockProductList()
-        val mockProductsEntities = mockProducts.map { domainToDatabaseEntityMapper.mapFrom(it) }
         every { marketService.getProductsAsync() } returns GlobalScope.async { createMockMarketProductsApiResponse() }
         every { entityMapper.mapFrom(any()) } returns mockProducts
         coEvery { productsDao.getMarketProducts() } returns listOf() andThen mockProductsEntities
@@ -117,8 +122,6 @@ class MarketRepositoryImplTest {
 
     @Test
     fun `get products from local database`() {
-        val mockProducts = createMockProductList()
-        val mockProductsEntities = mockProducts.map { domainToDatabaseEntityMapper.mapFrom(it) }
         every { marketService.getProductsAsync() } returns GlobalScope.async { createMockMarketProductsApiResponse() }
         every { entityMapper.mapFrom(any()) } returns mockProducts
         coEvery { productsDao.getMarketProducts() } returns mockProductsEntities

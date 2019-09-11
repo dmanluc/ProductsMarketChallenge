@@ -9,10 +9,10 @@ import com.dmanluc.cabifymarket.data.local.datasource.ProductsCartLocalDataSourc
 import com.dmanluc.cabifymarket.data.local.mapper.ProductsCartDomainToDatabaseEntityMapper
 import com.dmanluc.cabifymarket.data.local.mapper.ShoppingCartDatabaseEntityToDomainMapper
 import com.dmanluc.cabifymarket.data.remote.utils.CoroutinesMainDispatcherRule
-import com.dmanluc.cabifymarket.utils.Resource
 import com.dmanluc.cabifymarket.domain.model.ProductsCart
 import com.dmanluc.cabifymarket.domain.repository.ProductsCartLocalRepository
 import com.dmanluc.cabifymarket.utils.MockDataProvider
+import com.dmanluc.cabifymarket.utils.Resource
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -41,13 +41,17 @@ class ProductsCartLocalRepositoryImplTest {
     @get:Rule
     var coroutinesMainDispatcherRule: CoroutinesMainDispatcherRule = CoroutinesMainDispatcherRule()
 
-    private lateinit var observer: Observer<Resource<ProductsCart>>
-    private lateinit var repository: ProductsCartLocalRepository
-    private lateinit var localDataSource: ProductsCartLocalDataSource
     private val databaseEntityToDomainMapper = mockk<ShoppingCartDatabaseEntityToDomainMapper>()
     private val domainToDatabaseEntityMapper = mockk<ProductsCartDomainToDatabaseEntityMapper>()
     private val productsCartDao = mockk<ShoppingCartDao>(relaxed = true)
     private val cacheService = mockk<CacheDataSource>(relaxed = true)
+
+    private val mockProductsCart = MockDataProvider.createMockProductsCart()
+    private val mockProductsCartEntity = MockDataProvider.createMockProductsCartEntity()
+
+    private lateinit var observer: Observer<Resource<ProductsCart>>
+    private lateinit var repository: ProductsCartLocalRepository
+    private lateinit var localDataSource: ProductsCartLocalDataSource
 
     @Before
     fun setUp() {
@@ -65,9 +69,6 @@ class ProductsCartLocalRepositoryImplTest {
 
     @Test
     fun `save products cart to local database`() {
-        val mockProductsCart = MockDataProvider.createMockProductsCart()
-        val mockProductsCartEntity = MockDataProvider.createMockProductsCartEntity()
-
         coEvery { productsCartDao.saveShoppingCart(any()) } just Runs
         every { domainToDatabaseEntityMapper.mapFrom(any()) } returns mockProductsCartEntity
 
@@ -86,9 +87,7 @@ class ProductsCartLocalRepositoryImplTest {
     }
 
     @Test
-    fun `get last saved products cart from cache`() {
-        val mockProductsCart = MockDataProvider.createMockProductsCart()
-
+    fun `get local saved products cart from cache`() {
         every { cacheService.get(ProductsCart::class.java) } returns mockProductsCart
 
         runBlocking {
@@ -104,10 +103,7 @@ class ProductsCartLocalRepositoryImplTest {
     }
 
     @Test
-    fun `get last saved products cart from local database`() {
-        val mockProductsCartEntity = MockDataProvider.createMockProductsCartEntity()
-        val mockProductsCart = MockDataProvider.createMockProductsCart()
-
+    fun `get local saved products cart from local database`() {
         every { cacheService.get(ProductsCart::class.java) } returns null
         coEvery { productsCartDao.getShoppingCart() } returns mockProductsCartEntity
         every { databaseEntityToDomainMapper.mapFrom(any()) } returns mockProductsCart
@@ -131,9 +127,6 @@ class ProductsCartLocalRepositoryImplTest {
 
     @Test
     fun `delete products cart at local database`() {
-        val mockProductsCart = MockDataProvider.createMockProductsCart()
-        val mockProductsCartEntity = MockDataProvider.createMockProductsCartEntity()
-
         coEvery { productsCartDao.deleteShoppingCart(any()) } just Runs
         every { domainToDatabaseEntityMapper.mapFrom(any()) } returns mockProductsCartEntity
 
@@ -149,7 +142,6 @@ class ProductsCartLocalRepositoryImplTest {
         coVerify(exactly = 1) {
             productsCartDao.deleteShoppingCart(mockProductsCartEntity)
         }
-        
     }
 
 }
