@@ -65,9 +65,10 @@ popular libraries and tools of the Android ecosystem
     * [Retrofit](https://square.github.io/retrofit/) - networking
     * [Jetpack](https://developer.android.com/jetpack)
         * [Navigation](https://developer.android.com/topic/libraries/architecture/navigation/) - deal with whole in-app navigation
-        * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - notify views about database change
+        * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - lets the components in your app, usually the UI, observe LiveData objects for changes.
         * [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle) - perform action when lifecycle state changes
         * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - store and manage UI-related data in a lifecycle conscious way
+        * [Room](https://developer.android.com/topic/libraries/architecture/room) - create a cache of your app's data on a device that's running your app
   	* [Glide](https://bumptech.github.io/glide/) - image loading library
 * Architecture
     * Clean Architecture
