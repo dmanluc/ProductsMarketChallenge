@@ -70,7 +70,7 @@ class MarketCheckoutInstrumentedTest : AutoCloseKoinTest() {
     fun setUp() {
         coEvery { localProductsCartRepository.saveLocalProductsCart(any()) } just Runs
         coEvery { localProductsCartRepository.deleteLocalProductsCart(any()) } just Runs
-        
+
         startKoin {
             modules(listOf(module {
                 factory { localProductsCartRepository }

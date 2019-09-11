@@ -7,7 +7,6 @@ import android.content.res.AssetManager
 import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
-import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Handler
 import android.view.View
