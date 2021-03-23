@@ -40,16 +40,10 @@ Examples:
 - The discounts can change in the future, depending on the year season we apply different ones.
 - There is no need for a user login screen.
 - We would like to show users what discounts have been applied in their purchase. 
-- You should get the list of products from [here](https://api.myjson.com/bins/4bwec).
+- You should get the list of products from [here](https://gist.githubusercontent.com/palcalde/6c19259bd32dd6aafa327fa557859c2f/raw/ba51779474a150ee4367cda4f4ffacdcca479887/Products.json).
 
 ## Bonus
 - The app should work also offline, and all that this implies. 
-
-**The code should:**
-- Be written as production-ready code. You will write production code. We would like you to build it in the same way as if you were going to publish to the store.
-- Be easy to grow and easy to add new functionality.
-- Have notes attached, explaning the solution and why certain things are included and others are left out.
-- Be written either in Swift or Kotlin, preferably in the latest stable version of the language.
 
 ---------------------------------------------------------------------
 
